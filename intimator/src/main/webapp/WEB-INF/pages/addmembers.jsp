@@ -1,7 +1,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 
-<%@include file="menu.jsp" %>
 <html>
 <link href="<c:url value="/resources/css/jquery.dataTables.css" />" rel="stylesheet">
 
@@ -13,14 +12,27 @@
 <script src="<c:url value="/resources/js/table.js" />"></script>
 <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
 <script src="<c:url value="/resources/js/bootstrap-datepicker.js" />"></script>
+<%@include file="menu.jsp" %>
 
 <script type="text/javascript">
 $(document).ready(function() {
     var t = $('#example').DataTable();
  
     $('#addRow').on( 'click', function () {
-    	$.ajax({
-            url: "${pageContext.request.contextPath}/smartphones/delete/",
+    	t.row.add( [
+             		document.getElementById('id').value,
+             		document.getElementById('name').value,
+             		document.getElementById('example1').value,
+             		document.getElementById('phone').value,
+         		] ).draw();
+    	document.getElementById('id').value = '';
+ 		document.getElementById('name').value = '';
+ 		document.getElementById('example1').value = '';
+ 		document.getElementById('phone').value = '';
+    	//$.ajax({
+    		
+    		
+            /* url: "${pageContext.request.contextPath}/smartphones/delete/",
             type: "DELETE",
  
               beforeSend: function(xhr) {
@@ -43,8 +55,8 @@ $(document).ready(function() {
                 respContent += smartphone.price + "]</span>";
                 $("#sPhoneFromResponse").html(respContent);        
               }
-        });
-        event.preventDefault();
+  */      // });
+        //event.preventDefault();
     } );
     
     $('#example1').datepicker({

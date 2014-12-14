@@ -12,6 +12,16 @@
 		
 	}
 </script>
-<div align="right"><a href="/SpringMVC/members/browseMembers"  id="myMembers"><span id='mm'  class='disable_a_href'>My Members</span></a>&nbsp;&nbsp;
-<a id="addMembers" href='/SpringMVC/members/addmember'><span id='am' >Add Members</span></a></div>
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container-fluid">
+	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	      <ul class="nav navbar-nav"> 
+	      	<li class="active"><a href="/intimator/members/browsemembers"  id="myMembers"><span id='mm'  
+	      		class='disable_a_href'>My Members</span></a></li>
+	      
+			<li><a id="addMembers" href='/intimator/members/addmember'><span id='am' >Add Members</span></a></li>
+		  </ul>
+	</div>
+	</div>
+	</nav>
 </html>
