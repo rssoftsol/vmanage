@@ -2,6 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet">
+<link href="<c:url value="/resources/css/main.css" />" rel="stylesheet">
+
 <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
 
 <head>
@@ -9,7 +11,7 @@
 
 <title>Registration</title>
 </head>
-<body>
+<body class="body">
 <form action="/intimator/registerAction" method="post">
 <table align="center" style="margin-top: 100px">
 	<tr ><th></th><th><font color="red">${message}</font></th></tr>

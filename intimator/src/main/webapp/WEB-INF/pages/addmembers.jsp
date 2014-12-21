@@ -6,6 +6,8 @@
 
 <link href="<c:url value="/resources/css/bootstrap.css" />" rel="stylesheet">
 <link href="<c:url value="/resources/css/datepicker.css" />" rel="stylesheet">
+<link href="<c:url value="/resources/css/main.css" />" rel="stylesheet">
+
 <script src="<c:url value="/resources/js/jquery-1.11.1.min.js" />"></script>
 <script src="<c:url value="/resources/js/jquery.dataTables.min.js" />"></script>
 
@@ -16,6 +18,9 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
+	$('#confirm').on( 'click', function () {
+	
+	});
     var t = $('#example').DataTable();
  
     $('#addRow').on( 'click', function () {
@@ -72,11 +77,10 @@ $(document).ready(function() {
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Members Detail</title>
 </head>
-<body>
-<div>${message}</div>
+<body class="body">
 <!-- <input type="button" id='addRow' value='add members'/>
  -->
- <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+ <button type="button" class="btn btn-primary btn-lg margin-bottom" data-toggle="modal" data-target="#myModal">
   add members
 </button><br>
 <div id='demo'></div>
@@ -89,18 +93,14 @@ $(document).ready(function() {
       </div>
       <div class="modal-body">
         <div class='span2'>Id:</div><div class='span4'><input type="text" id='id' name='id'></div>
-        <div><div class='span2'>Name:</div><div class='span4'><input type="text" id='name' name='name'></div></div>
-        <div><div class='span2'>Expiry Date:</div><!-- <div class='span4'><input type="text" id='expDate' name='expDate'></div> -->
-        
+        <div class='span2'>Name:</div><div class='span4'><input type="text" id='name' name='name'></div>
+        <div class='span2'>Expiry Date:</div><!-- <div class='span4'><input type="text" id='expDate' name='expDate'></div> -->
         <div class="container">
             <div class="hero-unit">
                 <input  type="text" placeholder="click to show datepicker"  id="example1">
             </div>
         </div>
-        </div>
-        
-        
-        <div><div class='span2'>Phone no.:</div><div class='span4'><input type="text" id='phone' name='phone'></div></div>
+        <div class='span2'>Phone no.:</div><div class='span4'><input type="text" id='phone' name='phone'></div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -109,7 +109,9 @@ $(document).ready(function() {
     </div>
   </div>
 </div>
- 
+ <button type="button" class="btn btn-primary btn-lg center-start" id='confirm'>
+  <span>Confirm</span>
+</button>
  
 </body>
 </html>

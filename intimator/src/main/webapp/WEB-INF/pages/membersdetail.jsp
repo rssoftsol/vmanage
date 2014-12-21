@@ -4,6 +4,7 @@
 <%@include file="menu.jsp" %>
 <html>
 <link href="<c:url value="/resources/css/jquery.dataTables.css" />" rel="stylesheet">
+<link href="<c:url value="/resources/css/main.css" />" rel="stylesheet">
 
 <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet">
 <script src="<c:url value="/resources/js/jquery-1.11.1.min.js" />"></script>
@@ -26,8 +27,7 @@ dataSet = [
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Members Detail</title>
 </head>
-<body>
-<div>${message}</div>
-<div id='demo'></div>
+<body class="body">
+<div id='demo'class="center-start half-width"></div>
 </body>
 </html>

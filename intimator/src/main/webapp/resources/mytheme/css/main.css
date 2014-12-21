@@ -1,3 +1,37 @@
-h1{
-	color:red;
+.body {
+  background-image: url("../img/images.jpg");
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  background-size: cover;
 }
+
+@media (min-width: 1120px), (min-height: 630px) {
+    .body { background-size: auto; }
+}
+
+.margin-bottom {
+	margin-bottom: 20px;
+}
+
+.margin-small-bottom {
+	margin-bottom: 10px;
+}
+
+.margin-large-bottom {
+	margin-bottom: 40px;
+}
+
+.center-right {
+	margin-top:100px;
+	margin-bottom: 500px;
+	margin-left: 700px;
+}
+
+.center-start {
+	margin-left: 500px;
+}
+
+.half-width {
+	width: 500px;
+}
+
