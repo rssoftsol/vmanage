@@ -1,4 +1,4 @@
-package com.imanage.beans;
+package com.imanage.models;
 
 import java.util.Date;
 

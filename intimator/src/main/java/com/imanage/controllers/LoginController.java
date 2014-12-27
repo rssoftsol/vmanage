@@ -1,4 +1,4 @@
-package com.imanage;
+package com.imanage.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -6,12 +6,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.imanage.models.LoginModel;
+
 @Controller
 @RequestMapping("/login")
 public class LoginController {
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public String redirectToLogin(ModelMap model) {
-		return "login";
+	public ModelAndView redirectToLogin(ModelMap model) {
+		ModelAndView mav = new ModelAndView("login","command",new LoginModel());
+		return mav;
 	}
 }

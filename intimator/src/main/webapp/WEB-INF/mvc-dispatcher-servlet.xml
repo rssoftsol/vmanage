@@ -10,8 +10,11 @@
         http://www.springframework.org/schema/context 
         http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-	<context:component-scan base-package="com" />
+	<context:component-scan base-package="com.imanage" />
 
+ <context:component-scan base-package="com.imanage.models"/>
+ <context:component-scan base-package="com.imanage.util"/>
+<context:component-scan base-package="com.imanage.services.register"/>
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix">
@@ -22,8 +25,18 @@
 		</property>
 	</bean>
 
+	<bean id="messageSource"
+        class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+ 
+        <property name="basename" value="/WEB-INF/messages" />
+ 
+    </bean>
 	<mvc:resources mapping="/resources/**" location="/resources/mytheme/" />
 
 	<mvc:annotation-driven />
+	
+	<!-- Database Configuration -->
+	<import resource="DataSource.xml"/>
+	<import resource="Hibernate.xml"/>
 	
 </beans>

@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+
 <!-- <style>
 html {
   background-image: url("<c:url value="/resources/img/images.jpg" />");
@@ -36,7 +39,7 @@ html {
 </head>
 
 <body class="body">
-<form action="/intimator/loginAction" method="post">
+<form:form action="/intimator/loginAction" method="post">
 <%-- <table align="center" style="margin-top: 100px">
 <tr><th></th><th><font color="red">${message}</font></th></tr>
 <tr><td>User Name:</td><td><input type="text" id="username" name="name"></td></tr>
@@ -47,12 +50,12 @@ html {
  --%>
  <div class="center-right">
 <div><font color="red">${message}</font></div>
-<div><span>User Name:</span><span><input type="text" id="username" name="name"></span></div>
-<div><span>Password:</span><span><input type="password" id="password" name="password"></span></div>
+<div><span>User Name:</span><span><form:input id="username" path="username"/></span></div>
+<div><span>Password:</span><span><form:password  id="password" path="password"/></span></div>
 <div><span><input type="submit" value="Login"></span></div>
 <div><span>New club?click <a href="/intimator/register">here</a> for registration</span></div>
 </div>
  
- </form>
+ </form:form>
 </body>
 </html>
