@@ -9,6 +9,43 @@
     .body { background-size: auto; }
 }
 
+.margin-left {
+	margin-left: 20px;
+}
+
+.margin-small-left {
+	margin-left: 10px;
+}
+
+.margin-large-left {
+	margin-left: 40px;
+}
+
+.margin-right {
+	margin-right: 20px;
+}
+
+.margin-small-right {
+	margin-right: 10px;
+}
+
+.margin-large-right {
+	margin-right: 40px;
+}
+
+
+.margin-top {
+	margin-top: 20px;
+}
+
+.margin-small-top {
+	margin-top: 10px;
+}
+
+.margin-large-top {
+	margin-top: 40px;
+}
+
 .margin-bottom {
 	margin-bottom: 20px;
 }
@@ -21,6 +58,19 @@
 	margin-bottom: 40px;
 }
 
+.margin-top {
+	margin-top: 20px;
+}
+
+.margin-small-top {
+	margin-top: 10px;
+}
+
+.margin-large-top {
+	margin-top: 40px;
+}
+
+
 .center-right {
 	margin-top:100px;
 	margin-bottom: 500px;
@@ -29,6 +79,12 @@
 
 .center-start {
 	margin-left: 500px;
+}
+
+.center-pos {
+	margin-top: 100px;
+	margin-left:300px;
+	margin-bottom:200px;
 }
 
 .half-width {

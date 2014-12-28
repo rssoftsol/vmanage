@@ -40,20 +40,13 @@ html {
 
 <body class="body">
 <form:form action="/intimator/loginAction" method="post">
-<%-- <table align="center" style="margin-top: 100px">
-<tr><th></th><th><font color="red">${message}</font></th></tr>
-<tr><td>User Name:</td><td><input type="text" id="username" name="name"></td></tr>
-<tr><td>Password :</td><td><input type="password" id="password" name="password"></td></tr>
-<tr><td></td><td><input type="submit" value="Login"></td></tr>
-<tr><td></td><td>New club?click <a href="/intimator/register"><font color="red">here</font></a> for registration</td></tr>
-</table>
- --%>
- <div class="center-right">
+<div class="center-right">
 <div><font color="red">${message}</font></div>
-<div><span>User Name:</span><span><form:input id="username" path="username"/></span></div>
-<div><span>Password:</span><span><form:password  id="password" path="password"/></span></div>
-<div><span><input type="submit" value="Login"></span></div>
-<div><span>New club?click <a href="/intimator/register">here</a> for registration</span></div>
+<div><label class="col-xs-5">User Name:</label><span><form:input id="username" path="username"/></span></div>
+<div><label class="col-xs-5">Password:</label><span><form:password  id="password" path="password"/></span></div>
+<div><div class="col-xs-12"><input type="submit" class="btn" value="Login"></div></div>
+<div><div class="col-xs-12"><label>New club?click <a href="/intimator/register">
+<font color="red">here</font></a> for registration</label></div></div>
 </div>
  
  </form:form>

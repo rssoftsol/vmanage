@@ -20,7 +20,9 @@
 	      		class='disable_a_href'>My Members</span></a></li>
 	      
 			<li><a id="addMembers" href='/intimator/members/addmember'><span id='am' >Add Members</span></a></li>
+			<li><a href="/intimator/logout"><span>Logout</span></a></li>
 			<li><a><span class="center-start">${message}</span></a></li>
+			
 		  </ul>
 	</div>
 	</div>
