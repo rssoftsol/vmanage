@@ -15,16 +15,16 @@
 </head>
 <body class="body">
 <form:form action="/intimator/registerAction.json" method="post">
-<div class="center-pos">
-	<div><font color="red">${message}</font></div>
-	<div class="col-xs-4"><label>Club Name:</label></div><div><form:input id="clubname" path="clubname"/></div>
-	<div class="col-xs-4"><label>Phone:</label></div><div><form:input id="phonenumber" path="phonenumber"/></div>
-	<div class="col-xs-4"><label>User Name:</label></div><div><form:input id="username" path="username"/></div>
-	<div class="col-xs-4"><label>Password :</label></div><div><form:input id="password" path="password"/></div>
-	<div class="col-xs-4"><label>Membership type:</label></div><div><label>Regular</label><form:input type="radio" checked="checked" id="regular" path="membershiptype" value="R"/>&nbsp;&nbsp;
-	<%-- Premium<form:input type="radio" id="premium" path="membershipType" value="premium"/> --%></div>
-	<div class="margin-small-top pull-right col-xs-8"><input type="submit" class="btn" value="Register"></div>
-</div>
+<table align="center" style="margin-top: 100px">
+	<tr ><th></th><th><font color="red">${message}</font></th></tr>
+	<tr><td>Club Name:</td><td><form:input id="clubname" path="clubname"/></td></tr>
+	<tr><td>Phone:</td><td><form:input id="phonenumber" path="phonenumber"/></td></tr>
+	<tr><td>User Name:</td><td><form:input id="username" path="username"/></td></tr>
+	<tr><td>Password :</td><td><form:input id="password" path="password"/></td></tr>
+	<%-- <tr><td>Membership type:</td><td>Regular<form:input type="radio" checked="checked" id="regular" path="membershiptype" value="R"/>&nbsp;&nbsp; --%>
+	<%-- Premium<form:input type="radio" id="premium" path="membershipType" value="premium"/> --%></td></tr>
+	<tr><td></td><td><input type="submit" value="Register"></td></tr>
+</table>
 </form:form>
 </body>
 </html>
