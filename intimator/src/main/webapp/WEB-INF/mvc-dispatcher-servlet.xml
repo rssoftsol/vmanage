@@ -1,6 +1,5 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="
         http://www.springframework.org/schema/beans     
@@ -10,11 +9,16 @@
         http://www.springframework.org/schema/context 
         http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
+	<mvc:annotation-driven />
+	<mvc:view-controller path="/" view-name="login" />
+	<mvc:resources mapping="/resources/**" location="/resources/mytheme/" />
+	
 	<context:component-scan base-package="com.imanage" />
-
- <context:component-scan base-package="com.imanage.models"/>
- <context:component-scan base-package="com.imanage.util"/>
-<context:component-scan base-package="com.imanage.services.register"/>
+	
+	<!-- <context:component-scan base-package="com.imanage.models" />
+	<context:component-scan base-package="com.imanage.util" />
+	<context:component-scan base-package="com.imanage.services.register" /> -->
+	
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix">
@@ -26,17 +30,12 @@
 	</bean>
 
 	<bean id="messageSource"
-        class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
- 
-        <property name="basename" value="/WEB-INF/messages" />
- 
-    </bean>
-	<mvc:resources mapping="/resources/**" location="/resources/mytheme/" />
-
-	<mvc:annotation-driven />
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename" value="/WEB-INF/messages" />
+	</bean>
 	
 	<!-- Database Configuration -->
-	<import resource="DataSource.xml"/>
-	<import resource="Hibernate.xml"/>
-	
+	<import resource="DataSource.xml" />
+	<import resource="Hibernate.xml" />
+
 </beans>
