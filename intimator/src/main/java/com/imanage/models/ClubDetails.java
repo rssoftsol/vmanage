@@ -47,11 +47,11 @@ public class ClubDetails{
 	}
 	
 	public String getMembershiptype() {
-		return membershiptype;
+		return "R";
 	}
 	
 	public void setMembershiptype(String membershiptype) {
-		this.membershiptype = membershiptype;
+		this.membershiptype = "R";
 	}
 
 	public String getPhonenumber() {

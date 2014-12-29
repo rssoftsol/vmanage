@@ -1,13 +1,11 @@
 package com.imanage.controllers;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.imanage.models.ClubDetails;
 import com.imanage.services.register.ClubRegistrationService;
@@ -18,9 +16,9 @@ public class RegistrationActionController {
 	
 	@Autowired
 	ClubRegistrationService clubRegService;
-	
+	 
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView registrationHandler(@ModelAttribute("command")
+	public String registrationHandler(Model model, @ModelAttribute("clubDetails")
      ClubDetails clubDetails){
 		String message = "Sorry, Registeration failed";
 		try {
@@ -32,9 +30,9 @@ public class RegistrationActionController {
 				message = "User Name already taken registered";
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	    return new ModelAndView("register", "message",message);
+		model.addAttribute("message",message);
+	    return "register";
 	}
 }
