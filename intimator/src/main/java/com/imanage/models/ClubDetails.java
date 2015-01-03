@@ -1,10 +1,13 @@
 package com.imanage.models;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -18,6 +21,7 @@ public class ClubDetails{
 	private String phonenumber;
 	private String clubname;
 	
+	private Set<MemberDetails> memberDetails;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,11 +51,11 @@ public class ClubDetails{
 	}
 	
 	public String getMembershiptype() {
-		return "R";
+		return membershiptype;
 	}
 	
 	public void setMembershiptype(String membershiptype) {
-		this.membershiptype = "R";
+		this.membershiptype = membershiptype;
 	}
 
 	public String getPhonenumber() {
@@ -69,5 +73,14 @@ public class ClubDetails{
 	public void setClubname(String clubname) {
 		this.clubname = clubname;
 	}
-	
+
+	@OneToMany(mappedBy = "clubDetails")
+	public Set<MemberDetails> getMemberDetails() {
+		return memberDetails;
+	}
+
+	public void setMemberDetails(Set<MemberDetails> memberDetails) {
+		this.memberDetails = memberDetails;
+	}
+
 }
