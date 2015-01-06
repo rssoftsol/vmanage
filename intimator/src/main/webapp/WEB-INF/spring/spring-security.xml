@@ -1,0 +1,101 @@
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+	http://www.springframework.org/schema/security
+	http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+
+	<http pattern="/resources" security="none" />
+	<http pattern="/resetPassword.htm" security="none" />
+
+	<http auto-config="true" use-expressions="true"
+		disable-url-rewriting="true">
+		<intercept-url pattern="/login" access="permitAll" />
+		<intercept-url pattern="/logout" access="permitAll" />
+		<intercept-url pattern="/resetPassword.htm" access="permitAll" />
+		<intercept-url pattern="/user/**" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
+		<form-login login-page="/login" authentication-failure-url="/loginFailure"
+			always-use-default-target="true" default-target-url="/roleBasedAuthenticationUrl" />
+		<logout success-handler-ref="logoutSuccessHandler"
+			invalidate-session="true" delete-cookies="JSESSIONID" />
+		<custom-filter ref="sessionManagementFilter" before="SESSION_MANAGEMENT_FILTER" />
+		<session-management invalid-session-url="/login">
+			<concurrency-control expired-url="/login" />
+		</session-management>
+	</http>
+
+	<beans:bean id="logoutSuccessHandler"
+		class="com.imanage.security.CustomLogoutSuccessHandler">
+		<beans:property name="useReferer" value="true" />
+	</beans:bean>
+
+	<authentication-manager>
+		<authentication-provider user-service-ref="userDetailsService">
+			<password-encoder hash="sha">
+				<!-- <salt-source ref="saltSource"/> -->
+				<salt-source user-property="username" />
+			</password-encoder>
+		</authentication-provider>
+	</authentication-manager>
+
+	<beans:bean id="passwordEncoder"
+		class="org.springframework.security.authentication.encoding.ShaPasswordEncoder" />
+
+	<beans:bean id="sessionManagementFilter"
+		class="org.springframework.security.web.session.SessionManagementFilter">
+		<beans:constructor-arg name="securityContextRepository"
+			ref="httpSessionSecurityContextRepository" />
+		<beans:property name="invalidSessionStrategy">
+			<beans:bean
+				class="org.springframework.security.web.session.SimpleRedirectInvalidSessionStrategy">
+				<beans:constructor-arg name="invalidSessionUrl"
+					value="/login" />
+			</beans:bean>
+		</beans:property>
+	</beans:bean>
+
+	<beans:bean id="httpSessionSecurityContextRepository"
+		class="org.springframework.security.web.context.HttpSessionSecurityContextRepository" />
+
+	<beans:bean id="mailSenderImpl"
+		class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<!-- <beans:property name="host" value="wwindia.com" /> -->
+		<beans:property name="host" value="smtp.gmail.com" />
+		<beans:property name="port" value="25" />
+		<beans:property name="protocol" value="smtp" />  
+		<beans:property name="username" value="rsssoftsol@gmail.com" />
+		<beans:property name="password" value="dec@2014" />
+		<beans:property name="javaMailProperties">
+			<beans:props>
+				<beans:prop key="mail.transport.protocol">smtp</beans:prop>
+				<beans:prop key="mail.smtp.auth">true</beans:prop>
+				<beans:prop key="mail.smtp.starttls.enable">true</beans:prop>
+				<beans:prop key="mail.debug">true</beans:prop>
+			</beans:props>
+		</beans:property>
+	</beans:bean>
+
+	<beans:bean id="forgotPasswdManager" class="com.imanage.security.ForgotPasswordManager">
+	</beans:bean>
+
+	<beans:bean id="preauthAuthProvider"
+		class="org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider">
+		<beans:property name="preAuthenticatedUserDetailsService">
+			<beans:bean id="userDetailsServiceWrapper"
+				class="org.springframework.security.core.userdetails.UserDetailsByNameServiceWrapper">
+				<beans:property name="userDetailsService" ref="userDetailsService" />
+			</beans:bean>
+		</beans:property>
+	</beans:bean>
+
+	<beans:bean id="authenticationManager"
+		class="org.springframework.security.authentication.ProviderManager">
+		<beans:property name="providers">
+			<beans:list>
+				<beans:ref local="preauthAuthProvider" />
+			</beans:list>
+		</beans:property>
+	</beans:bean>
+
+</beans:beans>
