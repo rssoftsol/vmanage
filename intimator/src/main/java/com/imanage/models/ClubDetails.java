@@ -14,12 +14,26 @@ import javax.persistence.Table;
 @Table(name="club_details")
 public class ClubDetails{
 	
+	@Id
+	@Column(name="club_id")
+    @GeneratedValue
 	private Integer club_id;
+	@Column(name="username",length=20)
 	private String username;
+	@Column(name="password",length=10)
 	private String password;
+	@Column(name="newPassword",length=10)
+	private String newPassword;
+	@Column(name="membershiptype",length=1)
 	private String membershiptype;
+	@Column(name="phonenumber",length=20)
 	private String phonenumber;
+	@Column(name="clubname",length=20)
 	private String clubname;
+	@Column(name="email",length=35)
+	private String email;
+	@Column(name="roleId")
+	private Integer roleId;
 	
 	private Set<MemberDetails> memberDetails;
 	
@@ -50,6 +64,14 @@ public class ClubDetails{
 		this.password = password;
 	}
 	
+	public String getNewPassword() {
+		return newPassword;
+	}
+
+	public void setNewPassword(String newPassword) {
+		this.newPassword = newPassword;
+	}
+
 	public String getMembershiptype() {
 		return membershiptype;
 	}
@@ -72,6 +94,22 @@ public class ClubDetails{
 
 	public void setClubname(String clubname) {
 		this.clubname = clubname;
+	}
+
+	public Integer getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(Integer roleId) {
+		this.roleId = roleId;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	@OneToMany(mappedBy = "clubDetails")
