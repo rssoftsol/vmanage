@@ -17,7 +17,7 @@ public class PasswordResetReqMapper implements RowMapper<PasswordResetReqBean> {
 		PasswordResetReqBean passwordResetReqBean= new PasswordResetReqBean();
 
 		passwordResetReqBean.setuId(rs.getString("uId"));
-		passwordResetReqBean.setUserName(rs.getString("loginName"));
+		passwordResetReqBean.setUserName(rs.getString("username"));
 		passwordResetReqBean.setTime(rs.getDate("time"));
 		
 		return passwordResetReqBean;

@@ -98,15 +98,17 @@ public class AccessController {
 		if (resetReqBean.getUserName() != null
 				&& !resetReqBean.getUserName().trim().equals("")) {
 			double diffDays = Utility.getDateDifference(resetReqBean.getTime());
+			ClubDetails clubDetails = new ClubDetails();
+			clubDetails.setUsername(resetReqBean.getUserName());
 			if (diffDays > 1.00) {
-				return "resetPasswdLink";
+				return "security/resetPasswdLink";
 			} else {
-				model.addAttribute("customerDetailsBean", new ClubDetails());
+				model.addAttribute("clubDetailsBean", clubDetails);
 				model.addAttribute("uId", uId);
-				return "resetPassword";
+				return "security/resetPassword";
 			}
 		} else {
-			return "resetPasswdLink";
+			return "security/resetPasswdLink";
 		}
 	}
 
@@ -115,13 +117,13 @@ public class AccessController {
 	public String resetPasswdLink(Model model, @RequestParam String message) {
 		logger.info("message : " + message);
 		model.addAttribute("passwdResetSuccess", message);
-		return "resetPasswdLink";
+		return "security/resetPasswdLink";
 	}
 
 	@RequestMapping(value = "/resetPasswordSubmit.htm", method = RequestMethod.POST)
 	public String resetPasswordSubmit(Model model,
-			@ModelAttribute ClubDetails clubDetails, @RequestParam String uId) {
-		logger.info("customer: " + clubDetails.getPassword() + " uId : " + uId);
+			@ModelAttribute("clubDetailsBean") ClubDetails clubDetails, @RequestParam String uId) {
+		logger.info("clubDetails: " + clubDetails.getPassword() + " uId : " + uId);
 		String message = "";
 		int rowsUpdated = resetPasswordService.resetPassword(clubDetails, uId);
 		if (rowsUpdated > 0) {

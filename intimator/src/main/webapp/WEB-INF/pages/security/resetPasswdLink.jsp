@@ -3,8 +3,8 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ include
-	file="/WEB-INF/views/includes/security/forgotPassword_javascript.jsp"%>
+<%-- <%@ include
+	file="/WEB-INF/views/includes/security/forgotPassword_javascript.jsp"%> --%>
 <div class="header">
 	<div class="invalidLink-container">
 		<!-- invalidLink-container -->

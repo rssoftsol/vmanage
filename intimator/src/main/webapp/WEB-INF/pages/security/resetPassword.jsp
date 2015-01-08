@@ -5,8 +5,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@ include
-	file="/WEB-INF/views/includes/security/resetPassword_javascript.jsp"%>
+<%-- <%@ include
+	file="/WEB-INF/views/includes/security/resetPassword_javascript.jsp"%> --%>
 <title><spring:message code="resetPassword.title" /></title>
 </head>
 <body>
@@ -22,8 +22,8 @@
 				<!-- login-box -->
 				<form:form method="post" action="resetPasswordSubmit.htm?uId=${uId}"
 					id="resetPasswordForm" name="resetPasswordForm"
-					commandName="customerBean" cssClass="resetForm">
-					
+					commandName="clubDetailsBean" cssClass="resetForm">
+					<input type="hidden" id="username" name="username" value="${clubDetailsBean.username}"/>
 					<div class="form-input">
 						<p>
 							<spring:message code="resetPassword.password" />

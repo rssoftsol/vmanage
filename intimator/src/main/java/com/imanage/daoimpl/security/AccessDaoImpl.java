@@ -37,7 +37,7 @@ public class AccessDaoImpl implements AccessDao {
 		if (!customers.isEmpty()) {
 			return customers.get(0).getLoginName();
 		}*/
-		return "";
+		return "otari.rahul@gmail.com";
 	}
 
 	@Override
@@ -74,8 +74,8 @@ public class AccessDaoImpl implements AccessDao {
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = RuntimeException.class)
 	public int resetPassword(final ClubDetails clubDetails, final String uId) {
-		String sql = "update customer set password=?"
-				+ " where loginName=(select loginName from password_reset_requests where uid=?)";
+		String sql = "update club_details set password=?"
+				+ " where username=(select username from password_reset_requests where uid=?)";
 
 		int rowsUpdated = jdbcTemplate.update(sql,
 				new PreparedStatementSetter() {
@@ -118,7 +118,7 @@ public class AccessDaoImpl implements AccessDao {
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = RuntimeException.class)
 	public int updatePassword(final ClubDetails clubDetails) {
-		String sql = "update customer set password=?"
+		String sql = "update club_details set password=?"
 				+ " where loginName=?";
 
 		int rowsUpdated = jdbcTemplate.update(sql,

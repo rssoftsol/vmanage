@@ -31,7 +31,12 @@
 
 	<bean id="messageSource"
 		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-		<property name="basename" value="/WEB-INF/messages" />
+		<property name="basenames">
+			<array>
+				<value>classpath:messages</value>
+			</array>
+		</property>
+		<property name="defaultEncoding" value="UTF-8" />
 	</bean>
 		
 	<!-- Database Configuration -->
