@@ -8,62 +8,45 @@
 <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet">
 <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
 <link href="<c:url value="/resources/css/main.css" />" rel="stylesheet">
-
+<link href="<c:url value="/resources/css/signin.css" />" rel="stylesheet">
 <title>intimator</title>
 </head>
-<body>
-	<div class="">
-		<div class="">
+<body class="body">
+	<div class="container">
 			<!-- mainLogin-container -->
-
-			<div class="">
-				<label style="margin: 0px 0px 0px 22px; color: gray;">Login : </label>
 				<%-- <c:if test="${failureMessage != ''}"> --%>
-					<br> <br>
 					<label id="loginFailureLabel"
 						style="margin: 0px 0px 0px 22px; font-size: 12px; color: red;display: none;">Login Failed!</label>
 				<%-- </c:if> --%>
 				<!-- login-box -->
-				<form method="post" action="j_spring_security_check" name="f">
-					<div class="">
-						<p>
-							Usename :
-						</p>
-						<input type="text" name="j_username" id="j_username" value=""
-							class="textfield" onkeydown=""
-							maxlength="20"><span style="display: none;"
+				<form method="post" action="j_spring_security_check" name="f" class="form-signin">
+					<h2>Login  </h2>or
+				<a href="registration.htm">
+						Register
+				</a>
+			<!-- register-box -->
+					
+					<label for="j_username" class="sr-only">Usename</label>
+					<input type="text" name="j_username" id="j_username" value=""
+							class="form-control" placeholder="User Name" required autofocus
+							maxlength="20">
+							
+							<span style="display: none;"
 							id="loginName" class="vLogin">&nbsp;</span>
-					</div>
-					<div class="">
-						<p>
-							Password :
-						</p>
-						<input type="password" name="j_password" id="j_password"
+					<label for="j_password" class="sr-only">Password</label>
+					
+					<input type="password" name="j_password" id="j_password"
 							onkeydown=""
-							maxlength="20"><span style="display: none;" id="password">&nbsp;</span>
-					</div>
+							maxlength="20" class="form-control" placeholder="Password" required><span style="display: none;" id="password">&nbsp;</span>
 					<div >
-						<input type="submit" value="LOGIN" onclick="">
+						<input type="submit" class="btn btn-lg btn-primary btn-block" value="LOGIN" onclick="">
 							<a id="forgot-password-link"
-							style="color: #16A6BAA; float: left; margin-top: 10px; margin-left: 10px; vertical-align: text-bottom; cursor: pointer"
 							href="forgotPassword.htm">Forgot Password?</a>
 					</div>
 				</form>
-			</div>
 			<!-- mainLogin-box -->
 
-			<div class="mainregister-box">
-				<!-- register-box -->
-				<div class=""></div>
-				<a href="registration.htm">
-					<div class="">
-						Register
 					</div>
-				</a>
-			</div>
-			<!-- register-box -->
-		</div>
-	</div>
 	<!-- header -->
 </body>
 </html>
