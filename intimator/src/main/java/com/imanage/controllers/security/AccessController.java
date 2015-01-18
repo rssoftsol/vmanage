@@ -62,7 +62,7 @@ public class AccessController {
 
 	@RequestMapping(value = "/loginFailure")
 	public String loginFailure(Model model) {
-		String message = "failure";
+		String message = "Login failed";
 		model.addAttribute("failureMessage", message);
 		return "login";
 	}

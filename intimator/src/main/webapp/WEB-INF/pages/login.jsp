@@ -19,13 +19,14 @@
 						style="margin: 0px 0px 0px 22px; font-size: 12px; color: red;display: none;">Login Failed!</label>
 				<%-- </c:if> --%>
 				<!-- login-box -->
+				
 				<form method="post" action="j_spring_security_check" name="f" class="form-signin">
 					<h2>Login  </h2>or
 				<a href="registration.htm">
 						Register
 				</a>
 			<!-- register-box -->
-					
+					<div><label><font color="red">${failureMessage}</font></label></div>
 					<label for="j_username" class="sr-only">Usename</label>
 					<input type="text" name="j_username" id="j_username" value=""
 							class="form-control" placeholder="User Name" required autofocus
