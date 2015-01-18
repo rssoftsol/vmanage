@@ -4,12 +4,16 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet">
+<script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
+<link href="<c:url value="/resources/css/main.css" />" rel="stylesheet">
+<link href="<c:url value="/resources/css/signin.css" />" rel="stylesheet">
+
+
 <title>Forgot Password</title>
-<div class="">
-	<div class="">
-		<!-- forgotPasswd-container -->
-		<div class="">
-			<label style="margin: 0px 0px 0px 22px; color: gray;">Forgot Password : </label>
+<body class="forgotimage">
+		<div class="container">
+			<label>Forgot Password : </label>
 			<!-- forgotPasswd-box -->
 			<form:form id="forgotPasswordForm" name="forgotPasswordForm"
 				action="forgotPasswordSubmit.htm" method="post"
@@ -24,11 +28,9 @@
 						class=""></span>
 				</div>
 				<div class="">
-					<input type="submit" id="sendEmailBtn" value="Send"><font
-						color='red' size="10px;"><form:errors path='toEmailId' />
+					<input type="submit" id="sendEmailBtn" value="Send" class="btn btn-primary"><form:errors path='toEmailId' />
 				</div>
 			</form:form>
 		</div>
 		<!-- forgotPasswd-box -->
-	</div>
-</div>
+</body>

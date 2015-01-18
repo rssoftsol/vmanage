@@ -11,7 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.imanage.models.ClubDetails;
 
 @Controller
-@RequestMapping("/register")
+@RequestMapping("/registration.htm")
 public class RegisterController {
 
 	@RequestMapping(method = RequestMethod.GET)

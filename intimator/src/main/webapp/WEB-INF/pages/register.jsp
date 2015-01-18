@@ -7,24 +7,34 @@
 <link href="<c:url value="/resources/css/main.css" />" rel="stylesheet">
 
 <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
-
+<link href="<c:url value="/resources/css/register.css" />" rel="stylesheet">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
 <title>Registration</title>
 </head>
 <body class="body">
-<form:form action="/intimator/registerAction.json" method="post">
-<table align="center" style="margin-top: 100px">
-	<tr ><th></th><th><font color="red">${message}</font></th></tr>
-	<tr><td>Club Name:</td><td><form:input id="clubname" path="clubname"/></td></tr>
-	<tr><td>Phone:</td><td><form:input id="phonenumber" path="phonenumber"/></td></tr>
-	<tr><td>User Name:</td><td><form:input id="username" path="username"/></td></tr>
-	<tr><td>Password :</td><td><form:input id="password" path="password"/></td></tr>
-	<%-- <tr><td>Membership type:</td><td>Regular<form:input type="radio" checked="checked" id="regular" path="membershiptype" value="R"/>&nbsp;&nbsp; --%>
-	<%-- Premium<form:input type="radio" id="premium" path="membershipType" value="premium"/> --%></td></tr>
-	<tr><td></td><td><input type="submit" value="Register"></td></tr>
-</table>
-</form:form>
+<form action="/SpringMVC/registerAction.json" method="post">
+	<h1 class="header"><span style="margin-left:280px">Registration</span></h1>
+	<div class="form-register">
+	
+		<div><font color="red">${message}</font></div>
+		<div class="col-xs-4"><label>Club Name:</label></div>
+		<div class="col-xs-6"><input type="text" id="clubname" name="clubname" class="form-control"/></div>
+		<div class="col-xs-4"><label>Phone:</label></div>
+		<div class="col-xs-6"><input type="text" id="phonenumber" name="phonenumber" class="form-control"/></div>
+		<div class="col-xs-4"><label>User Name:</label></div>
+		<div class="col-xs-6"><input type="text" id="username" name="username" class="form-control"/></div>
+		<div class="col-xs-4"><label>Password :</label></div>
+		<div class="col-xs-6"><input type="password" id="password" name="password" class="form-control"/></div>
+		<div class="col-xs-4"><label>Email :</label></div>
+		<div class="col-xs-6"><input type="text" id="email" name="email" class="form-control"/></div>
+		<div class="col-xs-4"><label>Role :</label></div>
+		<div class="col-xs-6"><input type="text" id="roleid" name="roleid" class="form-control"/></div>
+		<div class="col-xs-4"><label>Membership type:</label></div><div class="col-xs-6">Regular<input type="radio" checked="checked" id="regular" name="membershiptype" value="R"/>&nbsp;&nbsp;
+		Premium<input type="radio" id="premium" name="membershipType" value="premium"/></div>
+		<div></div><div><input type="submit" value="Register" class="btn btn-primary"></div>
+	</div>
+</form>
 </body>
 </html>

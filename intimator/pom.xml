@@ -2,10 +2,10 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.springsource.training.module</groupId>
-	<artifactId>hibernate-jpa-config-samples</artifactId>
+	<artifactId>intimator</artifactId>
 	<version>1.0.0-CI-SNAPSHOT</version>
 	<packaging>jar</packaging>
-	<name>hibernate-jpa-config-samples</name>
+	<name>intimator</name>
 	<properties>
 		<maven.test.failure.ignore>true</maven.test.failure.ignore>
 		<spring.framework.version>3.2.0.RELEASE</spring.framework.version>
@@ -15,7 +15,7 @@
 		<hsqldb.version>2.2.9</hsqldb.version>
 	</properties>
 	<build>
-		<finalName>SpringMVC</finalName>
+		<finalName>intimator</finalName>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>

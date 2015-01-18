@@ -35,3 +35,13 @@
 	width: 500px;
 }
 
+.forgotimage {
+  background-image: url("../img/forgot.jpg");
+  background-size: cover;
+  background-position: top center !important;
+  background-repeat: no-repeat;
+}
+
+.header {
+  background-color: #80ffff;
+}
