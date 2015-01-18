@@ -15,10 +15,11 @@
 </head>
 <body class="body">
 <form action="/SpringMVC/registerAction.json" method="post">
-	<h1 class="header"><span style="margin-left:280px">Registration</span></h1>
-	<div class="form-register">
-	
-		<div><font color="red">${message}</font></div>
+<div class="form-register">
+	<div class="panel panel-default">
+	  <div class="panel-heading header"><h3 class="panel-title">Registration</h3></div>
+	  <div class="panel-body greybg">
+	    <div><font color="red">${message}</font></div>
 		<div class="col-xs-4"><label>Club Name:</label></div>
 		<div class="col-xs-6"><input type="text" id="clubname" name="clubname" class="form-control"/></div>
 		<div class="col-xs-4"><label>Phone:</label></div>
@@ -30,10 +31,16 @@
 		<div class="col-xs-4"><label>Email :</label></div>
 		<div class="col-xs-6"><input type="text" id="email" name="email" class="form-control"/></div>
 		<div class="col-xs-4"><label>Role :</label></div>
-		<div class="col-xs-6"><input type="text" id="roleid" name="roleid" class="form-control"/></div>
+		<div class="col-xs-6"><input type="text" id="roleid" name="roleid" class="form-control" readonly="readonly" value="1"/></div>
 		<div class="col-xs-4"><label>Membership type:</label></div><div class="col-xs-6">Regular<input type="radio" checked="checked" id="regular" name="membershiptype" value="R"/>&nbsp;&nbsp;
 		Premium<input type="radio" id="premium" name="membershipType" value="premium"/></div>
 		<div></div><div><input type="submit" value="Register" class="btn btn-primary"></div>
+	  </div>
+	</div>
+
+	
+	
+		
 	</div>
 </form>
 </body>

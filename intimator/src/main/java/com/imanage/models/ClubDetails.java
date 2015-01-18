@@ -20,9 +20,9 @@ public class ClubDetails{
 	private Integer club_id;
 	@Column(name="username",length=20)
 	private String username;
-	@Column(name="password",length=10)
+	@Column(name="password",length=40)
 	private String password;
-	@Column(name="newPassword",length=10)
+	@Column(name="newPassword",length=40)
 	private String newPassword;
 	@Column(name="membershiptype",length=1)
 	private String membershiptype;
@@ -121,4 +121,11 @@ public class ClubDetails{
 		this.memberDetails = memberDetails;
 	}
 
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "clubname:"+clubname+" email"+email+" membershiptype:"+membershiptype
+				+" newPassword:"+newPassword+" password:"+password+
+				" phonenumber:"+phonenumber+" username:"+username;
+	}
 }

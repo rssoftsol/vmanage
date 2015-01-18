@@ -1,6 +1,7 @@
 package com.imanage.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -16,11 +17,17 @@ public class RegistrationActionController {
 	
 	@Autowired
 	ClubRegistrationService clubRegService;
-	 
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	@RequestMapping(method = RequestMethod.POST)
 	public String registrationHandler(Model model, @ModelAttribute("clubDetails")
      ClubDetails clubDetails){
+		clubDetails.setPassword(passwordEncoder.encodePassword(clubDetails.getPassword(), ""));
+		clubDetails.setRoleId(1);
+		clubDetails.setNewPassword(passwordEncoder.encodePassword(clubDetails.getPassword(), ""));
 		String message = "Sorry, Registeration failed";
+		System.out.println("clubDetails: "+clubDetails);
 		try {
 			ClubDetails existingClubDetails = clubRegService.findByUserName(clubDetails.getUsername());
 			if(existingClubDetails == null){

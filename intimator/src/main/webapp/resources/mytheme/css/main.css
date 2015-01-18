@@ -43,5 +43,9 @@
 }
 
 .header {
-  background-color: #80ffff;
+  background-color: #80ffff!important;
+}
+
+.greybg {
+  background-color: #c0c0c0!important;
 }
