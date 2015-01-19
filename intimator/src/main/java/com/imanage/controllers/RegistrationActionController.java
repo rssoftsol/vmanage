@@ -23,9 +23,9 @@ public class RegistrationActionController {
 	@RequestMapping(method = RequestMethod.POST)
 	public String registrationHandler(Model model, @ModelAttribute("clubDetails")
      ClubDetails clubDetails){
-		clubDetails.setPassword(passwordEncoder.encodePassword(clubDetails.getPassword(), ""));
+		clubDetails.setPassword(passwordEncoder.encodePassword(clubDetails.getPassword(), clubDetails.getUsername()));
 		clubDetails.setRoleId(1);
-		clubDetails.setNewPassword(passwordEncoder.encodePassword(clubDetails.getPassword(), ""));
+		clubDetails.setNewPassword(passwordEncoder.encodePassword(clubDetails.getPassword(), clubDetails.getUsername()));
 		String message = "Sorry, Registeration failed";
 		System.out.println("clubDetails: "+clubDetails);
 		try {

@@ -5,10 +5,10 @@
   background-size: cover;
 }
 
-@media (min-width: 1120px), (min-height: 630px) {
+/* @media (min-width: 1120px), (min-height: 630px) {
     .body { background-size: auto; }
 }
-
+ */
 .margin-bottom {
 	margin-bottom: 20px;
 }
