@@ -1,43 +1,29 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-
-
+<%@include file="menu.jsp" %>
+<%@include file="submenu.jsp" %>
 <html>
 <link href="<c:url value="/resources/css/jquery.dataTables.css" />" rel="stylesheet">
 
 <link href="<c:url value="/resources/css/bootstrap.css" />" rel="stylesheet">
 <link href="<c:url value="/resources/css/datepicker.css" />" rel="stylesheet">
 <link href="<c:url value="/resources/css/main.css" />" rel="stylesheet">
+<link href="<c:url value="/resources/css/register.css" />" rel="stylesheet">
 
-<script src="<c:url value="/resources/js/jquery-1.11.1.min.js" />"></script>
+
 <script src="<c:url value="/resources/js/jquery.dataTables.min.js" />"></script>
 
 <script src="<c:url value="/resources/js/table.js" />"></script>
 <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
 <script src="<c:url value="/resources/js/bootstrap-datepicker.js" />"></script>
-<%@include file="menu.jsp" %>
+
 
 <script type="text/javascript">
 $(document).ready(function() {
-	$('#confirm').on( 'click', function () {
-		var t = $('#example').DataTable();
-		var data = t.rows();
-		
-	});
-    var t = $('#example').DataTable();
- 
-    $('#addRow').on( 'click', function () {
-    	t.row.add( [
-             		document.getElementById('id').value,
-             		document.getElementById('name').value,
-             		document.getElementById('phone').value,
-             		document.getElementById('example1').value
-         		] ).draw();
-    	document.getElementById('id').value = '';
- 		document.getElementById('name').value = '';
- 		document.getElementById('example1').value = '';
- 		document.getElementById('phone').value = '';
+	
+    //$('#addRow').on( 'click', function () {
+    	
     	//$.ajax({
     		
     		
@@ -66,7 +52,7 @@ $(document).ready(function() {
               }
   */      // });
         //event.preventDefault();
-    } );
+    //} );
     
     $('#example1').datepicker({
         format: "dd/mm/yyyy"
@@ -82,28 +68,30 @@ $(document).ready(function() {
 <title>Members Detail</title>
 </head>
 <body class="body">
-	<form:form action="/intimator/members/addMemberAction" method="post">
-	<div>
-	  <div>
-        <h4 class="modal-title margin-bottom col-xs-12" id="myModalLabel">Provide Member Details</h4>
-      </div>
-      <div>
-        <div class='col-xs-2'><label>Id:</label></div><div class='col-xs-10'><form:input id='memid' path='memid'/></div>
-        <div class='col-xs-2'><label>Name:</label></div><div class='col-xs-10'><form:input id='name' path='name'/></div>
-        <div class='col-xs-2'><label>Expiry Date:</label></div>
-        <div class="container col-xs-10">
-            <div class="hero-unit">
-                <form:input placeholder="click to show datepicker"  id="example1" path="expirydate"/>
-            </div>
-        </div>
-        <div class='col-xs-2'><label>Phone no.:</label></div><div class='col-xs-10'><form:input type="text" id='phone' path="phone"/></div>
-        <div class="col-xs-10 margin-top pull-right">
-        	<button type="submit" class="btn btn-primary btn-lg margin-top">
-  				add member
-	  		</button>
-        </div>
-      </div>
-	  </div>
-	  </form:form>
+	<form action="/SpringMVC/members/memberAction/AM" method="post">
+		<div class="form-register">
+			<div class="panel panel-default">
+			<div class="panel-body greybg">
+		        <div class="panel-heading header"><h3 class="panel-title">Provide Member Details</h3></div><br>
+		        <div class='col-xs-12'><label>${result}</label></div>
+		        <div class='col-xs-4'><label>Id:</label></div>
+		        <div class='col-xs-8'><input type="text" id='memid' name="memid"/></div>
+		        <div class='col-xs-4'><label>Name:</label></div>
+		        <div class='col-xs-8'><input type="text" id='name' name="name"/></div>
+		        
+		        <div class='col-xs-4'><label>Phone No:</label></div>
+		        <div class='col-xs-8'><input type="text" id='phone' name="phone"/></div>
+		        <div class='col-xs-4'><label>Expiry Date:</label></div>
+		        <div class="container col-xs-8">
+		            <div class="hero-unit">
+		                <input placeholder="click to show datepicker"  id="example1" type="text" name="expirydate"/>
+		            </div>
+		        </div>
+		       
+		        <div><input type="submit" value="Add" class="btn btn-primary pull-right"></div>
+		    </div>
+		    </div>
+		</div>
+	  </form>
 </body>
 </html>

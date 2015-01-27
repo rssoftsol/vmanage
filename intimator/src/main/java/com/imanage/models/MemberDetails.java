@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -64,16 +65,8 @@ public class MemberDetails {
 		return expirydate;
 	}
 	
-	public void setExpirydate(String expirydate) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-		Date date = new Date(new java.util.Date().getTime());
-		try {
-			date = new Date(dateFormat.parse(expirydate).getTime());
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		this.expirydate = date;
+	public void setExpirydate(Date expirydate) {
+		this.expirydate = expirydate;
 	}
 	
 	@ManyToOne  

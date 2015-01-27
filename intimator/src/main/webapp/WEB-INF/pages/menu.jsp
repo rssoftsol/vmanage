@@ -2,15 +2,13 @@
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-	<nav class="navbar navbar-default header" role="navigation">
+	<nav class="navbar navbar-default header" style="margin-bottom:0px" role="navigation">
   		<div class="container-fluid">
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	      		<ul class="nav navbar-nav"> 
-	      			<li class="active"><a href="/intimator/members/browsemembers"  id="myMembers"><span id='mm'  
-	      				class='disable_a_href'>My Members</span></a></li>
-	      
-					<li><a id="addMembers" href='/intimator/members/addmember'><span id='am' >Add Members</span></a></li>
-					<li><a><span class="center-start">${message}</span></a></li>
+					<li><a><span>${date}</span></a></li>
+					<li><a><span>Welcome ${user}</span></a></li>
+					<li><a href='/SpringMVC/logout'><span>Logout</span></a></li>
 		  		</ul>
 			</div>
 		</div>

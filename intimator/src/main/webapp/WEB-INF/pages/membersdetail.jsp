@@ -2,6 +2,7 @@
 
 
 <%@include file="menu.jsp" %>
+<%@include file="submenu.jsp" %>
 <html>
 <link href="<c:url value="/resources/css/jquery.dataTables.css" />" rel="stylesheet">
 <link href="<c:url value="/resources/css/main.css" />" rel="stylesheet">

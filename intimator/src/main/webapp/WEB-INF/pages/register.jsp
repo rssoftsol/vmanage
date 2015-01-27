@@ -32,9 +32,11 @@
 		<div class="col-xs-6"><input type="text" id="email" name="email" class="form-control"/></div>
 		<div class="col-xs-4"><label>Role :</label></div>
 		<div class="col-xs-6"><input type="text" id="roleid" name="roleid" class="form-control" readonly="readonly" value="1"/></div>
-		<div class="col-xs-4"><label>Membership type:</label></div><div class="col-xs-6">Regular<input type="radio" checked="checked" id="regular" name="membershiptype" value="R"/>&nbsp;&nbsp;
+		<div class="col-xs-4"><label>Membership type:</label></div>
+		<div class="col-xs-6">Regular<input type="radio" checked="checked" id="regular" name="membershiptype" value="R"/>
+		&nbsp;&nbsp;
 		Premium<input type="radio" id="premium" name="membershipType" value="premium"/></div>
-		<div></div><div><input type="submit" value="Register" class="btn btn-primary"></div>
+		<div><input type="submit" value="Register" class="btn btn-primary"></div>
 	  </div>
 	</div>
 

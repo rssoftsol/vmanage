@@ -1,5 +1,7 @@
 package com.imanage.controllers;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -14,7 +16,8 @@ import com.imanage.models.LoginModel;
 public class LogoutController {
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public String redirectToLogin(Model model) {
+	public String redirectToLogin(Model model, HttpSession session) {
+		session.invalidate();
 		model.addAttribute("login",new LoginModel());
 		return "login";
 	}
