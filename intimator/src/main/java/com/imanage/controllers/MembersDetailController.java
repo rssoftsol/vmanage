@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.imanage.Session;
 import com.imanage.models.ClubDetails;
+import com.imanage.models.MemberDetailBean;
 import com.imanage.models.MemberDetails;
 import com.imanage.services.members.MemberRegistrationService;
 import com.imanage.services.register.ClubRegistrationService;
@@ -36,9 +38,16 @@ public class MembersDetailController {
 	MemberRegistrationService memberRegistrationService;
 	
 	@RequestMapping(value="/browsemembers", method = RequestMethod.GET)
-	public ModelAndView browseMembersPage() {
+	public ModelAndView browseMembersPage(HttpSession session) {
+		String data = "";
 		ModelAndView mav = new ModelAndView("membersdetail");
-		mav.addObject("mode", "MO");
+		ClubDetails clubDetails = clubRegistrationService.findByUserName(((Session)session.getAttribute("session")).getUsername());
+		for(MemberDetails memberDetail : clubDetails.getMemberDetails()){
+			data = data + memberDetail.getMemid()+"~"+memberDetail.getPhone()+"~"+memberDetail.getName()
+					+"~"+memberDetail.getExpirydate()+"!";
+		}
+		mav.addObject("mode", "BM");
+		mav.addObject("dataset", data);
 		return mav;
 	}
 	
@@ -80,6 +89,22 @@ public class MembersDetailController {
 		return mav;
 	}
 	
+	@RequestMapping(value="/view/{memid}", method=RequestMethod.GET, produces={"application/json"})
+	@ResponseBody
+    public MemberDetailBean viewMemberDetails(@PathVariable("memid") String id, HttpSession session) {
+		ClubDetails clubDetails = clubRegistrationService.findByUserName(((Session)session.getAttribute("session")).getUsername());
+		Set<MemberDetails> memberDetails = clubDetails.getMemberDetails();
+		MemberDetailBean memberDetailBean = null;
+		for(MemberDetails memberDetail : memberDetails){
+			if(id.equalsIgnoreCase(memberDetail.getMemid())){
+				memberDetailBean = new MemberDetailBean(memberDetail.getPhone(), 
+						memberDetail.getName(), memberDetail.getExpirydate(), memberDetail.getId());
+				break;
+			}
+		}
+		return memberDetailBean;
+	}
+	
 	@RequestMapping(value="/memberAction/{mode}", method=RequestMethod.POST)
     public ModelAndView addMember(@ModelAttribute("addmembercommand")
     MemberDetails memberDetails, HttpSession session, @PathVariable("mode") String mode) {
@@ -95,11 +120,11 @@ public class MembersDetailController {
 		String message = "";
 		ClubDetails clubDetails = clubRegistrationService.findByUserName(((Session)session.getAttribute("session")).getUsername());
 		memberDetails.setClubDetails(clubDetails);
-		Set<MemberDetails> membersSet = clubDetails.getMemberDetails();
+		/*Set<MemberDetails> membersSet = clubDetails.getMemberDetails();
 		membersSet.add(memberDetails);
-		clubDetails.setMemberDetails(membersSet);
+		clubDetails.setMemberDetails(membersSet);*/
 		
-		return processCRUDRequest(mode, memberDetails);
+		return processCRUDRequest(mode, memberDetails, clubDetails);
 	}
 	
 	@ModelAttribute
@@ -108,12 +133,13 @@ public class MembersDetailController {
 		model.addAttribute("date", new java.util.Date().toString());
 	}
 	
-	private ModelAndView processCRUDRequest(String mode, MemberDetails memberDetails){
+	private ModelAndView processCRUDRequest(String mode, MemberDetails memberDetails, ClubDetails clubDetails){
 		String message = "";
 		String view = "";
 		switch (mode.charAt(0)) {
 		case 'A':
 			if(memberRegistrationService.findByMemid(memberDetails.getMemid()) == null){
+				memberDetails.setClubDetails(clubDetails);
 				memberRegistrationService.save(memberDetails);
 				message = "Member added successfully";
 			}else{
@@ -134,7 +160,7 @@ public class MembersDetailController {
 			if(memberRegistrationService.findByMemid(memberDetails.getMemid()) == null){
 				message = "Member "+memberDetails.getMemid()+" doesn't exist";
 			}else{
-				memberRegistrationService.update(memberDetails);
+				memberRegistrationService.delete(memberDetails);
 				message = "Member deleted successfully";
 			}
 			view = "delete_member";

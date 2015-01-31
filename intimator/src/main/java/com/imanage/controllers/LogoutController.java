@@ -19,6 +19,7 @@ public class LogoutController {
 	public String redirectToLogin(Model model, HttpSession session) {
 		session.invalidate();
 		model.addAttribute("login",new LoginModel());
+		model.addAttribute("menumode", "L");
 		return "login";
 	}
 }

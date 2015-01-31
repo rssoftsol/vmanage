@@ -79,4 +79,10 @@ public class MemberDetails {
 		this.clubDetails = clubDetails;
 	}
 	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "phone:"+phone;
+	}
+	
 }

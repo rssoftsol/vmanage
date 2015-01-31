@@ -9,12 +9,12 @@
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	      		<ul class="nav navbar-nav"> 
 	      			<li id="myMember">
-	      				<a href="/SpringMVC/members/browsemembers"  ><span id='bm'>My Members</span></a>
+	      				<a href="${pageContext.request.contextPath}/members/browsemembers"  ><span id='bm'><b>My Members</b></span></a>
 	      			</li>
 	      
-					<li id="addMember"><a href='/SpringMVC/members/addmember'><span id='am' >Add Member</span></a></li>
-					<li id="modifyMember"><a href='/SpringMVC/members/modifymember'><span id='mm' >Modify Member</span></a></li>
-					<li id="deleteMember"><a href='/SpringMVC/members/deletemember'><span id='dm' >Delete Member</span></a></li>
+					<li id="addMember"><a href='${pageContext.request.contextPath}/members/addmember'><span id='am' ><b>Add Member</b></span></a></li>
+					<li id="modifyMember"><a href='${pageContext.request.contextPath}/members/modifymember'><span id='mm' ><b>Modify Member</b></span></a></li>
+					<li id="deleteMember"><a href='${pageContext.request.contextPath}/members/deletemember'><span id='dm' ><b>Delete Member</b></span></a></li>
 					
 		  		</ul>
 			</div>

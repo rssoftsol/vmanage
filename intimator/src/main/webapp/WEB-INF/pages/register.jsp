@@ -1,4 +1,4 @@
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@include file="commonmenu.jsp" %>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -14,7 +14,7 @@
 <title>Registration</title>
 </head>
 <body class="body">
-<form action="/SpringMVC/registerAction.json" method="post">
+<form action="/${pageContext.request.contextPath}/registerAction.json" method="post">
 <div class="form-register">
 	<div class="panel panel-default">
 	  <div class="panel-heading header"><h3 class="panel-title">Registration</h3></div>

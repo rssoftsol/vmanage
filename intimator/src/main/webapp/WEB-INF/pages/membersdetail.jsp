@@ -15,14 +15,28 @@
 <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
 
 <script type="text/javascript">
-dataSet = [
-               ['1','Shekhar','8451046250','16 Dec 14'],
-               ['2','Subhasis','9821181970','01 Jan 2015'],
-               ['3','Dillu','9768914599' ,'25 Mar 2015'],
-               ['4','Sharat','9320020888','16 Jan 2015'],
-               ['5','Bharat','8433172249','31 Dec 2014'],
-               ['6','Priya','9821181977','4 April 2014']
-           ];
+/* dataSet = [['4', 'sharat', '1234', '2015-01-27'], ['3', 'Dillu', '8451046250', '2015-03-28'], 
+           ['123', 'Shekhar', '8451046250', '2015-01-30'], ['1', 'rahul', '8451046250', '2015-03-28'], 
+           ['12345', 'admin', '8451046250', '2015-01-27'], ['123456', 'test sharma', '8451046250', '2015-03-28'], 
+           ['2', 'Subhasis', '8451046250', '2015-01-29'], ['1234', 'Shekhar', '8451046250', '2015-01-28']];
+ */
+var data = "${dataset}";
+var dataMainArr = [];
+var dataSubArr = [];
+var dataMainfinalArr = [];
+
+dataMainArr = data.split('!');
+for(var i=0;i<dataMainArr.length;i++){
+	if(dataMainArr[i]!=''){
+	 var dataSubfinalArr = [];
+	 dataSubArr = dataMainArr[i].split('~');
+	 for(var m=0;m<dataSubArr.length;m++){
+	 	dataSubfinalArr.push(dataSubArr[m]);
+	 }
+	 dataMainfinalArr.push(dataSubfinalArr);
+	}
+}
+dataSet = dataMainfinalArr;
 </script>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">

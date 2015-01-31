@@ -8,7 +8,7 @@
 	      		<ul class="nav navbar-nav"> 
 					<li><a><span>${date}</span></a></li>
 					<li><a><span>Welcome ${user}</span></a></li>
-					<li><a href='/SpringMVC/logout'><span>Logout</span></a></li>
+					<li><a href='${pageContext.request.contextPath}/logout'><span>Logout</span></a></li>
 		  		</ul>
 			</div>
 		</div>

@@ -17,15 +17,40 @@
 <script src="<c:url value="/resources/js/table.js" />"></script>
 <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
 <script src="<c:url value="/resources/js/bootstrap-datepicker.js" />"></script>
+<script src="<c:url value="/resources/js/main.js" />"></script>
 
 
 <script type="text/javascript">
 $(document).ready(function() {
 	
-    //$('#addRow').on( 'click', function () {
-    	
-    	//$.ajax({
-    		
+    $('#getMemBtn').on( 'click', function () {
+    	$.ajax({
+    		url: "${pageContext.request.contextPath}/members/view/"+document.getElementById("memid").value,
+            type: "GET",
+ 
+              beforeSend: function(xhr) {
+                xhr.setRequestHeader("Accept", "application/*");
+                xhr.setRequestHeader("Content-Type", "application/*");
+              },
+              success: function(memberdetails) {
+            	  if(memberdetails!=''){
+	            	  document.getElementById('phone').value = memberdetails.phone;
+	            	  document.getElementById('name').value = memberdetails.name;
+	            	  document.getElementById('example1').value = formatdate(memberdetails.expirydate);
+	            	  document.getElementById('id').value = memberdetails.id;
+            	  }else{
+            		  alert('Invalid Member ID');
+            	  }
+            	  
+              },
+              error: function(jqXHR, textStatus, errorThrown) {1
+            	  	var respBody = $.parseJSON(jqXHR.responseText);
+          			var respContent = "";
+	          		respContent += "<span class='error-main'>";
+	          		respContent += respBody.message;
+	          		respContent += "</span>";
+	          		alert('respContent:'+respContent);
+              }
     		
             /* url: "${pageContext.request.contextPath}/smartphones/delete/",
             type: "DELETE",
@@ -50,9 +75,9 @@ $(document).ready(function() {
                 respContent += smartphone.price + "]</span>";
                 $("#sPhoneFromResponse").html(respContent);        
               }
-  */      // });
-        //event.preventDefault();
-    //} );
+  */       });
+        event.preventDefault();
+    } );
     
     $('#example1').datepicker({
         format: "dd/mm/yyyy"
@@ -73,10 +98,11 @@ $(document).ready(function() {
 			<div class="panel panel-default">
 			<div class="panel-body greybg">
 		        <div class="panel-heading header"><h3 class="panel-title">Modify Member Details</h3></div><br>
+		        <input type="hidden" id="id" name="id"/>
 		        <div class='col-xs-12'><label>${result}</label></div>
 		        <div class='col-xs-3'><label>Id:</label></div>
 		        <div class='col-xs-9'><input type="text" id='memid' name="memid"/>
-		        <input type="button" value="Get Member" class="btn btn-primary"></div>
+		        <input type="button" value="Get Member" id='getMemBtn' class="btn btn-primary"></div>
 		        <div class='col-xs-3'><label>Name:</label></div>
 		        <div class='col-xs-9'><input type="text" id='name' name="name"/></div>
 		        

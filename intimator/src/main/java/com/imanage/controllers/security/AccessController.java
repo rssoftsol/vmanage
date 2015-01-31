@@ -21,8 +21,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.imanage.Session;
 import com.imanage.models.ClubDetails;
+import com.imanage.models.MemberDetails;
 import com.imanage.models.security.ForgotPasswordBean;
 import com.imanage.models.security.PasswordResetReqBean;
+import com.imanage.services.register.ClubRegistrationService;
 import com.imanage.services.security.ResetPasswordService;
 import com.imanage.util.Utility;
 
@@ -37,6 +39,9 @@ public class AccessController {
 
 	@Autowired
 	ResetPasswordService resetPasswordService;
+	
+	@Autowired
+	ClubRegistrationService clubRegistrationService;
 
 	@RequestMapping("/login")
 	public String login(Model model,
@@ -45,12 +50,13 @@ public class AccessController {
 		 * message = "Session Expired...! Please login again.";
 		 * model.addAttribute("failureMessage", message);
 		 */
+		model.addAttribute("menumode", "L");
 		return "login";
 	}
 
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = { "roleBasedAuthenticationUrl" })
-	public String roleBasedAuthenticationUrl(HttpSession session) {
+	public String roleBasedAuthenticationUrl(HttpSession session, Model model) {
 		Authentication authentication = SecurityContextHolder.getContext()
 				.getAuthentication();
 		List<GrantedAuthority> authList = (List<GrantedAuthority>) authentication
@@ -58,8 +64,15 @@ public class AccessController {
 		String userRole = authList.get(0).getAuthority();
 		logger.info("userRole : " + userRole);
 		if (userRole.equalsIgnoreCase("ROLE_ADMIN")) {
+			String data ="";
 			Session.getSessionInstance().setUsername(authentication.getName());
 			session.setAttribute("session", Session.getSessionInstance());
+			ClubDetails clubDetails = clubRegistrationService.findByUserName(((Session)session.getAttribute("session")).getUsername());
+			for(MemberDetails memberDetail : clubDetails.getMemberDetails()){
+				data = data + memberDetail.getMemid()+"~"+memberDetail.getPhone()+"~"+memberDetail.getName()
+						+"~"+memberDetail.getExpirydate()+"!";
+			}
+			model.addAttribute("dataset", data);
 			return "membersdetail";
 		} else {
 			return "redirect:membersdetail";
