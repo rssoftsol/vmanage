@@ -10,6 +10,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name="club_details")
@@ -20,18 +24,24 @@ public class ClubDetails{
     @GeneratedValue
 	private Integer club_id;
 	@Column(name="username",length=20)
+	@NotEmpty(message="User Name is mandatory")
 	private String username;
 	@Column(name="password",length=40)
+	@NotEmpty(message="Password is mandatory")
 	private String password;
 	@Column(name="newPassword",length=40)
 	private String newPassword;
 	@Column(name="membershiptype",length=1)
 	private String membershiptype;
 	@Column(name="phonenumber",length=20)
+	@NotEmpty(message="Phone is mandatory")
 	private String phonenumber;
 	@Column(name="clubname",length=20)
+	@NotEmpty(message="Club name is mandatory")
 	private String clubname;
 	@Column(name="email",length=35)
+	@Email(message="Invalid email")
+	@NotEmpty(message="Email is mandatory")
 	private String email;
 	@Column(name="roleId")
 	private Integer roleId;
