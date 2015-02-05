@@ -1,12 +1,18 @@
 package com.imanage.controllers;
 
+import java.util.Locale;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.imanage.models.ClubDetails;
 import com.imanage.services.register.ClubRegistrationService;
@@ -21,11 +27,14 @@ public class RegistrationActionController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	@RequestMapping(method = RequestMethod.POST)
-	public String registrationHandler(Model model, @ModelAttribute("clubDetails")
-     ClubDetails clubDetails){
-		clubDetails.setPassword(passwordEncoder.encodePassword(clubDetails.getPassword(), ""));
+	public ModelAndView registrationHandler(Model model, @ModelAttribute("clubDetails")
+     @Valid ClubDetails clubDetails, BindingResult result){
+		if(result.hasErrors()){
+			return new ModelAndView("register");
+		}
+		clubDetails.setPassword(passwordEncoder.encodePassword(clubDetails.getPassword(), clubDetails.getUsername()));
 		clubDetails.setRoleId(1);
-		clubDetails.setNewPassword(passwordEncoder.encodePassword(clubDetails.getPassword(), ""));
+		clubDetails.setNewPassword(passwordEncoder.encodePassword(clubDetails.getPassword(), clubDetails.getUsername()));
 		String message = "Sorry, Registeration failed";
 		System.out.println("clubDetails: "+clubDetails);
 		try {
@@ -40,6 +49,6 @@ public class RegistrationActionController {
 			e.printStackTrace();
 		}
 		model.addAttribute("message",message);
-	    return "register";
+	    return new ModelAndView("register");
 	}
 }

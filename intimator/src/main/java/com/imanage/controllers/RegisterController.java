@@ -11,12 +11,25 @@ import org.springframework.web.servlet.ModelAndView;
 import com.imanage.models.ClubDetails;
 
 @Controller
-@RequestMapping("/registration.htm")
+@RequestMapping("/")
 public class RegisterController {
 
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET,value="/registration.htm")
 	public String redirectToLogin(Model model) {
 		model.addAttribute("clubDetails", new ClubDetails());
+		model.addAttribute("menumode", "R");
 		return "register";
+	}
+	
+	@RequestMapping(method = RequestMethod.GET,value="/aboutus")
+	public String redirectToAboutUs(Model model) {
+		model.addAttribute("menumode", "A");
+		return "aboutus";
+	}
+	
+	@RequestMapping(method = RequestMethod.GET,value="/contactus")
+	public String redirectToContactUs(Model model) {
+		model.addAttribute("menumode", "C");
+		return "contactus";
 	}
 }
