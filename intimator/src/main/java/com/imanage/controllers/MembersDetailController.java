@@ -7,16 +7,19 @@ import java.text.SimpleDateFormat;
 import java.util.Set;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -62,68 +65,62 @@ public class MembersDetailController {
 		        }
 		    }
 		    public String getAsText() {
-		        return new SimpleDateFormat("dd/MM/yyyy").format((Date) getValue());
+		    	if(getValue() != null){
+		    		return new SimpleDateFormat("dd/MM/yyyy").format((Date) getValue());
+		    	}
+		    	return "";
 		    }        
 	
 			});
 	}
 	
-	@RequestMapping(value="/addmember", method=RequestMethod.GET)
-    public ModelAndView addMembersPage() {
-		ModelAndView mav = new ModelAndView("addmember");
-		mav.addObject("mode", "AM");
+	@RequestMapping(value="/member/{mode}", method=RequestMethod.GET)
+    public ModelAndView addMembersPage(@PathVariable("mode") String mode) {
+		ModelAndView mav = new ModelAndView("member");
+		mav.addObject("mode", mode);
+		mav.addObject("commandd", new MemberDetails());
 		return mav;
 	}
 	
-	@RequestMapping(value="/modifymember", method=RequestMethod.GET)
-    public ModelAndView modifyMembersPage() {
-		ModelAndView mav = new ModelAndView("modify_member");
-		mav.addObject("mode", "MM");
-		return mav;
-	}
-	
-	@RequestMapping(value="/deletemember", method=RequestMethod.GET)
-    public ModelAndView deleteMembersPage() {
-		ModelAndView mav = new ModelAndView("delete_member");
-		mav.addObject("mode", "DM");
-		return mav;
-	}
-	
-	@RequestMapping(value="/view/{memid}", method=RequestMethod.GET, produces={"application/json"})
-	@ResponseBody
-    public MemberDetailBean viewMemberDetails(@PathVariable("memid") String id, HttpSession session) {
+	@RequestMapping(value="/view/{mode}/{memid}", method=RequestMethod.POST)
+    public ModelAndView viewMemberDetails(@PathVariable("memid") String id, @PathVariable("memid") String mode, 
+    		HttpSession session) {
+		ModelAndView mav = new ModelAndView("member");
+		mav.addObject("mode", mode);
 		ClubDetails clubDetails = clubRegistrationService.findByUserName(((Session)session.getAttribute("session")).getUsername());
 		Set<MemberDetails> memberDetails = clubDetails.getMemberDetails();
-		MemberDetailBean memberDetailBean = null;
+		
 		for(MemberDetails memberDetail : memberDetails){
 			if(id.equalsIgnoreCase(memberDetail.getMemid())){
-				memberDetailBean = new MemberDetailBean(memberDetail.getPhone(), 
-						memberDetail.getName(), memberDetail.getExpirydate(), memberDetail.getId());
-				break;
+				mav.addObject("commandd", memberDetail);
+				return mav;
 			}
 		}
-		return memberDetailBean;
+		mav.addObject("commandd", new MemberDetails());
+		mav.addObject("result","No member exist with given Id:"+id);
+		return mav;
+	}
+	
+	@RequestMapping(value="/view/{mode}", method=RequestMethod.POST)
+    public ModelAndView viewMemberDetails() {
+		ModelAndView mav = new ModelAndView("member");
+		mav.addObject("mode", "MM");
+		mav.addObject("result","Please provide Member Id");
+		mav.addObject("commandd", new MemberDetails());
+		return mav;
 	}
 	
 	@RequestMapping(value="/memberAction/{mode}", method=RequestMethod.POST)
-    public ModelAndView addMember(@ModelAttribute("addmembercommand")
-    MemberDetails memberDetails, HttpSession session, @PathVariable("mode") String mode) {
-		/*ClubDetails clubDetails = clubRegistrationService.findByUserName("SHEKHAR");
-		Set<MemberDetails> membersSet = new HashSet<MemberDetails>();
-		membersSet.add(memberDetails);
-		clubDetails.setMemberDetails(membersSet);
-		clubRegistrationService.update(clubDetails);
-		ModelAndView mav = new ModelAndView("addmembers","message","Member updated successfully");
-	    //mav.addObject("sMemberDetails", new MemberDetails());
-	    return mav;*/
-		
+    public ModelAndView memberAction(@ModelAttribute("commandd") 
+    @Valid MemberDetails memberDetails, BindingResult result, HttpSession session, @PathVariable("mode") String mode) {
+		if(result.hasErrors()){
+			ModelAndView mav = new ModelAndView("member");
+			mav.addObject("commandd", memberDetails);
+			return mav;
+		}
 		String message = "";
 		ClubDetails clubDetails = clubRegistrationService.findByUserName(((Session)session.getAttribute("session")).getUsername());
 		memberDetails.setClubDetails(clubDetails);
-		/*Set<MemberDetails> membersSet = clubDetails.getMemberDetails();
-		membersSet.add(memberDetails);
-		clubDetails.setMemberDetails(membersSet);*/
-		
 		return processCRUDRequest(mode, memberDetails, clubDetails);
 	}
 	
@@ -131,6 +128,7 @@ public class MembersDetailController {
 	public void addCommonAttribute(Model model, HttpSession session){
 		model.addAttribute("user", ((Session)session.getAttribute("session")).getUsername());
 		model.addAttribute("date", new java.util.Date().toString());
+		model.addAttribute("headermsg", "Provide Member Details"); 
 	}
 	
 	private ModelAndView processCRUDRequest(String mode, MemberDetails memberDetails, ClubDetails clubDetails){

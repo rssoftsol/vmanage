@@ -13,14 +13,26 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name="member_details")
 public class MemberDetails {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ID", unique = true, nullable = false)
 	private Integer id;
+	@NotEmpty(message="Member Id is mandatory")
 	private String memid;
+	@NotEmpty(message="Phone is mandatory")
 	private String phone;
+	@NotEmpty(message="Name is mandatory")
 	private String name;
+	@NotNull(message="Expiry Date is mandatory")
+	@Future(message="Invalid date")
 	private Date expirydate;
 	
 	
@@ -53,6 +65,7 @@ public class MemberDetails {
 		this.phone = phone;
 	}
 	
+	
 	public String getName() {
 		return name;
 	}
@@ -61,6 +74,7 @@ public class MemberDetails {
 		this.name = name;
 	}
 	
+	//
 	public Date getExpirydate() {
 		return expirydate;
 	}

@@ -27,10 +27,13 @@ public class RegistrationActionController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView registrationHandler(Model model, @ModelAttribute("clubDetails")
+	public ModelAndView registrationHandler(Model model, @ModelAttribute("command")
      @Valid ClubDetails clubDetails, BindingResult result){
 		if(result.hasErrors()){
-			return new ModelAndView("register");
+			ModelAndView mav = new ModelAndView("register");
+			clubDetails.setPassword("");
+			mav.addObject("command", clubDetails);
+			return mav;
 		}
 		clubDetails.setPassword(passwordEncoder.encodePassword(clubDetails.getPassword(), clubDetails.getUsername()));
 		clubDetails.setRoleId(1);

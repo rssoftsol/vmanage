@@ -12,9 +12,9 @@
 	      				<a href="${pageContext.request.contextPath}/members/browsemembers"  ><span id='bm'><b>My Members</b></span></a>
 	      			</li>
 	      
-					<li id="addMember"><a href='${pageContext.request.contextPath}/members/addmember'><span id='am' ><b>Add Member</b></span></a></li>
-					<li id="modifyMember"><a href='${pageContext.request.contextPath}/members/modifymember'><span id='mm' ><b>Modify Member</b></span></a></li>
-					<li id="deleteMember"><a href='${pageContext.request.contextPath}/members/deletemember'><span id='dm' ><b>Delete Member</b></span></a></li>
+					<li id="addMember"><a href='${pageContext.request.contextPath}/members/member/AM'><span id='am' ><b>Add Member</b></span></a></li>
+					<li id="modifyMember"><a href='${pageContext.request.contextPath}/members/member/MM'><span id='mm' ><b>Modify Member</b></span></a></li>
+					<li id="deleteMember"><a href='${pageContext.request.contextPath}/members/member/DM'><span id='dm' ><b>Delete Member</b></span></a></li>
 					
 		  		</ul>
 			</div>

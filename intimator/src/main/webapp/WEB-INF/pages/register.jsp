@@ -24,7 +24,7 @@ function checkPassword(t){
 }
 </script>
 <body class="body">
-<form action="${pageContext.request.contextPath}/registerAction.json" method="post">
+<form:form action="${pageContext.request.contextPath}/registerAction.json" method="post" commandName="command">
 <%-- <form:errors path="clubDetails.*" cssClass="errorblock" element="div" />
  --%><div class="form-register">
 	<div class="panel panel-default">
@@ -33,26 +33,26 @@ function checkPassword(t){
 	    <div><font color="blue">${message}</font></div>
 	    <div class="col-xs-12">
 			<div class="col-xs-4"><label>Club Name:</label></div>
-			<div class="col-xs-4"><input type="text" id="clubname" name="clubname" class="form-control" required autofocus/></div>
-			<div class="col-xs-4"><form:errors path="clubDetails.clubname" cssClass="error" element="div" /></div>
+			<div class="col-xs-4"><form:input type="text" id="clubname" path="clubname" class="form-control" /></div>
+			<div class="col-xs-4"><form:errors path="clubname" cssClass="error" element="div" /></div>
 		</div>
 		
 		<div class="col-xs-12">
 			<div class="col-xs-4"><label>Phone:</label></div>
-			<div class="col-xs-4"><input type="text" id="phonenumber" name="phonenumber" class="form-control" required autofocus/></div>
-			<div class="col-xs-4"><form:errors path="clubDetails.phonenumber" cssClass="error" element="div" /></div>
+			<div class="col-xs-4"><form:input type="text" id="phonenumber" path="phonenumber" class="form-control" /></div>
+			<div class="col-xs-4"><form:errors path="phonenumber" cssClass="error" element="div" /></div>
 		</div>
 		
 		<div class="col-xs-12">
 			<div class="col-xs-4"><label>User Name:</label></div>
-			<div class="col-xs-4"><input type="text" id="username" name="username" class="form-control" required autofocus/></div>
-			<div class="col-xs-4"><form:errors path="clubDetails.username" cssClass="error" element="div"/></div>
+			<div class="col-xs-4"><form:input type="text" id="username" path="username" class="form-control" /></div>
+			<div class="col-xs-4"><form:errors path="username" cssClass="error" element="div"/></div>
 		</div>
 		
 		<div class="col-xs-12">
 			<div class="col-xs-4"><label>Password :</label></div>
-			<div class="col-xs-4"><input type="password" id="password" name="password" class="form-control" required autofocus/></div>
-			<div class="col-xs-4"><form:errors path="clubDetails.password" cssClass="error" element="div" /></div>
+			<div class="col-xs-4"><form:input type="password" id="password" path="password" class="form-control"/></div>
+			<div class="col-xs-4"><form:errors path="password" cssClass="error" element="div" /></div>
 		</div>
 		
 		<div class="col-xs-12">
@@ -64,8 +64,8 @@ function checkPassword(t){
 		 
 		 <div class="col-xs-12">
 			<div class="col-xs-4"><label>Email :</label></div>
-			<div class="col-xs-4"><input type="text" id="email" name="email" class="form-control" required autofocus/></div>
-			<div class="col-xs-4"><form:errors path="clubDetails.email" cssClass="error" element="div" /></div>
+			<div class="col-xs-4"><form:input type="text" id="email" path="email" class="form-control" /></div>
+			<div class="col-xs-4"><form:errors path="email" cssClass="error" element="div" /></div>
 		</div>
 		
 		<!-- <div class="col-xs-12">
@@ -81,7 +81,7 @@ function checkPassword(t){
 			<div class="col-xs-4">Regular<input type="radio" checked="checked" id="regular" name="membershiptype" value="R"/>
 			&nbsp;&nbsp;
 			Premium<input type="radio" id="premium" name="membershipType" value="premium"/></div>
-			<div class="col-xs-4"><form:errors path="clubDetails.membershiptype" cssClass="error" element="div" /></div>
+			<div class="col-xs-4"><form:errors path="membershiptype" cssClass="error" element="div" /></div>
 		</div>
 		<div><input type="submit" value="Register" class="btn btn-primary pull-right"></div>
 	  </div>
@@ -91,6 +91,6 @@ function checkPassword(t){
 	
 		
 	</div>
-</form>
+</form:form>
 </body>
 </html>

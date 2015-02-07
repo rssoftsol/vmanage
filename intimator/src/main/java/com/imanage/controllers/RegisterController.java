@@ -17,6 +17,7 @@ public class RegisterController {
 	@RequestMapping(method = RequestMethod.GET,value="/registration.htm")
 	public String redirectToLogin(Model model) {
 		model.addAttribute("clubDetails", new ClubDetails());
+		model.addAttribute("command", new ClubDetails());
 		model.addAttribute("menumode", "R");
 		return "register";
 	}
