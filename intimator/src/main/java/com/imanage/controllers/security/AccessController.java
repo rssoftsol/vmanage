@@ -193,6 +193,7 @@ public class AccessController {
 			model.addAttribute("user", authentication.getName());
 			model.addAttribute("date", new Date().toString());
 			model.addAttribute("mode", "BM");
+			model.addAttribute("mainmode", "MEMBER");
 		}
 	}
 }

@@ -1,36 +1,44 @@
-<%@include file="commonmenu.jsp" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@include file="menu.jsp" %>
 <html>
-<link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet">
-<link href="<c:url value="/resources/css/main.css" />" rel="stylesheet">
+<link href="<c:url value="/resources/css/jquery.dataTables.css" />" rel="stylesheet">
 
-<script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
+<link href="<c:url value="/resources/css/bootstrap.css" />" rel="stylesheet">
+<link href="<c:url value="/resources/css/datepicker.css" />" rel="stylesheet">
+<link href="<c:url value="/resources/css/main.css" />" rel="stylesheet">
 <link href="<c:url value="/resources/css/register.css" />" rel="stylesheet">
+
+
+<script src="<c:url value="/resources/js/jquery.dataTables.min.js" />"></script>
+
+<script src="<c:url value="/resources/js/table.js" />"></script>
+<script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
+<script src="<c:url value="/resources/js/bootstrap-datepicker.js" />"></script>
+<%@ include file="popup.html" %>
+
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
 <title>Registration</title>
 </head>
 <script type="text/javascript">
-function checkPassword(t){
-	if(t.value!=document.getElementById('password').value){
-		t.value = '';
-		t.focus();
-		alert('Password doesn`t match');
-		
+	if("${popupMessage}"!=''){
+		$('#popup').modal('show');
 	}
-}
 </script>
 <body class="body">
-<form:form action="${pageContext.request.contextPath}/createAction.htm" method="post" commandName="command">
+<form:form action="${pageContext.request.contextPath}/myprofile/editAction.json" method="post" commandName="command">
 <%-- <form:errors path="clubDetails.*" cssClass="errorblock" element="div" />
- --%><div class="form-register">
+ --%>
+ <form:input type="hidden" id="club_id" path="club_id"/>
+ <form:input type="hidden" id="password" path="password"/>
+ <form:input type="hidden" id="newPassword" path="newPassword"/>
+ <div class="form-register">
 	<div class="panel panel-default">
 	  <div class="panel-heading header"><h3 class="panel-title">Registration</h3></div>
 	  <div class="panel-body greybg">
-	    <div><font color="blue">${message}</font></div>
 	    <div class="col-xs-12">
 			<div class="col-xs-4"><label>Club Name:</label></div>
 			<div class="col-xs-4"><form:input type="text" id="clubname" path="clubname" class="form-control" /></div>
@@ -45,36 +53,15 @@ function checkPassword(t){
 		
 		<div class="col-xs-12">
 			<div class="col-xs-4"><label>User Name:</label></div>
-			<div class="col-xs-4"><form:input type="text" id="username" path="username" class="form-control" /></div>
+			<div class="col-xs-4"><form:input type="text" id="username" path="username" class="form-control" readonly="true"/></div>
 			<div class="col-xs-4"><form:errors path="username" cssClass="error" element="div"/></div>
 		</div>
 		
-		<div class="col-xs-12">
-			<div class="col-xs-4"><label>Password :</label></div>
-			<div class="col-xs-4"><form:input type="password" id="password" path="password" class="form-control"/></div>
-			<div class="col-xs-4"><form:errors path="password" cssClass="error" element="div" /></div>
-		</div>
-		
-		<div class="col-xs-12">
-			<div class="col-xs-4"><label>Confirm Password :</label></div>
-			<div class="col-xs-4"><input type="password" id="confirmPassword" name="confirmPassword"
-			 class="form-control" onblur ="return checkPassword(this);" required autofocus/></div>
-			 <div class="col-xs-4"><%-- <form:errors path="clubDetails.confirmPassword" cssClass="error" element="div" /> --%></div>
-		 </div>
-		 
 		 <div class="col-xs-12">
 			<div class="col-xs-4"><label>Email :</label></div>
 			<div class="col-xs-4"><form:input type="text" id="email" path="email" class="form-control" /></div>
 			<div class="col-xs-4"><form:errors path="email" cssClass="error" element="div" /></div>
 		</div>
-		
-		<!-- <div class="col-xs-12">
-			<div class="col-xs-3"><label>Role :</label></div>
- 			<div class="col-xs-4">-->
- 					<input type="hidden" id="roleid" name="roleid" class="form-control" readonly="readonly" value="1"/>
- 			<%--	</div>
-			 <div class="col-xs-5"><form:errors path="clubDetails.roleid" cssClass="error" element="div" /></div>
-		</div> --%>
 		
 		<div class="col-xs-12">
 			<div class="col-xs-4"><label>Membership type:</label></div>
@@ -83,7 +70,7 @@ function checkPassword(t){
 			Premium<input type="radio" id="premium" name="membershipType" value="premium"/></div>
 			<div class="col-xs-4"><form:errors path="membershiptype" cssClass="error" element="div" /></div>
 		</div>
-		<div><input type="submit" value="Register" class="btn btn-primary pull-right"></div>
+		<div><input type="submit" value="Edit" class="btn btn-primary pull-right"></div>
 	  </div>
 	</div>
 

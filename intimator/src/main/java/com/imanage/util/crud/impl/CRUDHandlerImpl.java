@@ -15,7 +15,7 @@ public class CRUDHandlerImpl implements CRUDHandler {
 		String message = "Member "+memberDetails.getMemid()+" already exist";
 		if(existingMemberDetails == null){
 			memberRegistrationService.save(memberDetails);
-			return "";
+			return "Member Added successfully";
 		}
 		return message;
 	}
@@ -24,7 +24,7 @@ public class CRUDHandlerImpl implements CRUDHandler {
 		String message = "Member "+memberDetails.getMemid()+" doesn't exist";
 		if(existingMemberDetails != null){
 			memberRegistrationService.update(memberDetails);
-			return "";
+			return "Member record updated successfully";
 		}
 		return message;
 	}
@@ -33,7 +33,7 @@ public class CRUDHandlerImpl implements CRUDHandler {
 		String message = "Member "+memberDetails.getMemid()+" doesn't exist";
 		if(existingMemberDetails != null){
 			memberRegistrationService.delete(memberDetails);
-			return "";
+			return "Member record deleted successfully";
 		}
 		return message;
 	}
@@ -64,7 +64,7 @@ public class CRUDHandlerImpl implements CRUDHandler {
 			//To Do
 			break;
 		}
-		ModelAndView mav = new ModelAndView("member", "result", message);
+		ModelAndView mav = new ModelAndView("member", "popupMessage", message);
 		mav.addObject("commandd", new MemberDetails());
 		mav.addObject("mode", mode);
 		return mav;

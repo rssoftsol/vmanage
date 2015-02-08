@@ -98,7 +98,7 @@ public class MembersDetailController {
 			}
 		}
 		mav.addObject("commandd", new MemberDetails());
-		mav.addObject("result","No member exist with given Id:"+id);
+		mav.addObject("popupMessage","No member exist with given Id:"+id);
 		return mav;
 	}
 	
@@ -106,7 +106,7 @@ public class MembersDetailController {
     public ModelAndView viewMemberDetails(@PathVariable("mode") String mode) {
 		ModelAndView mav = new ModelAndView("member");
 		mav.addObject("mode", mode);
-		mav.addObject("result","Please provide Member Id");
+		mav.addObject("popupMessage","Please provide Member Id");
 		mav.addObject("commandd", new MemberDetails());
 		return mav;
 	}
@@ -129,6 +129,7 @@ public class MembersDetailController {
 	public void addCommonAttribute(Model model, HttpSession session){
 		model.addAttribute("user", ((Session)session.getAttribute("session")).getUsername());
 		model.addAttribute("date", new java.util.Date().toString());
+		model.addAttribute("mainmode", "MEMBER");
 		model.addAttribute("headermsg", "Provide Member Details"); 
 	}
 	

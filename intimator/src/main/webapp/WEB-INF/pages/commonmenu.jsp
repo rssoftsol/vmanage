@@ -21,7 +21,7 @@
 						</a>
 					</li>
 					<li id="register">
-						<a href='${pageContext.request.contextPath}/registration.htm'>
+						<a href='${pageContext.request.contextPath}/create.htm'>
 							<span id='dm' ><b>Registration</b></span>
 						</a>
 					</li>

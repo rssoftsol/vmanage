@@ -3,7 +3,6 @@
     
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<script src="<c:url value="/resources/js/jquery-1.11.1.min.js" />"></script>
 	<nav class="navbar navbar-default subheader" role="navigation">
   		<div class="container-fluid">
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">

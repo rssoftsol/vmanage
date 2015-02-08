@@ -17,12 +17,18 @@
 <script src="<c:url value="/resources/js/table.js" />"></script>
 <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
 <script src="<c:url value="/resources/js/bootstrap-datepicker.js" />"></script>
-
+<link rel="import" href="popup.html"/>
+<%@ include file="popup.html" %>
 
 <script type="text/javascript">
-var addMode = "AM";
+if("${popupMessage}"!=''){
+	$('#popup').modal('show');
+}
+//alert('hi');
+/* var addMode = "AM";
 var modifyMode = "MM";
 var deleteMode = "DM";
+ */
 var mode = "${mode}";
 var get_mem_button_visibility = (mode != "ADD");
 var text_field_visibility = (mode != "DELETE");
@@ -53,13 +59,14 @@ $(document).ready(function() {
 <title>Members Detail</title>
 </head>
 <body class="body">
+
 	<form:form name="form" action="${pageContext.request.contextPath}/members/memberAction/${mode}" method="post" commandName="commandd">
 		<form:input type="hidden" id="id" path="id"/>
 		<div class="form-register">
 			<div class="panel panel-default">
+			<div class="panel-heading header"><h3 class="panel-title">${headermsg}</h3></div>
 			<div class="panel-body greybg">
-		        <div class="panel-heading header"><h3 class="panel-title">${headermsg}</h3></div>
-		        <div class='col-xs-12 error'><label>${result}</label></div>
+		        
 		        <div class='col-xs-12'>
 			        <div class='col-xs-3'><label>Id:</label></div>
 			        <div class='col-xs-2'><form:input type="text" id='memid' path="memid" class="form-control"/></div>

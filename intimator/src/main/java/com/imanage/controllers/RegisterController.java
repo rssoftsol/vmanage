@@ -14,14 +14,6 @@ import com.imanage.models.ClubDetails;
 @RequestMapping("/")
 public class RegisterController {
 
-	@RequestMapping(method = RequestMethod.GET,value="/registration.htm")
-	public String redirectToLogin(Model model) {
-		model.addAttribute("clubDetails", new ClubDetails());
-		model.addAttribute("command", new ClubDetails());
-		model.addAttribute("menumode", "R");
-		return "register";
-	}
-	
 	@RequestMapping(method = RequestMethod.GET,value="/aboutus")
 	public String redirectToAboutUs(Model model) {
 		model.addAttribute("menumode", "A");

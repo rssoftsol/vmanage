@@ -22,7 +22,7 @@
 				
 				<form method="post" action="j_spring_security_check" name="f" class="form-signin">
 					<h2>Login  </h2>or
-				<a href="registration.htm">
+				<a href="myprofile/create.htm">
 						<b>Register</b>
 				</a>
 			<!-- register-box -->
