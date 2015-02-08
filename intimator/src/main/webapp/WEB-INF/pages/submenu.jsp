@@ -12,9 +12,9 @@
 	      				<a href="${pageContext.request.contextPath}/members/browsemembers"  ><span id='bm'><b>My Members</b></span></a>
 	      			</li>
 	      
-					<li id="addMember"><a href='${pageContext.request.contextPath}/members/member/AM'><span id='am' ><b>Add Member</b></span></a></li>
-					<li id="modifyMember"><a href='${pageContext.request.contextPath}/members/member/MM'><span id='mm' ><b>Modify Member</b></span></a></li>
-					<li id="deleteMember"><a href='${pageContext.request.contextPath}/members/member/DM'><span id='dm' ><b>Delete Member</b></span></a></li>
+					<li id="addMember"><a href='${pageContext.request.contextPath}/members/member/ADD'><span id='am' ><b>Add Member</b></span></a></li>
+					<li id="modifyMember"><a href='${pageContext.request.contextPath}/members/member/MODIFY'><span id='mm' ><b>Modify Member</b></span></a></li>
+					<li id="deleteMember"><a href='${pageContext.request.contextPath}/members/member/DELETE'><span id='dm' ><b>Delete Member</b></span></a></li>
 					
 		  		</ul>
 			</div>
@@ -22,13 +22,13 @@
 	</nav>
 <script type="text/javascript">
 	var mode= "${mode}";
-	if(mode == "BM")
+	if(mode == "BROWSE")
 		$('#myMember').addClass('active');
-	else if(mode == "AM")
+	else if(mode == "ADD")
 		$('#addMember').addClass('active');
-	else if(mode == "MM")
+	else if(mode == "MODIFY")
 		$('#modifyMember').addClass('active');
-	else if(mode == "DM")
+	else if(mode == "DELETE")
 		$('#deleteMember').addClass('active');
 </script>
 </html>

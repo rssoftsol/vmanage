@@ -29,6 +29,7 @@ import com.imanage.models.MemberDetailBean;
 import com.imanage.models.MemberDetails;
 import com.imanage.services.members.MemberRegistrationService;
 import com.imanage.services.register.ClubRegistrationService;
+import com.imanage.util.crud.impl.CRUDHandlerImpl;
 
 @Controller
 @RequestMapping("/members")
@@ -49,7 +50,7 @@ public class MembersDetailController {
 			data = data + memberDetail.getMemid()+"~"+memberDetail.getPhone()+"~"+memberDetail.getName()
 					+"~"+memberDetail.getExpirydate()+"!";
 		}
-		mav.addObject("mode", "BM");
+		mav.addObject("mode", "BROWSE");
 		mav.addObject("dataset", data);
 		return mav;
 	}
@@ -83,7 +84,7 @@ public class MembersDetailController {
 	}
 	
 	@RequestMapping(value="/view/{mode}/{memid}", method=RequestMethod.POST)
-    public ModelAndView viewMemberDetails(@PathVariable("memid") String id, @PathVariable("memid") String mode, 
+    public ModelAndView viewMemberDetails(@PathVariable("memid") String id, @PathVariable("mode") String mode, 
     		HttpSession session) {
 		ModelAndView mav = new ModelAndView("member");
 		mav.addObject("mode", mode);
@@ -102,9 +103,9 @@ public class MembersDetailController {
 	}
 	
 	@RequestMapping(value="/view/{mode}", method=RequestMethod.POST)
-    public ModelAndView viewMemberDetails() {
+    public ModelAndView viewMemberDetails(@PathVariable("mode") String mode) {
 		ModelAndView mav = new ModelAndView("member");
-		mav.addObject("mode", "MM");
+		mav.addObject("mode", mode);
 		mav.addObject("result","Please provide Member Id");
 		mav.addObject("commandd", new MemberDetails());
 		return mav;
@@ -116,12 +117,12 @@ public class MembersDetailController {
 		if(result.hasErrors()){
 			ModelAndView mav = new ModelAndView("member");
 			mav.addObject("commandd", memberDetails);
+			mav.addObject("mode", mode);
 			return mav;
 		}
-		String message = "";
 		ClubDetails clubDetails = clubRegistrationService.findByUserName(((Session)session.getAttribute("session")).getUsername());
 		memberDetails.setClubDetails(clubDetails);
-		return processCRUDRequest(mode, memberDetails, clubDetails);
+		return new CRUDHandlerImpl().processCRUDRequest(mode, memberDetails, memberRegistrationService);
 	}
 	
 	@ModelAttribute
@@ -129,46 +130,6 @@ public class MembersDetailController {
 		model.addAttribute("user", ((Session)session.getAttribute("session")).getUsername());
 		model.addAttribute("date", new java.util.Date().toString());
 		model.addAttribute("headermsg", "Provide Member Details"); 
-	}
-	
-	private ModelAndView processCRUDRequest(String mode, MemberDetails memberDetails, ClubDetails clubDetails){
-		String message = "";
-		String view = "";
-		switch (mode.charAt(0)) {
-		case 'A':
-			if(memberRegistrationService.findByMemid(memberDetails.getMemid()) == null){
-				memberDetails.setClubDetails(clubDetails);
-				memberRegistrationService.save(memberDetails);
-				message = "Member added successfully";
-			}else{
-				message = "Member "+memberDetails.getMemid()+" already exist";
-			}
-			view = "addmember";
-			break;
-		case 'M':
-			if(memberRegistrationService.findByMemid(memberDetails.getMemid()) == null){
-				message = "Member "+memberDetails.getMemid()+" doesn't exist";
-			}else{
-				memberRegistrationService.update(memberDetails);
-				message = "Member updated successfully";
-			}
-			view = "modify_member";
-			break;
-		case 'D':
-			if(memberRegistrationService.findByMemid(memberDetails.getMemid()) == null){
-				message = "Member "+memberDetails.getMemid()+" doesn't exist";
-			}else{
-				memberRegistrationService.delete(memberDetails);
-				message = "Member deleted successfully";
-			}
-			view = "delete_member";
-			break;
-		default:
-			break;
-		}
-		ModelAndView mav = new ModelAndView(view, "result", message);
-		mav.addObject("mode", mode);
-		return mav;
 	}
 	
 }

@@ -24,8 +24,8 @@ var addMode = "AM";
 var modifyMode = "MM";
 var deleteMode = "DM";
 var mode = "${mode}";
-var get_mem_button_visibility = (mode != "AM");
-var text_field_visibility = (mode != "DM");
+var get_mem_button_visibility = (mode != "ADD");
+var text_field_visibility = (mode != "DELETE");
 $(document).ready(function() {
     $('#example1').datepicker({
         format: "dd/mm/yyyy"
@@ -34,9 +34,9 @@ $(document).ready(function() {
     	$("#getMemBtn").hide();
     }
     if(!text_field_visibility){
-    	$( "#name" ).prop( "disabled", true );
-    	$( "#phone" ).prop( "disabled", true );
-    	$( "#example1" ).prop( "disabled", true );
+    	$( "#name" ).prop( "readonly", true );
+    	$( "#phone" ).prop( "readonly", true );
+    	$( "#example1" ).prop( "readonly", true );
     }
     $('#getMemBtn').on( 'click', function () {
   	  	$('form[name=form]').attr('action','${pageContext.request.contextPath}/members/view/${mode}/'+document.getElementById('memid').value);
@@ -54,11 +54,11 @@ $(document).ready(function() {
 </head>
 <body class="body">
 	<form:form name="form" action="${pageContext.request.contextPath}/members/memberAction/${mode}" method="post" commandName="commandd">
-		<input type="hidden" id="test" value="true">
+		<form:input type="hidden" id="id" path="id"/>
 		<div class="form-register">
 			<div class="panel panel-default">
 			<div class="panel-body greybg">
-		        <div class="panel-heading header"><h3 class="panel-title">${headermsg}</h3></div><br>
+		        <div class="panel-heading header"><h3 class="panel-title">${headermsg}</h3></div>
 		        <div class='col-xs-12 error'><label>${result}</label></div>
 		        <div class='col-xs-12'>
 			        <div class='col-xs-3'><label>Id:</label></div>
@@ -91,7 +91,7 @@ $(document).ready(function() {
 			        </div>
 			        <div class='col-xs-5'><form:errors  path="expirydate" cssClass="error" element="div"/></div>
 		       </div>
-		        <div><input type="submit" value="${modebutton}" class="btn btn-primary pull-right"></div>
+		        <div><input type="submit" value="${mode}" class="btn btn-primary pull-right"></div>
 		    </div>
 		    </div>
 		</div>
