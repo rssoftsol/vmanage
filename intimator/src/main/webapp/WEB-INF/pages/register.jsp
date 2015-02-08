@@ -8,6 +8,7 @@
 
 <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
 <link href="<c:url value="/resources/css/register.css" />" rel="stylesheet">
+<script src="<c:url value="/resources/js/main.js" />"></script>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
@@ -22,6 +23,9 @@ function checkPassword(t){
 		
 	}
 }
+$(document).ready(function() {
+ 	$("#phonenumber").ForceNumericOnly();
+});
 </script>
 <body class="body">
 <form:form action="${pageContext.request.contextPath}/createAction.htm" method="post" commandName="command">

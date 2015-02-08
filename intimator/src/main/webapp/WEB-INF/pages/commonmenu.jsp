@@ -12,22 +12,22 @@
 	      			
 					<li id="aboutus">
 						<a href='${pageContext.request.contextPath}/aboutus'>
-							<span id='am' ><b>About us</b></span>
+							<span class='glyphicon glyphicon-user' ><b> About us</b></span>
 						</a>
 					</li>
 					<li id="contactus">
 						<a href='${pageContext.request.contextPath}/contactus'>
-							<span id='mm' ><b>Contact us</b></span>
+							<span class='glyphicon glyphicon-earphone' ><b> Contact us</b></span>
 						</a>
 					</li>
 					<li id="register">
-						<a href='${pageContext.request.contextPath}/create.htm'>
-							<span id='dm' ><b>Registration</b></span>
+						<a href='${pageContext.request.contextPath}/myprofile/create.htm'>
+							<span class='glyphicon glyphicon-edit' ><b> Registration</b></span>
 						</a>
 					</li>
 					<li id="login">
 	      				<a href="${pageContext.request.contextPath}/login"  >
-	      					<span id='bm'><b>Login</b></span>
+	      					<span class='glyphicon glyphicon-log-in'><b> Login</b></span>
 	      				</a>
 	      			</li>
 		  		</ul>

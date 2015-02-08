@@ -25,7 +25,7 @@ public class ClubDetailsMapper implements RowMapper<ClubDetails>{
 		clubDetails.setEmail(rs.getString("email"));
 		//clubDetails.setMemberDetails(new HashSet<MemberDetails>());
 		clubDetails.setMembershiptype(rs.getString("membershiptype"));
-		clubDetails.setPhonenumber(rs.getString("phonenumber"));
+		clubDetails.setPhonenumber(rs.getLong("phonenumber"));
 		clubDetails.setClub_id(rs.getInt("club_id"));
 		clubDetails.setRoleId(rs.getInt("roleId"));
 		return clubDetails;

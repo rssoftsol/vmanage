@@ -1,12 +1,9 @@
 package com.imanage.models;
 
 import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,6 +14,8 @@ import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.NumberFormat;
+import org.springframework.format.annotation.NumberFormat.Style;
 
 @Entity
 @Table(name="member_details")
@@ -27,9 +26,11 @@ public class MemberDetails {
 	private Integer id;
 	@NotEmpty(message="Member Id is mandatory")
 	private String memid;
-	@NotEmpty(message="Phone is mandatory")
-	private String phone;
+	@NotNull(message="Phone is mandatory")
+	@NumberFormat(style= Style.NUMBER)
+	private Long phone;
 	@NotEmpty(message="Name is mandatory")
+	
 	private String name;
 	@NotNull(message="Expiry Date is mandatory")
 	@Future(message="Invalid date")
@@ -57,11 +58,11 @@ public class MemberDetails {
 		this.memid = memid;
 	}
 
-	public String getPhone() {
+	public Long getPhone() {
 		return phone;
 	}
 	
-	public void setPhone(String phone) {
+	public void setPhone(Long phone) {
 		this.phone = phone;
 	}
 	

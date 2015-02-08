@@ -69,7 +69,7 @@ public class AccessController {
 			session.setAttribute("session", Session.getSessionInstance());
 			ClubDetails clubDetails = clubRegistrationService.findByUserName(((Session)session.getAttribute("session")).getUsername());
 			for(MemberDetails memberDetail : clubDetails.getMemberDetails()){
-				data = data + memberDetail.getMemid()+"~"+memberDetail.getPhone()+"~"+memberDetail.getName()
+				data = data + memberDetail.getMemid()+"~"+memberDetail.getName()+"~"+memberDetail.getPhone()
 						+"~"+memberDetail.getExpirydate()+"!";
 			}
 			model.addAttribute("dataset", data);
@@ -192,7 +192,7 @@ public class AccessController {
 		if(authentication!=null && authentication.getName()!=null){
 			model.addAttribute("user", authentication.getName());
 			model.addAttribute("date", new Date().toString());
-			model.addAttribute("mode", "BM");
+			model.addAttribute("mode", "BROWSE");
 			model.addAttribute("mainmode", "MEMBER");
 		}
 	}

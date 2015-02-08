@@ -7,11 +7,23 @@
   		<div class="container-fluid">
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	      		<ul class="nav navbar-nav"> 
-					<li><a><span>${date}</span></a></li>
+					<li><a><span class="glyphicon glyphicon-time"> ${date}</span></a></li>
 					<li><a><span>Welcome ${user}</span></a></li>
-					<li id="myprofile"><a href='${pageContext.request.contextPath}/myprofile/edit'><span>My Profile</span></a></li>
-					<li id="member"><a href='${pageContext.request.contextPath}/members/browsemembers'><span>Operations</span></a></li>
-					<li><a href='${pageContext.request.contextPath}/logout'><span>Logout</span></a></li>
+					<li id="myprofile">
+						<a href='${pageContext.request.contextPath}/myprofile/edit'>
+							<span class="glyphicon glyphicon-user"> MyProfile</span>
+						</a>
+					</li>
+					<li id="member"
+						><a href='${pageContext.request.contextPath}/members/browsemembers'>
+							<span class="glyphicon glyphicon-edit"> Operations</span>
+						</a>
+					</li>
+					<li>
+						<a href='${pageContext.request.contextPath}/logout'>
+							<span class="glyphicon glyphicon-log-out"> Logout</span>
+						</a>
+					</li>
 					
 		  		</ul>
 			</div>

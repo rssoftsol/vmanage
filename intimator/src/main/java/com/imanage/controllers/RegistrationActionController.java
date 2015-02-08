@@ -72,6 +72,7 @@ public class RegistrationActionController {
 		ModelAndView mav = new ModelAndView("myprofile");
 		ClubDetails clubDetails = clubRegService.findByUserName(((Session)session.getAttribute("session")).getUsername());
 		mav.addObject("command", clubDetails);
+		mav.addObject("user", ((Session)session.getAttribute("session")).getUsername());
 		return mav;
 	}
 	
@@ -83,18 +84,17 @@ public class RegistrationActionController {
 			mav.addObject("command", clubDetails);
 			return mav;
 		}
-		ClubDetails clubDetailstmp = clubRegService.findByUserName(((Session)session.getAttribute("session")).getUsername());
 		//clubDetails.setMemberDetails(clubDetailstmp.getMemberDetails());
 		clubDetails.setRoleId(1);
 		clubRegService.update(clubDetails);
 		mav.addObject("command", clubDetails);
 		mav.addObject("popupMessage", "Details updated");
+		mav.addObject("user", ((Session)session.getAttribute("session")).getUsername());
 		return mav;
 	}
 	
 	@ModelAttribute
 	public void addCommonAttribute(Model model, HttpSession session){
-		model.addAttribute("user", ((Session)session.getAttribute("session")).getUsername());
 		model.addAttribute("date", new java.util.Date().toString());
 		model.addAttribute("mainmode", "MYPROFILE");
 	}

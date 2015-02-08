@@ -8,12 +8,25 @@
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	      		<ul class="nav navbar-nav"> 
 	      			<li id="myMember">
-	      				<a href="${pageContext.request.contextPath}/members/browsemembers"  ><span id='bm'><b>My Members</b></span></a>
+	      				<a href="${pageContext.request.contextPath}/members/browsemembers"  >
+	      					<span class='glyphicon glyphicon-search'></span></a>
 	      			</li>
 	      
-					<li id="addMember"><a href='${pageContext.request.contextPath}/members/member/ADD'><span id='am' ><b>Add Member</b></span></a></li>
-					<li id="modifyMember"><a href='${pageContext.request.contextPath}/members/member/MODIFY'><span id='mm' ><b>Modify Member</b></span></a></li>
-					<li id="deleteMember"><a href='${pageContext.request.contextPath}/members/member/DELETE'><span id='dm' ><b>Delete Member</b></span></a></li>
+					<li id="addMember">
+						<a href='${pageContext.request.contextPath}/members/member/ADD'>
+							<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+						</a>
+					</li>
+					<li id="modifyMember">
+						<a href='${pageContext.request.contextPath}/members/member/MODIFY'>
+							<span class='glyphicon glyphicon-pencil' ></span>
+						</a>
+					</li>
+					<li id="deleteMember">
+						<a href='${pageContext.request.contextPath}/members/member/DELETE'>
+							<span class='glyphicon glyphicon-remove' ></span>
+						</a>
+					</li>
 					
 		  		</ul>
 			</div>

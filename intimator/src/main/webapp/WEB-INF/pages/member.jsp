@@ -17,6 +17,7 @@
 <script src="<c:url value="/resources/js/table.js" />"></script>
 <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
 <script src="<c:url value="/resources/js/bootstrap-datepicker.js" />"></script>
+<script src="<c:url value="/resources/js/main.js" />"></script>
 <link rel="import" href="popup.html"/>
 <%@ include file="popup.html" %>
 
@@ -48,7 +49,7 @@ $(document).ready(function() {
   	  	$('form[name=form]').attr('action','${pageContext.request.contextPath}/members/view/${mode}/'+document.getElementById('memid').value);
   	  	$('form[name=form]').submit();
   	});
-
+    $("#phone").ForceNumericOnly();
 } );
 
 

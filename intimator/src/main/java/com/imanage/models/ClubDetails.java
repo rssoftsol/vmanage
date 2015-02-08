@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
@@ -34,8 +35,8 @@ public class ClubDetails{
 	@Column(name="membershiptype",length=1)
 	private String membershiptype;
 	@Column(name="phonenumber",length=20)
-	@NotEmpty(message="Phone is mandatory")
-	private String phonenumber;
+	@NotNull(message="Phone is mandatory")
+	private Long phonenumber;
 	@Column(name="clubname",length=20)
 	@NotEmpty(message="Club name is mandatory")
 	private String clubname;
@@ -91,11 +92,11 @@ public class ClubDetails{
 		this.membershiptype = membershiptype;
 	}
 
-	public String getPhonenumber() {
+	public Long getPhonenumber() {
 		return phonenumber;
 	}
 
-	public void setPhonenumber(String phonenumber) {
+	public void setPhonenumber(Long phonenumber) {
 		this.phonenumber = phonenumber;
 	}
 

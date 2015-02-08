@@ -11,7 +11,7 @@
 <script src="<c:url value="/resources/js/jquery-1.11.1.min.js" />"></script>
 <script src="<c:url value="/resources/js/jquery.dataTables.min.js" />"></script>
 
-<script src="<c:url value="/resources/js/table.js" />"></script>
+<script src="<c:url value="/resources/js/memberdetails.js" />"></script>
 <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
 
 <script type="text/javascript">

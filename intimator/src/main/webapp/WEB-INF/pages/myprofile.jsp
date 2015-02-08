@@ -16,6 +16,7 @@
 <script src="<c:url value="/resources/js/table.js" />"></script>
 <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
 <script src="<c:url value="/resources/js/bootstrap-datepicker.js" />"></script>
+<script src="<c:url value="/resources/js/main.js" />"></script>
 <%@ include file="popup.html" %>
 
 <head>
@@ -27,6 +28,9 @@
 	if("${popupMessage}"!=''){
 		$('#popup').modal('show');
 	}
+	$(document).ready(function() {
+	 	$("#phonenumber").ForceNumericOnly();
+	});
 </script>
 <body class="body">
 <form:form action="${pageContext.request.contextPath}/myprofile/editAction.json" method="post" commandName="command">
@@ -65,9 +69,9 @@
 		
 		<div class="col-xs-12">
 			<div class="col-xs-4"><label>Membership type:</label></div>
-			<div class="col-xs-4">Regular<input type="radio" checked="checked" id="regular" name="membershiptype" value="R"/>
+			<div class="col-xs-4">Regular<form:radiobutton checked="checked" id="regular" path="membershiptype" value="R"/>
 			&nbsp;&nbsp;
-			Premium<input type="radio" id="premium" name="membershipType" value="premium"/></div>
+			Premium<form:radiobutton id="premium" path="membershiptype" value="P"/></div>
 			<div class="col-xs-4"><form:errors path="membershiptype" cssClass="error" element="div" /></div>
 		</div>
 		<div><input type="submit" value="Edit" class="btn btn-primary pull-right"></div>

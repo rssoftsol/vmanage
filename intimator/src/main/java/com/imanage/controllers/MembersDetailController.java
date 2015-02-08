@@ -47,7 +47,7 @@ public class MembersDetailController {
 		ModelAndView mav = new ModelAndView("membersdetail");
 		ClubDetails clubDetails = clubRegistrationService.findByUserName(((Session)session.getAttribute("session")).getUsername());
 		for(MemberDetails memberDetail : clubDetails.getMemberDetails()){
-			data = data + memberDetail.getMemid()+"~"+memberDetail.getPhone()+"~"+memberDetail.getName()
+			data = data + memberDetail.getMemid()+"~"+memberDetail.getName()+"~"+memberDetail.getPhone()
 					+"~"+memberDetail.getExpirydate()+"!";
 		}
 		mav.addObject("mode", "BROWSE");
