@@ -42,7 +42,7 @@ dataSet = dataMainfinalArr;
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Members Detail</title>
 </head>
-<body class="body">
+<body class="body" background="<c:url value="/resources/img/body-bg.jpg" />">
 <div id='demo'class="center-start half-width"></div>
 </body>
 </html>
