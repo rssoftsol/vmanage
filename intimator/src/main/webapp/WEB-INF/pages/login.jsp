@@ -11,7 +11,7 @@
 <link href="<c:url value="/resources/css/signin.css" />" rel="stylesheet">
 <title>intimator</title>
 </head>
-<body class="body">
+<body class="body" background="<c:url value="/resources/img/body-bg.jpg" />">
 	<div class="container">
 			<!-- mainLogin-container -->
 				<%-- <c:if test="${failureMessage != ''}"> --%>
@@ -22,7 +22,7 @@
 				
 				<form method="post" action="j_spring_security_check" name="f" class="form-signin">
 					<h2>Login  </h2>or
-				<a href="myprofile/create.htm">
+				<a href="create.htm">
 						<b>Register</b>
 				</a>
 			<!-- register-box -->
