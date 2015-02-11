@@ -19,7 +19,7 @@ function checkPassword(t){
 	if(t.value!=document.getElementById('password').value){
 		t.value = '';
 		t.focus();
-		alert('Password doesn`t match');
+		//alert('Password doesn`t match');
 		
 	}
 }
