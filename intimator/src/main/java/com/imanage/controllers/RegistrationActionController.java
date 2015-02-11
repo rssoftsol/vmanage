@@ -20,7 +20,6 @@ import com.imanage.models.ClubDetails;
 import com.imanage.services.register.ClubRegistrationService;
 
 @Controller
-@RequestMapping("/myprofile")
 public class RegistrationActionController {
 	
 	@Autowired
@@ -67,7 +66,7 @@ public class RegistrationActionController {
 	    return new ModelAndView("register");
 	}
 	
-	@RequestMapping(value="/edit", method = RequestMethod.GET)
+	@RequestMapping(value="/myprofile/edit", method = RequestMethod.GET)
 	public ModelAndView myProfilePage(HttpSession session) {
 		ModelAndView mav = new ModelAndView("myprofile");
 		ClubDetails clubDetails = clubRegService.findByUserName(((Session)session.getAttribute("session")).getUsername());
@@ -76,7 +75,7 @@ public class RegistrationActionController {
 		return mav;
 	}
 	
-	@RequestMapping(value="/editAction", method = RequestMethod.POST)
+	@RequestMapping(value="/myprofile/editAction", method = RequestMethod.POST)
 	public ModelAndView myProfileAction(@ModelAttribute("command") 
     @Valid ClubDetails clubDetails, BindingResult result, HttpSession session) {
 		ModelAndView mav = new ModelAndView("myprofile");
