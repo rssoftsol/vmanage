@@ -18,8 +18,8 @@ public class CustomLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler {
 			HttpServletResponse response, Authentication authentication)
 			throws IOException, ServletException {
 
+		setDefaultTargetUrl("/login");
 		setAlwaysUseDefaultTargetUrl(true);
-		setDefaultTargetUrl("/home");
 		super.onLogoutSuccess(request, response, authentication);
 	}
 }
