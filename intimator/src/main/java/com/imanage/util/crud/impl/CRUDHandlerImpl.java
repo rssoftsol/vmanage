@@ -1,6 +1,5 @@
 package com.imanage.util.crud.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.imanage.models.MemberDetails;

@@ -13,10 +13,11 @@
 		<intercept-url pattern="/login" access="permitAll" />
 		<intercept-url pattern="/logout" access="permitAll" />
 		<intercept-url pattern="/resetPassword.htm" access="permitAll" />
-		<intercept-url pattern="/user/**" access="hasRole('ROLE_USER')" />
-		<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/members/**" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/myprofile/**" access="hasRole('ROLE_USER')" />
 		<form-login login-page="/login" authentication-failure-url="/loginFailure"
 			always-use-default-target="true" default-target-url="/roleBasedAuthenticationUrl" />
+			
 		<logout success-handler-ref="logoutSuccessHandler"
 			invalidate-session="true" delete-cookies="JSESSIONID" />
 		<custom-filter ref="sessionManagementFilter" before="SESSION_MANAGEMENT_FILTER" />

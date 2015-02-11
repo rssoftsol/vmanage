@@ -21,7 +21,7 @@
 						</a>
 					</li>
 					<li id="register">
-						<a href='${pageContext.request.contextPath}/myprofile/create.htm'>
+						<a href='${pageContext.request.contextPath}/create.htm'>
 							<span class='glyphicon glyphicon-edit' ><b> Registration</b></span>
 						</a>
 					</li>
