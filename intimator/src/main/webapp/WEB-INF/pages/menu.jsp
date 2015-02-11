@@ -20,7 +20,7 @@
 						</a>
 					</li>
 					<li>
-						<a href='${pageContext.request.contextPath}/logout'>
+						<a href='${pageContext.request.contextPath}/j_spring_security_logout'>
 							<span class="glyphicon glyphicon-log-out"> Logout</span>
 						</a>
 					</li>
