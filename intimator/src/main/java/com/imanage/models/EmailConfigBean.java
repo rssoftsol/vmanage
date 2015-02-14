@@ -42,7 +42,16 @@ public class EmailConfigBean implements Serializable {
 
 	@Value("${emailConfig.emailSubject}")
 	private String emailSubject;
+	
+	@Value("${emailConfig.emailPDFInfoText}")
+	private String emailPDFInfoText;
+	
+	@Value("${emailConfig.emailPDFNoRecordText}")
+	private String emailPDFNoRecordText;
 
+	@Value("${emailConfig.pdfEmailSubject}")
+	private String pdfEmailSubject;
+	
 	public String getEmailHost() {
 		return emailHost;
 	}
@@ -123,4 +132,29 @@ public class EmailConfigBean implements Serializable {
 		this.emailSubject = emailSubject;
 	}
 
+	public String getEmailPDFInfoText() {
+		return emailPDFInfoText;
+	}
+
+	public void setEmailPDFInfoText(String emailPDFInfoText) {
+		this.emailPDFInfoText = emailPDFInfoText;
+	}
+
+	public String getPdfEmailSubject() {
+		return pdfEmailSubject;
+	}
+
+	public void setPdfEmailSubject(String pdfEmailSubject) {
+		this.pdfEmailSubject = pdfEmailSubject;
+	}
+
+	public String getEmailPDFNoRecordText() {
+		return emailPDFNoRecordText;
+	}
+
+	public void setEmailPDFNoRecordText(String emailPDFNoRecordText) {
+		this.emailPDFNoRecordText = emailPDFNoRecordText;
+	}
+
+	
 }

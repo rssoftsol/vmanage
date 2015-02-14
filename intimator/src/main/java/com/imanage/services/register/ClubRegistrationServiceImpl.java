@@ -1,5 +1,7 @@
 package com.imanage.services.register;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +36,11 @@ public class ClubRegistrationServiceImpl implements ClubRegistrationService{
 	@Override
 	public ClubDetails findByUserName(String value) {
 		return clubRegistrationDao.findBySpecific(value);
+	}
+	
+	@Override
+	public List<ClubDetails> findAll() {
+		return clubRegistrationDao.findAll();
 	}
 
 }

@@ -34,4 +34,9 @@ public class ClubRegistrationDaoImpl extends CustomHibernateDaoSupport implement
 		return null;
 	}
 	
+	@Override
+	public List<ClubDetails> findAll() {
+		return getHibernateTemplate().find("from ClubDetails");
+	}
+	
 }
