@@ -2,12 +2,14 @@ package com.imanage.intimate;
 
 import java.io.File;
 
+import org.springframework.core.io.FileSystemResource;
+
 public class EmailBean {
 	String fromEmailId;
 	String toEmailId;
 	String mailBody;
 	String mailSubject;
-	File emailAttachment;
+	FileSystemResource emailAttachment;
 	
 	public String getFromEmailId() {
 		return fromEmailId;
@@ -37,10 +39,10 @@ public class EmailBean {
 		this.mailSubject = mailSubject;
 		return this;
 	}
-	public File getEmailAttachment() {
+	public FileSystemResource getEmailAttachment() {
 		return emailAttachment;
 	}
-	public EmailBean withEmailAttachment(File emailAttachment) {
+	public EmailBean withEmailAttachment(FileSystemResource emailAttachment) {
 		this.emailAttachment = emailAttachment;
 		return this;
 	}

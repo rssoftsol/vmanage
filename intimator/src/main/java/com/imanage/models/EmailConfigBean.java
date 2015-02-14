@@ -46,9 +46,6 @@ public class EmailConfigBean implements Serializable {
 	@Value("${emailConfig.emailPDFInfoText}")
 	private String emailPDFInfoText;
 	
-	@Value("${emailConfig.emailPDFNoRecordText}")
-	private String emailPDFNoRecordText;
-
 	@Value("${emailConfig.pdfEmailSubject}")
 	private String pdfEmailSubject;
 	
@@ -148,13 +145,4 @@ public class EmailConfigBean implements Serializable {
 		this.pdfEmailSubject = pdfEmailSubject;
 	}
 
-	public String getEmailPDFNoRecordText() {
-		return emailPDFNoRecordText;
-	}
-
-	public void setEmailPDFNoRecordText(String emailPDFNoRecordText) {
-		this.emailPDFNoRecordText = emailPDFNoRecordText;
-	}
-
-	
 }

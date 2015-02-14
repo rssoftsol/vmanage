@@ -1,28 +1,33 @@
 package com.imanage;
 
 
-import java.io.*;
 import java.util.Date;
 import java.util.Set;
+
+import org.springframework.core.io.FileSystemResource;
 
 import com.imanage.intimate.Intimator;
 import com.imanage.models.MemberDetails;
 import com.imanage.util.DateUtility;
-import com.itextpdf.text.*;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 public class PDFGen {
 	
-	public static File getPDFDoc(Set<MemberDetails> members, String fileName, Intimator intimator) throws Exception{
+	public static FileSystemResource getPDFDoc(Set<MemberDetails> members, String fileName, Intimator intimator) throws Exception{
 		boolean expires = false;
 		ClassLoader classLoader = PDFGen.class.getClassLoader();
-		String path = classLoader.getResource("/resources/pdfs").getPath();
-		File f = new File(path+"\\Membership_Expiry_Report_"+DateUtility.getTodaysDate("ddMMyyyy")+".pdf");
+		String path = classLoader.getResource("/resources").getPath();
+		FileSystemResource file = new FileSystemResource(path+"\\Membership_Expiry_Report_"+DateUtility.getTodaysDate("ddMMyyyy")+".pdf");
 		//File f = new File("D:\\test_data\\test"+".pdf");
-        OutputStream file = new FileOutputStream(f);
+        /*OutputStream file = new FileOutputStream(f);*/
         Document document = new Document();
-        PdfWriter.getInstance(document, file);
+        PdfWriter.getInstance(document, file.getOutputStream());
         //Inserting Image in PDF
            //Image image = Image.getInstance ("src/pdf/java4s.png");
            //image.scaleAbsolute(120f, 60f);//image width,height    
@@ -42,7 +47,7 @@ public class PDFGen {
         table.addCell("Name");
         table.addCell("Expiry");
         for(MemberDetails details : members){
-        	if(details.getExpirydate().equals(DateUtility.getTodaysDate("yyyy-MM-dd"))){
+        	if(details.getExpirydate().toString().equals(DateUtility.getTodaysDate("yyyy-MM-dd"))){
 	            table.addCell(details.getName());
 	            table.addCell(details.getExpirydate().toString());
 	    		intimator.intimateMember(details.getPhone(), "");
@@ -68,13 +73,12 @@ public class PDFGen {
 
         document.add(table);
         document.close();
-        file.close();
-        if(expires){
-        	return f;
+        /*if(expires){
+        	return file;
         }else{
-        	f.delete();
         	return null;
-        }
+        }*/
+        return file;
   }
 	
     public static void main(String[] args) {
