@@ -8,7 +8,6 @@
 
 <link href="<c:url value="/resources/css/bootstrap.css" />" rel="stylesheet">
 <link href="<c:url value="/resources/css/datepicker.css" />" rel="stylesheet">
-<link href="<c:url value="/resources/css/main.css" />" rel="stylesheet">
 <link href="<c:url value="/resources/css/register.css" />" rel="stylesheet">
 
 
@@ -18,6 +17,8 @@
 <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
 <script src="<c:url value="/resources/js/bootstrap-datepicker.js" />"></script>
 <script src="<c:url value="/resources/js/main.js" />"></script>
+<link href="<c:url value="/resources/css/main.css" />" rel="stylesheet">
+
 <link rel="import" href="popup.html"/>
 <%@ include file="popup.html" %>
 
@@ -59,7 +60,7 @@ $(document).ready(function() {
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Members Detail</title>
 </head>
-<body class="body">
+<body class="body" background="<c:url value="/resources/img/body-bg.jpg" />">
 
 	<form:form name="form" action="${pageContext.request.contextPath}/members/memberAction/${mode}" method="post" commandName="commandd">
 		<form:input type="hidden" id="id" path="id"/>

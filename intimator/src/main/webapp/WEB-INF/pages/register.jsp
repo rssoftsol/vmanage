@@ -9,25 +9,28 @@
 <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
 <link href="<c:url value="/resources/css/register.css" />" rel="stylesheet">
 <script src="<c:url value="/resources/js/main.js" />"></script>
+<%@ include file="popup.html" %>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
 <title>Registration</title>
 </head>
 <script type="text/javascript">
+if("${popupMessage}"!=''){
+	$('#popup').modal('show');
+}
 function checkPassword(t){
 	if(t.value!=document.getElementById('password').value){
 		t.value = '';
-		t.focus();
-		//alert('Password doesn`t match');
-		
+		alert('Password doesn`t match');
 	}
 }
-$(document).ready(function() {
+
+ $(document).ready(function() {
  	$("#phonenumber").ForceNumericOnly();
 });
 </script>
-<body class="body">
+<body class="body" background="<c:url value="/resources/img/body-bg.jpg" />">
 <form:form action="${pageContext.request.contextPath}/createAction.htm" method="post" commandName="command">
 	<form:hidden path="smsText" value="ur mem expire today"/>
 <%-- <form:errors path="clubDetails.*" cssClass="errorblock" element="div" />
@@ -35,22 +38,22 @@ $(document).ready(function() {
 	<div class="panel panel-default">
 	  <div class="panel-heading header"><h3 class="panel-title">Registration</h3></div>
 	  <div class="panel-body greybg">
-	    <div><font color="blue">${message}</font></div>
 	    <div class="col-xs-12">
 			<div class="col-xs-4"><label>Club Name:</label></div>
-			<div class="col-xs-4"><form:input type="text" id="clubname" path="clubname" class="form-control" /></div>
+			<div class="col-xs-4"><form:input type="text" id="clubname" path="clubname" class="form-control" required="true" autofocus="true"/></div>
 			<div class="col-xs-4"><form:errors path="clubname" cssClass="error" element="div" /></div>
 		</div>
 		
 		<div class="col-xs-12">
 			<div class="col-xs-4"><label>Phone:</label></div>
-			<div class="col-xs-4"><form:input type="text" id="phonenumber" path="phonenumber" class="form-control" /></div>
+			<div class="col-xs-4"><form:input type="text" id="phonenumber" path="phonenumber" class="form-control" required="true" autofocus="true"/></div>
 			<div class="col-xs-4"><form:errors path="phonenumber" cssClass="error" element="div" /></div>
 		</div>
 		
 		<div class="col-xs-12">
 			<div class="col-xs-4"><label>User Name:</label></div>
-			<div class="col-xs-4"><form:input type="text" id="username" path="username" class="form-control" /></div>
+			<div class="col-xs-4"><form:input type="text" id="username" path="username" class="form-control" 
+			required="true" autofocus="true"/></div>
 			<div class="col-xs-4"><form:errors path="username" cssClass="error" element="div"/></div>
 		</div>
 		
@@ -63,13 +66,14 @@ $(document).ready(function() {
 		<div class="col-xs-12">
 			<div class="col-xs-4"><label>Confirm Password :</label></div>
 			<div class="col-xs-4"><input type="password" id="confirmPassword" name="confirmPassword"
-			 class="form-control" onblur ="return checkPassword(this);" required autofocus/></div>
-			 <div class="col-xs-4"><%-- <form:errors path="clubDetails.confirmPassword" cssClass="error" element="div" /> --%></div>
+			 class="form-control" onblur ="return checkPassword(this);" required="true" autofocus="true"/></div>
+			 <div class="col-xs-4"></div>
 		 </div>
 		 
 		 <div class="col-xs-12">
 			<div class="col-xs-4"><label>Email :</label></div>
-			<div class="col-xs-4"><form:input type="text" id="email" path="email" class="form-control" /></div>
+			<div class="col-xs-4"><form:input type="text" id="email" path="email" class="form-control" 
+			required="true" autofocus="true"/></div>
 			<div class="col-xs-4"><form:errors path="email" cssClass="error" element="div" /></div>
 		</div>
 		

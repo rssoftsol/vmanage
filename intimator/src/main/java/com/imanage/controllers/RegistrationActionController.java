@@ -45,6 +45,7 @@ public class RegistrationActionController {
 			ModelAndView mav = new ModelAndView("register");
 			clubDetails.setPassword("");
 			mav.addObject("command", clubDetails);
+			model.addAttribute("menumode", "R");
 			return mav;
 		}
 		clubDetails.setPassword(passwordEncoder.encodePassword(clubDetails.getPassword(), clubDetails.getUsername()));
@@ -58,14 +59,17 @@ public class RegistrationActionController {
 			if(existingClubDetails == null){
 				clubRegService.save(clubDetails);
 				message = "Successfully registered";
+				clubDetails = new ClubDetails();
 			}else{
 				message = "User Name already taken";
+				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		model.addAttribute("message",message);
-	    return new ModelAndView("register");
+		model.addAttribute("popupMessage",message);
+		model.addAttribute("menumode", "R");
+	    return new ModelAndView("register", "command", clubDetails);
 	}
 	
 	@RequestMapping(value="/myprofile/edit", method = RequestMethod.GET)

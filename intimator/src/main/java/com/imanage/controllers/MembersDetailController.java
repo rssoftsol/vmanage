@@ -51,7 +51,7 @@ public class MembersDetailController {
 				data = data + memberDetail.getMemid()+"~"+memberDetail.getName()+"~"+memberDetail.getPhone()
 						+"~"+memberDetail.getExpirydate()+"!";
 			}
-			model.addAttribute("mode", "MEMBER");
+			model.addAttribute("mode", "BROWSE");
 			model.addAttribute("dataset", data);
 		}else{
 			attributes.addFlashAttribute("popupMessage","Please Activate the Account first");

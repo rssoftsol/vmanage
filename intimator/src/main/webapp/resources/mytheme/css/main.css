@@ -1,0 +1,23 @@
+@CHARSET "ISO-8859-1";
+
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+  color: #ffffff;
+  background-color: blue;
+}
+
+.navbar-default {
+    background-color: #400080;
+    border-color: #e7e7e7;
+}
+
+.navbar-submenu {
+    background-color: #ff8040;
+    border-color: #e7e7e7;
+}
+
+
+.navbar-default .navbar-nav > li > a {
+    color: white;
+}

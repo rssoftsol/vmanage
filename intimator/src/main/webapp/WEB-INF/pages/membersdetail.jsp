@@ -5,7 +5,6 @@
 <%@include file="submenu.jsp" %>
 <html>
 <link href="<c:url value="/resources/css/jquery.dataTables.css" />" rel="stylesheet">
-<link href="<c:url value="/resources/css/main.css" />" rel="stylesheet">
 
 <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet">
 <script src="<c:url value="/resources/js/jquery-1.11.1.min.js" />"></script>
@@ -13,6 +12,8 @@
 
 <script src="<c:url value="/resources/js/memberdetails.js" />"></script>
 <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
+<link href="<c:url value="/resources/css/main.css" />" rel="stylesheet">
+
 
 <script type="text/javascript">
 /* dataSet = [['4', 'sharat', '1234', '2015-01-27'], ['3', 'Dillu', '8451046250', '2015-03-28'], 

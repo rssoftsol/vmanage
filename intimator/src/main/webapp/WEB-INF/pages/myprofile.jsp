@@ -49,7 +49,7 @@
 	  	});
 	});
 </script>
-<body class="body">
+<body class="body" background="<c:url value="/resources/img/body-bg.jpg" />">
 <form:form name="form" action="${pageContext.request.contextPath}/myprofile/editAction.htm" method="post" commandName="command">
 <%-- <form:errors path="clubDetails.*" cssClass="errorblock" element="div" />
  --%>
