@@ -15,7 +15,7 @@
 						</a>
 					</li>
 					<li id="member"
-						><a href='${pageContext.request.contextPath}/members/browsemembers'>
+						><a href='${pageContext.request.contextPath}/members/browsemembers' >
 							<span class="glyphicon glyphicon-edit"> Operations</span>
 						</a>
 					</li>

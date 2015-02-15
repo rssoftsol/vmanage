@@ -47,6 +47,13 @@ public class ClubDetails{
 	@Column(name="roleId")
 	private Integer roleId;
 	
+	@Column(name="SMSTEXT",length=20)
+	@NotEmpty(message="SMS text is mandatory")
+	private String smsText;
+	
+	@Column(name="ISACCOUNTATIVE",length=1)
+	private String isAccountative;
+	
 	private Set<MemberDetails> memberDetails;
 	
 	@Id
@@ -131,6 +138,22 @@ public class ClubDetails{
 
 	public void setMemberDetails(Set<MemberDetails> memberDetails) {
 		this.memberDetails = memberDetails;
+	}
+	
+	public String getSmsText() {
+		return smsText;
+	}
+
+	public void setSmsText(String smsText) {
+		this.smsText = smsText;
+	}
+
+	public String getIsAccountative() {
+		return isAccountative;
+	}
+
+	public void setIsAccountative(String isAccountative) {
+		this.isAccountative = isAccountative;
 	}
 
 	@Override

@@ -42,6 +42,7 @@ public class ScheduledTaskController {
         List<ClubDetails> clubs = clubRegistrationService.findAll();
         for(ClubDetails clubDetails : clubs){
         	try {
+        		if("N".equalsIgnoreCase(clubDetails.getIsAccountative())) continue;
         		file = PDFGen.getPDFDoc(clubDetails.getMemberDetails(),
         				clubDetails.getClubname().replace(" ", ""), intimator);
         		if(null!=file){

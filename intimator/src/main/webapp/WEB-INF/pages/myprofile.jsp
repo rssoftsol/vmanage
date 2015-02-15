@@ -22,18 +22,35 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
-<title>Registration</title>
+<title>My Profile</title>
 </head>
 <script type="text/javascript">
 	if("${popupMessage}"!=''){
 		$('#popup').modal('show');
 	}
+	var active = "${isActive}";
 	$(document).ready(function() {
 	 	$("#phonenumber").ForceNumericOnly();
+	 	
+	 	if(active=='N'){
+	    	$("#deActivate").hide();
+	    }else{
+	    	$("#reActivate").hide();
+	    }
+	    
+	    $('#deActivate').on( 'click', function () {
+	  	  	$('form[name=form]').attr('action','${pageContext.request.contextPath}/myprofile/deActivate');
+	  	  	$('form[name=form]').submit();
+	  	});
+	    
+	    $('#reActivate').on( 'click', function () {
+	  	  	$('form[name=form]').attr('action','${pageContext.request.contextPath}/myprofile/reActivate');
+	  	  	$('form[name=form]').submit();
+	  	});
 	});
 </script>
 <body class="body">
-<form:form action="${pageContext.request.contextPath}/myprofile/editAction.json" method="post" commandName="command">
+<form:form name="form" action="${pageContext.request.contextPath}/myprofile/editAction.htm" method="post" commandName="command">
 <%-- <form:errors path="clubDetails.*" cssClass="errorblock" element="div" />
  --%>
  <form:input type="hidden" id="club_id" path="club_id"/>
@@ -74,7 +91,21 @@
 			Premium<form:radiobutton id="premium" path="membershiptype" value="P"/></div>
 			<div class="col-xs-4"><form:errors path="membershiptype" cssClass="error" element="div" /></div>
 		</div>
-		<div><input type="submit" value="Edit" class="btn btn-primary pull-right"></div>
+		
+		<div class="col-xs-12">
+			<div class="col-xs-4"><label>SMS Text:</label></div>
+			<div class="col-xs-4"><form:textarea id="smsText" path="smsText" class="form-control" /></div>
+			<div class="col-xs-4"><form:errors path="smsText" cssClass="smsText" element="div" /></div>
+		</div>
+		<br>
+		<div class="col-xs-12" style="margin-top:5px">
+		<div class="col-xs-11">
+			<input type="button" id="deActivate" value="Deactivate Account" class="btn btn-primary pull-right">
+			<input type="button" id="reActivate" value="Reactivate Account" class="btn btn-primary pull-right">
+		</div>
+		<div class="col-xs-1"><input type="submit" value="Edit" class="btn btn-primary"></div>
+		
+		</div>
 	  </div>
 	</div>
 

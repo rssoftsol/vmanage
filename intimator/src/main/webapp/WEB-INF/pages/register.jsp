@@ -29,6 +29,7 @@ $(document).ready(function() {
 </script>
 <body class="body">
 <form:form action="${pageContext.request.contextPath}/createAction.htm" method="post" commandName="command">
+	<form:hidden path="smsText" value="ur mem expire today"/>
 <%-- <form:errors path="clubDetails.*" cssClass="errorblock" element="div" />
  --%><div class="form-register">
 	<div class="panel panel-default">

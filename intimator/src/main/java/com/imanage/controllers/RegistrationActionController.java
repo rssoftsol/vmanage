@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.imanage.Session;
 import com.imanage.models.ClubDetails;
@@ -48,6 +49,7 @@ public class RegistrationActionController {
 		}
 		clubDetails.setPassword(passwordEncoder.encodePassword(clubDetails.getPassword(), clubDetails.getUsername()));
 		clubDetails.setRoleId(1);
+		clubDetails.setIsAccountative("Y");
 		clubDetails.setNewPassword(passwordEncoder.encodePassword(clubDetails.getPassword(), clubDetails.getUsername()));
 		String message = "Sorry, Registeration failed";
 		System.out.println("clubDetails: "+clubDetails);
@@ -67,15 +69,54 @@ public class RegistrationActionController {
 	}
 	
 	@RequestMapping(value="/myprofile/edit", method = RequestMethod.GET)
-	public ModelAndView myProfilePage(HttpSession session) {
+	public ModelAndView myProfilePage(HttpSession session, Model model, RedirectAttributes attributes) {
 		ModelAndView mav = new ModelAndView("myprofile");
 		ClubDetails clubDetails = clubRegService.findByUserName(((Session)session.getAttribute("session")).getUsername());
 		mav.addObject("command", clubDetails);
+		mav.addObject("isActive", clubDetails.getIsAccountative());
 		mav.addObject("user", ((Session)session.getAttribute("session")).getUsername());
 		return mav;
 	}
 	
-	@RequestMapping(value="/myprofile/editAction", method = RequestMethod.POST)
+	@RequestMapping(value="/myprofile/deActivate", method = RequestMethod.POST)
+	public ModelAndView deActivateAccount(HttpSession session) {
+		ModelAndView mav = new ModelAndView("myprofile");
+		String message = "";
+		ClubDetails clubDetails = clubRegService.findByUserName(((Session)session.getAttribute("session")).getUsername());
+		if("Y".equalsIgnoreCase(clubDetails.getIsAccountative())){
+			clubDetails.setIsAccountative("N");
+			clubRegService.update(clubDetails);
+			message = "Account Deactivated";
+		}else{
+			message = "Account is already Deactivate";
+		}
+		mav.addObject("popupMessage", message);
+		mav.addObject("user", ((Session)session.getAttribute("session")).getUsername());
+		mav.addObject("isActive", clubDetails.getIsAccountative());
+		mav.addObject("command", clubDetails);
+		return mav;
+	}
+	
+	@RequestMapping(value="/myprofile/reActivate", method = RequestMethod.POST)
+	public ModelAndView reActivateAccount(HttpSession session) {
+		ModelAndView mav = new ModelAndView("myprofile");
+		String message = "";
+		ClubDetails clubDetails = clubRegService.findByUserName(((Session)session.getAttribute("session")).getUsername());
+		if("Y".equalsIgnoreCase(clubDetails.getIsAccountative())){
+			message = "Account is already Active";
+		}else{
+			clubDetails.setIsAccountative("Y");
+			clubRegService.update(clubDetails);
+			message = "Account Reactivated";
+		}
+		mav.addObject("popupMessage", message);
+		mav.addObject("isActive", clubDetails.getIsAccountative());
+		mav.addObject("user", ((Session)session.getAttribute("session")).getUsername());
+		mav.addObject("command", clubDetails);
+		return mav;
+	}
+	
+	@RequestMapping(value="/myprofile/editAction.htm", method = RequestMethod.POST)
 	public ModelAndView myProfileAction(@ModelAttribute("command") 
     @Valid ClubDetails clubDetails, BindingResult result, HttpSession session) {
 		ModelAndView mav = new ModelAndView("myprofile");
@@ -89,6 +130,7 @@ public class RegistrationActionController {
 		mav.addObject("command", clubDetails);
 		mav.addObject("popupMessage", "Details updated");
 		mav.addObject("user", ((Session)session.getAttribute("session")).getUsername());
+		mav.addObject("isActive", clubDetails.getIsAccountative());
 		return mav;
 	}
 	

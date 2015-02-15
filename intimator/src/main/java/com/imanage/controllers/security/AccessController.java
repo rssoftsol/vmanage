@@ -64,16 +64,9 @@ public class AccessController {
 		String userRole = authList.get(0).getAuthority();
 		logger.info("userRole : " + userRole);
 		if (userRole.equalsIgnoreCase("ROLE_ADMIN")) {
-			String data ="";
 			Session.getSessionInstance().setUsername(authentication.getName());
 			session.setAttribute("session", Session.getSessionInstance());
-			ClubDetails clubDetails = clubRegistrationService.findByUserName(((Session)session.getAttribute("session")).getUsername());
-			for(MemberDetails memberDetail : clubDetails.getMemberDetails()){
-				data = data + memberDetail.getMemid()+"~"+memberDetail.getName()+"~"+memberDetail.getPhone()
-						+"~"+memberDetail.getExpirydate()+"!";
-			}
-			model.addAttribute("dataset", data);
-			return "membersdetail";
+			return "redirect:/members/browsemembers";
 		} else {
 			return "redirect:membersdetail";
 		}

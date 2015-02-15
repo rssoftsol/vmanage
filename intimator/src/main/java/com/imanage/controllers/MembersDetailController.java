@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.imanage.Session;
 import com.imanage.models.ClubDetails;
@@ -39,17 +40,24 @@ public class MembersDetailController {
 	MemberRegistrationService memberRegistrationService;
 	
 	@RequestMapping(value="/browsemembers", method = RequestMethod.GET)
-	public ModelAndView browseMembersPage(HttpSession session) {
+	public String browseMembersPage(HttpSession session, Model model, RedirectAttributes attributes) {
 		String data = "";
-		ModelAndView mav = new ModelAndView("membersdetail");
 		ClubDetails clubDetails = clubRegistrationService.findByUserName(((Session)session.getAttribute("session")).getUsername());
-		for(MemberDetails memberDetail : clubDetails.getMemberDetails()){
-			data = data + memberDetail.getMemid()+"~"+memberDetail.getName()+"~"+memberDetail.getPhone()
-					+"~"+memberDetail.getExpirydate()+"!";
+		String view =null;
+		if("Y".equalsIgnoreCase(clubDetails.getIsAccountative())){
+			view = "membersdetail";
+			
+			for(MemberDetails memberDetail : clubDetails.getMemberDetails()){
+				data = data + memberDetail.getMemid()+"~"+memberDetail.getName()+"~"+memberDetail.getPhone()
+						+"~"+memberDetail.getExpirydate()+"!";
+			}
+			model.addAttribute("mode", "MEMBER");
+			model.addAttribute("dataset", data);
+		}else{
+			attributes.addFlashAttribute("popupMessage","Please Activate the Account first");
+			return "redirect:/myprofile/edit";
 		}
-		mav.addObject("mode", "BROWSE");
-		mav.addObject("dataset", data);
-		return mav;
+		return view;
 	}
 	
 	@InitBinder
