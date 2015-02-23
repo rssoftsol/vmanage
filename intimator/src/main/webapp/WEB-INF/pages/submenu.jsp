@@ -28,6 +28,12 @@
 						</a>
 					</li>
 					
+					<li id="deleteMember">
+						<a href='${pageContext.request.contextPath}/members/member/upload'>
+							<span class='glyphicon glyphicon-upload'>Upload Excel</span>
+						</a>
+					</li>
+					
 		  		</ul>
 			</div>
 		</div>

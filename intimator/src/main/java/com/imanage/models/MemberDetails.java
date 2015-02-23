@@ -10,12 +10,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.Valid;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.NumberFormat;
 import org.springframework.format.annotation.NumberFormat.Style;
+import org.springframework.validation.BindingResult;
 
 @Entity
 @Table(name="member_details")
@@ -38,6 +40,17 @@ public class MemberDetails {
 	
 	
 	private ClubDetails clubDetails;
+	
+	public MemberDetails() {
+		super();
+	}
+	
+	public MemberDetails(String memid, String name, Long phone, Date expirydate){
+		this.memid = memid;
+		this.name = name;
+		this.phone = phone;
+		this.expirydate = expirydate;
+	}
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -98,6 +111,10 @@ public class MemberDetails {
 	public String toString() {
 		// TODO Auto-generated method stub
 		return "phone:"+phone;
+	}
+	
+	public BindingResult validate(@Valid MemberDetails memberDetails, BindingResult result){
+		return result;
 	}
 	
 }

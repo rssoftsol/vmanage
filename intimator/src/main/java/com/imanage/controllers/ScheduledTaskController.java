@@ -18,7 +18,7 @@ import com.imanage.models.ClubDetails;
 import com.imanage.models.EmailConfigBean;
 import com.imanage.services.register.ClubRegistrationService;
 
-@EnableScheduling
+//@EnableScheduling
 @Controller
 public class ScheduledTaskController {
 
@@ -35,7 +35,7 @@ public class ScheduledTaskController {
 	@Autowired
 	Intimator intimator;
 	
-    @Scheduled(fixedRate = 500000,initialDelay=5000)
+    //@Scheduled(fixedRate = 500000,initialDelay=5000)
     public void reportCurrentTime() {
         System.out.println("The time is now " + dateFormat.format(new Date()));
         FileSystemResource file = null;
@@ -51,6 +51,7 @@ public class ScheduledTaskController {
             				withEmailAttachment(file).withMailBody(emailConfigBean.getEmailPDFInfoText());
         			
         			intimator.intimateOwner(emailBean, mailSenderImpl);
+        			
         		}
         		
 			} catch (Exception e) {

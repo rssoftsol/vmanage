@@ -61,46 +61,21 @@ $(document).ready(function() {
 </head>
 <body class="body" background="<c:url value="/resources/img/body-bg.jpg" />">
 
-	<form:form name="form" action="${pageContext.request.contextPath}/members/memberAction/${mode}" method="post" commandName="commandd">
-		<form:input type="hidden" id="id" path="id"/>
+	<form:form name="form" enctype="multipart/form-data" action="${pageContext.request.contextPath}/members/member/uploadAction" method="post">
 		<div class="form-register">
 			<div class="panel panel-default">
-			<div class="panel-heading"><h3 class="panel-title">${headermsg}</h3></div>
-			<div class="panel-body greybg">
-		        
-		        <div class='col-xs-12'>
-			        <div class='col-xs-3'><label>Id:</label></div>
-			        <div class='col-xs-2'><form:input type="text" id='memid' path="memid" class="form-control"/></div>
-			        <div class='col-xs-2'>
-			        	<input type="button" value="Get Mem" id='getMemBtn' hidden='true'  class="btn btn-primary">
-			        </div>
-			        <div class='col-xs-5'><form:errors path="memid" cssClass="error" element="div"/></div>
+				<div class="panel-heading"><h3 class="panel-title">Excel upload</h3></div>
+				<div class="panel-body">
 			        
-		        </div>
-		        
-		        <div class='col-xs-12'>
-			        <div class='col-xs-3'><label>Name:</label></div>
-			        <div class='col-xs-4'><form:input type="text" id='name' path="name" class="form-control"/></div>
-			        <div class='col-xs-5'><form:errors path="name" cssClass="error" element="div"/></div>
-		        </div>
-		        
-		        <div class='col-xs-12'>
-			        <div class='col-xs-3'><label>Phone No:</label></div>
-			        <div class='col-xs-4'><form:input type="text" id='phone' path="phone" class="form-control"/></div>
-			        <div class='col-xs-5'><form:errors  path="phone" cssClass="error" element="div"/></div>
-		        </div>
-		        
-		        <div class='col-xs-12'>
-			        <div class='col-xs-3'><label>Expiry Date:</label></div>
-			        <div class="container col-xs-4">
-			            <div class="hero-unit">
-			                <form:input placeholder="click to show datepicker"  id="example1" type="text" path="expirydate" class="form-control"/>
-			            </div>
+			        <div class='col-xs-12'>
+				        <div class='col-xs-2'><label>File:</label></div>
+				        <div class='col-xs-8'><input type="file" id='file' name="file" class="form-control"/></div>
+				        <div class='col-xs-2'>
+				        	<input type="submit" value="Upload" id='upload' hidden='true'  class="btn btn-primary">
+				        </div>
 			        </div>
-			        <div class='col-xs-5'><form:errors  path="expirydate" cssClass="error" element="div"/></div>
-		       </div>
-		        <div><input type="submit" value="${mode}" class="btn btn-primary pull-right"></div>
-		    </div>
+			        
+			    </div>
 		    </div>
 		</div>
 	  </form:form>

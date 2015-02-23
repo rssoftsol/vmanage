@@ -61,6 +61,13 @@ public class Utility {
 		return dateDiff;
 	}
 
+	public static boolean isNumeric(String str){
+	    for (char c : str.toCharArray()){
+	        if (!Character.isDigit(c)) return false;
+	    }
+	    return true;
+	}
+	
 	public static void main(String[] args) throws ParseException {
 
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

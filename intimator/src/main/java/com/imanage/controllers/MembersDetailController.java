@@ -1,15 +1,20 @@
 package com.imanage.controllers;
 
 import java.beans.PropertyEditorSupport;
+import java.io.IOException;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.HashSet;
 import java.util.Set;
+import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +24,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -28,6 +35,8 @@ import com.imanage.models.MemberDetails;
 import com.imanage.services.members.MemberRegistrationService;
 import com.imanage.services.register.ClubRegistrationService;
 import com.imanage.util.crud.impl.CRUDHandlerImpl;
+import com.imanage.util.excel.members.MembersDetailExcelReader;
+import com.imanage.util.excel.members.MembersDetailUploadBean;
 
 @Controller
 @RequestMapping("/members")
@@ -138,4 +147,115 @@ public class MembersDetailController {
 		model.addAttribute("headermsg", "Provide Member Details"); 
 	}
 	
+	@RequestMapping(value="/member/upload", method=RequestMethod.GET)
+    public ModelAndView uploadExcelPage() {
+		ModelAndView mav = new ModelAndView("uploadexcel");
+		return mav;
+	}
+	
+	@RequestMapping(value="/member/uploadAction", method=RequestMethod.POST)
+    public ModelAndView uploadExcelPage(@RequestParam("file") MultipartFile file) {
+		ModelAndView mav = null;
+		if(!"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet".equals(file.getContentType())){
+			mav = new ModelAndView("uploadexcel");
+			mav.addObject("popupMessage", "Invalid file format");
+			return mav;
+		}
+		String validMembers = "";
+		String invalidMembers = "";
+		try {
+			if (!file.isEmpty()) {
+				Set<String> memberIds = new HashSet<String>();
+				Authentication authentication = SecurityContextHolder.getContext()
+						.getAuthentication();
+				ClubDetails clubDetails = clubRegistrationService.findByUserName(authentication.getName());
+				for(MemberDetails memberDetails : clubDetails.getMemberDetails()){
+					memberIds.add(memberDetails.getMemid());
+				}
+				MembersDetailExcelReader membersDetailExcelReader = new MembersDetailExcelReader();
+				membersDetailExcelReader.memberDetails = memberIds;
+				Vector<MembersDetailUploadBean> excelData = membersDetailExcelReader.
+						 importExcelSheet(file.getInputStream());
+				System.out.println("excelData--->"+excelData);
+				if(excelData == null){
+					mav = new ModelAndView("uploadexcel");
+					mav.addObject("popupMessage", "Invalid file format");
+					return mav;
+				}else{
+					for(MembersDetailUploadBean membersDetailUploadBean : excelData){
+						if(membersDetailUploadBean.hasError){
+							invalidMembers = invalidMembers + membersDetailUploadBean.memberId+"~"+
+									membersDetailUploadBean.name+"~"+membersDetailUploadBean.phonenumber+"~"+
+									membersDetailUploadBean.expiryDate+"~"+membersDetailUploadBean.getErrorString()+"!";
+						}else{
+							validMembers = validMembers + membersDetailUploadBean.memberId+"~"+
+									membersDetailUploadBean.name+"~"+membersDetailUploadBean.phonenumber+"~"+
+									membersDetailUploadBean.expiryDate+"!";
+						}
+					}
+					if("".equalsIgnoreCase(invalidMembers)){
+						processMembersString(validMembers, clubDetails);
+						mav = new ModelAndView("uploadexcel");
+						mav.addObject("popupMessage", "Upload completed");
+						return mav;
+					}else{
+						mav = new ModelAndView("confirmupload");
+						if("".equalsIgnoreCase(validMembers))
+							mav.addObject("UPLOADINFO", "All member's of excel has invalid data as listed above");
+						else
+							mav.addObject("UPLOADINFO", "Member's listed above has invalid data");
+						System.out.println("VALIDMEMBERS--->"+validMembers);
+						System.out.println("INVALIDMEMBERS--->"+invalidMembers);
+						mav.addObject("VALIDMEMBERS", validMembers);
+						mav.addObject("INVALIDMEMBERS", invalidMembers);
+						return mav;
+					}
+				}
+			}else{
+				mav.addObject("popupMessage", "Please select the file first");
+				return mav;
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//mav.addObject("popupMessage", "Upload completed");
+		return mav;
+	}
+	
+	@RequestMapping(value="/confirmupload", method=RequestMethod.POST)
+    public ModelAndView confirmUpload(@RequestParam("validmembers") String validmembers) {
+		Authentication authentication = SecurityContextHolder.getContext()
+				.getAuthentication();
+		ClubDetails clubDetails = clubRegistrationService.findByUserName(authentication.getName());
+		processMembersString(validmembers, clubDetails);
+		ModelAndView mav = new ModelAndView("uploadexcel");
+		mav.addObject("popupMessage", "Upload completed");
+		return mav;
+	}
+	
+	@RequestMapping(value="/cancelupload", method=RequestMethod.POST)
+    public ModelAndView cancelUpload() {
+		ModelAndView mav = new ModelAndView("uploadexcel");
+		mav.addObject("popupMessage", "Upload Aborted");
+		return mav;
+	}
+	
+	private void processMembersString(String members, ClubDetails clubDetails){
+		String[] validmembersArr = members.split("!");
+		for(int i=0;i<validmembersArr.length;i++){
+			String[] memberArr = validmembersArr[i].split("~");
+			try {
+				MemberDetails memberDetails = new MemberDetails(
+						memberArr[0], memberArr[1], Long.valueOf(memberArr[2]), 
+						new java.sql.Date(new SimpleDateFormat("dd/MM/yyyy").parse(memberArr[3]).getTime()));
+				memberDetails.setClubDetails(clubDetails);
+				
+				memberRegistrationService.save(memberDetails);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 }
