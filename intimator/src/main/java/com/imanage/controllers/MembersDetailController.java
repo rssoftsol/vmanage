@@ -1,7 +1,10 @@
 package com.imanage.controllers;
 
 import java.beans.PropertyEditorSupport;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,6 +12,9 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Vector;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -156,11 +162,11 @@ public class MembersDetailController {
 	@RequestMapping(value="/member/uploadAction", method=RequestMethod.POST)
     public ModelAndView uploadExcelPage(@RequestParam("file") MultipartFile file) {
 		ModelAndView mav = null;
-		if(!"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet".equals(file.getContentType())){
+		/*if(!"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet".equals(file.getContentType())){
 			mav = new ModelAndView("uploadexcel");
 			mav.addObject("popupMessage", "Invalid file format");
 			return mav;
-		}
+		}*/
 		String validMembers = "";
 		String invalidMembers = "";
 		try {
@@ -240,6 +246,57 @@ public class MembersDetailController {
 		mav.addObject("popupMessage", "Upload Aborted");
 		return mav;
 	}
+	
+	 /**
+     * Handle request to download an Excel document
+     */
+    @RequestMapping(value = "/mymembers.xls", method = RequestMethod.POST)
+    public void downloadExcel(HttpServletRequest request,
+            HttpServletResponse response) {
+        // create some sample data
+    	//ServletContext context = request.getServletContext();
+        ClassLoader classLoader = MembersDetailController.class.getClassLoader();
+		String path = classLoader.getResource("/resources").getPath();
+		String fullPath = path+"/sampleexcel/mymembers.xls";
+		File downloadFile = new File(fullPath);
+        
+        String mimeType = null;//context.getMimeType(fullPath);
+        if (mimeType == null) {
+            // set to binary type if MIME mapping not found
+            mimeType = "application/octet-stream";
+        }
+        System.out.println("MIME type: " + mimeType);
+ 
+        // set content attributes for the response
+        response.setContentType(mimeType);
+        response.setContentLength((int) downloadFile.length());
+ 
+        // set headers for the response
+        String headerKey = "Content-Disposition";
+        String headerValue = String.format("attachment; filename=\"%s\"",
+                downloadFile.getName());
+        response.setHeader(headerKey, headerValue);
+ 
+        // get output stream of the response
+        try {
+        	FileInputStream inputStream = new FileInputStream(downloadFile);
+			OutputStream outStream = response.getOutputStream();
+			final int BUFFER_SIZE = 4096;
+			byte[] buffer = new byte[BUFFER_SIZE];
+			int bytesRead = -1;
+ 
+			// write bytes read from the input stream into the output stream
+			while ((bytesRead = inputStream.read(buffer)) != -1) {
+			    outStream.write(buffer, 0, bytesRead);
+			}
+ 
+			inputStream.close();
+			outStream.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
 	
 	private void processMembersString(String members, ClubDetails clubDetails){
 		String[] validmembersArr = members.split("!");

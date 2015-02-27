@@ -25,31 +25,12 @@
 if("${popupMessage}"!=''){
 	$('#popup').modal('show');
 }
-//alert('hi');
-/* var addMode = "AM";
-var modifyMode = "MM";
-var deleteMode = "DM";
- */
-var mode = "${mode}";
-var get_mem_button_visibility = (mode != "ADD");
-var text_field_visibility = (mode != "DELETE");
 $(document).ready(function() {
-    $('#example1').datepicker({
-        format: "dd/mm/yyyy"
-    });
-    if(!get_mem_button_visibility){
-    	$("#getMemBtn").hide();
-    }
-    if(!text_field_visibility){
-    	$( "#name" ).prop( "readonly", true );
-    	$( "#phone" ).prop( "readonly", true );
-    	$( "#example1" ).prop( "readonly", true );
-    }
-    $('#getMemBtn').on( 'click', function () {
-  	  	$('form[name=form]').attr('action','${pageContext.request.contextPath}/members/view/${mode}/'+document.getElementById('memid').value);
+    $('#downloadExcel').on( 'click', function () {
+    	alert('hi');
+  	  	$('form[name=form]').attr('action','${pageContext.request.contextPath}/members/mymembers.xls');
   	  	$('form[name=form]').submit();
   	});
-    $("#phone").ForceNumericOnly();
 } );
 
 
@@ -74,8 +55,8 @@ $(document).ready(function() {
 				        	<input type="submit" value="Upload" id='upload' hidden='true'  class="btn btn-primary">
 				        </div>
 			        </div>
-			        
 			    </div>
+			    <div class="panel-footer">Click<a href="#" id="downloadExcel"><b> here </b> </a> to download required excel format</div>
 		    </div>
 		</div>
 	  </form:form>
