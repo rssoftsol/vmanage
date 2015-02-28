@@ -10,13 +10,15 @@
 	      		<ul class="nav navbar-nav"> 
 					<li><a><span class="glyphicon glyphicon-time"> ${date}</span></a></li>
 					<li><a><span>Welcome ${user}</span></a></li>
-					<li id="myprofile">
+					<li id="myprofile" data-toggle="tooltip" data-placement="bottom" 
+	      			title="View or edit your details here">
 						<a href='${pageContext.request.contextPath}/myprofile/edit'>
 							<span class="glyphicon glyphicon-user"> MyProfile</span>
 						</a>
 					</li>
-					<li id="member"
-						><a href='${pageContext.request.contextPath}/members/browsemembers' >
+					<li id="member" data-toggle="tooltip" data-placement="bottom" 
+	      			title="Perform member operations here, like add,change,remove,search">
+						<a href='${pageContext.request.contextPath}/members/browsemembers' >
 							<span class="glyphicon glyphicon-edit"> Operations</span>
 						</a>
 					</li>

@@ -19,16 +19,19 @@
 <script src="<c:url value="/resources/js/main.js" />"></script>
 <link href="<c:url value="/resources/css/main.css" />" rel="stylesheet">
 
-<%@ include file="popup.html" %>
+<%@ include file="popupinfo.html" %>
+<%@ include file="popuperror.html" %>
 
 <script type="text/javascript">
-if("${popupMessage}"!=''){
-	$('#popup').modal('show');
-}
+$('#addMember').addClass('active');
 $(document).ready(function() {
     $('#downloadExcel').on( 'click', function () {
-    	alert('hi');
   	  	$('form[name=form]').attr('action','${pageContext.request.contextPath}/members/mymembers.xls');
+  	  	$('form[name=form]').submit();
+  	});
+    $('#singleupload').on( 'click', function () {
+  	  	$('form[name=form]').attr('action','${pageContext.request.contextPath}/members/member/ADD');
+  	  	$('form[name=form]').attr('method','GET');
   	  	$('form[name=form]').submit();
   	});
 } );
@@ -56,9 +59,10 @@ $(document).ready(function() {
 				        </div>
 			        </div>
 			    </div>
-			    <div class="panel-footer">Click<a href="#" id="downloadExcel"><b> here </b> </a> to download required excel format</div>
+			    <div class="panel-footer">Click<a href="#" id="singleupload"><b> here </b> </a> to add single member at a time</div>
 		    </div>
 		</div>
+		<div class="pull-right">Please<a href="#" id="downloadExcel"><b> Download </b> </a>valid excel format for uploading</div>
 	  </form:form>
 </body>
 </html>

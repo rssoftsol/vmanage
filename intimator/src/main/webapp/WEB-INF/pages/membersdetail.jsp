@@ -13,6 +13,7 @@
 <script src="<c:url value="/resources/js/memberdetails.js" />"></script>
 <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
 <link href="<c:url value="/resources/css/main.css" />" rel="stylesheet">
+<script src="<c:url value="/resources/js/main.js" />"></script>
 
 
 <script type="text/javascript">

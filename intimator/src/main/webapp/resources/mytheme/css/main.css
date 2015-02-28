@@ -32,6 +32,22 @@
 	
 }
 
-.modal-header {
+.modal-info-header {
   background-color: #80ff80;
+}
+
+.modal-error-header {
+  background-color: #ff8080;
+}
+
+
+.error {
+	color: #d21813;	
+}
+
+.modal-dialog-center { /* Edited classname 10/03/2014 */
+    margin: 0;
+    position: absolute;
+    top: 40%;
+    left: 25%;
 }

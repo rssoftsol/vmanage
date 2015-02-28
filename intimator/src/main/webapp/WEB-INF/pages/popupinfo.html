@@ -1,0 +1,22 @@
+<div class="modal fade" id="popupinfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header modal-info-header">
+        <h4 class="modal-title glyphicon glyphicon-info-sign" id="myModalLabel">Info</h4>
+      </div>
+      <div class="modal-body">
+      	<div>${popupInfoMessage}</div> 
+	  </div>
+	  <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">ok</button>
+      </div>
+    </div>
+  </div>
+</div><!-- /.modal -->
+<script type="text/javascript">
+if("${popupInfoMessage}"!=''){
+	$('#popupinfo').modal('show');
+}
+</script>
+
+

@@ -12,7 +12,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Vector;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -40,6 +39,7 @@ import com.imanage.models.ClubDetails;
 import com.imanage.models.MemberDetails;
 import com.imanage.services.members.MemberRegistrationService;
 import com.imanage.services.register.ClubRegistrationService;
+import com.imanage.util.MemberModeEnum;
 import com.imanage.util.crud.impl.CRUDHandlerImpl;
 import com.imanage.util.excel.members.MembersDetailExcelReader;
 import com.imanage.util.excel.members.MembersDetailUploadBean;
@@ -69,7 +69,7 @@ public class MembersDetailController {
 			model.addAttribute("mode", "BROWSE");
 			model.addAttribute("dataset", data);
 		}else{
-			attributes.addFlashAttribute("popupMessage","Please Activate the Account first");
+			attributes.addFlashAttribute("popupInfoMessage","Please Activate the Account first");
 			return "redirect:/myprofile/edit";
 		}
 		return view;
@@ -98,7 +98,7 @@ public class MembersDetailController {
 	@RequestMapping(value="/member/{mode}", method=RequestMethod.GET)
     public ModelAndView addMembersPage(@PathVariable("mode") String mode) {
 		ModelAndView mav = new ModelAndView("member");
-		mav.addObject("mode", mode);
+		mav.addObject("mode", MemberModeEnum.getMemberModeEnum(mode));
 		mav.addObject("commandd", new MemberDetails());
 		return mav;
 	}
@@ -118,7 +118,7 @@ public class MembersDetailController {
 			}
 		}
 		mav.addObject("commandd", new MemberDetails());
-		mav.addObject("popupMessage","No member exist with given Id:"+id);
+		mav.addObject("popupErrorMessage","No member exist with given Id:"+id);
 		return mav;
 	}
 	
@@ -126,7 +126,7 @@ public class MembersDetailController {
     public ModelAndView viewMemberDetails(@PathVariable("mode") String mode) {
 		ModelAndView mav = new ModelAndView("member");
 		mav.addObject("mode", mode);
-		mav.addObject("popupMessage","Please provide Member Id");
+		mav.addObject("popupErrorMessage","Please provide Member Id");
 		mav.addObject("commandd", new MemberDetails());
 		return mav;
 	}
@@ -185,7 +185,7 @@ public class MembersDetailController {
 				System.out.println("excelData--->"+excelData);
 				if(excelData == null){
 					mav = new ModelAndView("uploadexcel");
-					mav.addObject("popupMessage", "Invalid file format");
+					mav.addObject("popupErrorMessage", "Invalid file format");
 					return mav;
 				}else{
 					for(MembersDetailUploadBean membersDetailUploadBean : excelData){
@@ -202,7 +202,7 @@ public class MembersDetailController {
 					if("".equalsIgnoreCase(invalidMembers)){
 						processMembersString(validMembers, clubDetails);
 						mav = new ModelAndView("uploadexcel");
-						mav.addObject("popupMessage", "Upload completed");
+						mav.addObject("popupInfoMessage", "Upload completed");
 						return mav;
 					}else{
 						mav = new ModelAndView("confirmupload");
@@ -218,7 +218,7 @@ public class MembersDetailController {
 					}
 				}
 			}else{
-				mav.addObject("popupMessage", "Please select the file first");
+				mav.addObject("popupErrorMessage", "Please select the file first");
 				return mav;
 			}
 		} catch (IOException e) {
@@ -236,14 +236,14 @@ public class MembersDetailController {
 		ClubDetails clubDetails = clubRegistrationService.findByUserName(authentication.getName());
 		processMembersString(validmembers, clubDetails);
 		ModelAndView mav = new ModelAndView("uploadexcel");
-		mav.addObject("popupMessage", "Upload completed");
+		mav.addObject("popupInfoMessage", "Upload completed");
 		return mav;
 	}
 	
 	@RequestMapping(value="/cancelupload", method=RequestMethod.POST)
     public ModelAndView cancelUpload() {
 		ModelAndView mav = new ModelAndView("uploadexcel");
-		mav.addObject("popupMessage", "Upload Aborted");
+		mav.addObject("popupInfoMessage", "Upload Aborted");
 		return mav;
 	}
 	
@@ -261,10 +261,8 @@ public class MembersDetailController {
 		File downloadFile = new File(fullPath);
         
         String mimeType = null;//context.getMimeType(fullPath);
-        if (mimeType == null) {
-            // set to binary type if MIME mapping not found
-            mimeType = "application/octet-stream";
-        }
+            // set to binary type
+        mimeType = "application/octet-stream";
         System.out.println("MIME type: " + mimeType);
  
         // set content attributes for the response

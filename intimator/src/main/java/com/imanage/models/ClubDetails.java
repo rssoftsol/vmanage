@@ -24,31 +24,44 @@ public class ClubDetails{
 	@Column(name="club_id")
     @GeneratedValue
 	private Integer club_id;
+	
 	@Column(name="username",length=20)
 	@NotEmpty(message="User Name is mandatory")
+	@Size(max=20,message="Maximum length is 20")
 	private String username;
+	
 	@Column(name="password",length=40)
 	@NotEmpty(message="Password is mandatory")
+	@Size(max=20,message="Maximum length is 20")
 	private String password;
+	
 	@Column(name="newPassword",length=40)
 	private String newPassword;
+	
 	@Column(name="membershiptype",length=1)
 	private String membershiptype;
+	
 	@Column(name="phonenumber",length=20)
 	@NotNull(message="Phone is mandatory")
 	private Long phonenumber;
+	
 	@Column(name="clubname",length=20)
 	@NotEmpty(message="Club name is mandatory")
+	@Size(max=20,message="Maximum length is 20")
 	private String clubname;
+	
 	@Column(name="email",length=35)
 	@Email(message="Invalid email")
 	@NotEmpty(message="Email is mandatory")
+	@Size(max=40,message="Maximum length is 40")
 	private String email;
+	
 	@Column(name="roleId")
 	private Integer roleId;
 	
 	@Column(name="SMSTEXT",length=20)
 	@NotEmpty(message="SMS text is mandatory")
+	@Size(max=160,message="Maximum length is 160")
 	private String smsText;
 	
 	@Column(name="ISACCOUNTATIVE",length=1)

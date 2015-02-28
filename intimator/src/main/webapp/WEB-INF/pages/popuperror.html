@@ -1,0 +1,22 @@
+<div class="modal fade" id="popuperror" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header modal-error-header">
+        <h4 class="modal-title glyphicon glyphicon-warning-sign" id="myModalLabel">Error</h4>
+      </div>
+      <div class="modal-body">
+      	<div>${popupErrorMessage}</div> 
+	  </div>
+	  <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">ok</button>
+      </div>
+    </div>
+  </div>
+</div><!-- /.modal -->
+<script type="text/javascript">
+if("${popupErrorMessage}"!=''){
+	$('#popuperror').modal('show');
+}
+</script>
+
+

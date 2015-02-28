@@ -17,7 +17,9 @@
 <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
 <script src="<c:url value="/resources/js/bootstrap-datepicker.js" />"></script>
 <script src="<c:url value="/resources/js/main.js" />"></script>
-<%@ include file="popup.html" %>
+<script src="<c:url value="/resources/js/jquery.maxlength.js" />"></script>
+<%@ include file="popupinfo.html" %>
+<%@ include file="popuperror.html" %>
 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -25,9 +27,6 @@
 <title>My Profile</title>
 </head>
 <script type="text/javascript">
-	if("${popupMessage}"!=''){
-		$('#popup').modal('show');
-	}
 	var active = "${isActive}";
 	$(document).ready(function() {
 	 	$("#phonenumber").ForceNumericOnly();
@@ -62,25 +61,26 @@
 	  <div class="panel-body greybg">
 	    <div class="col-xs-12">
 			<div class="col-xs-4"><label>Club Name:</label></div>
-			<div class="col-xs-4"><form:input type="text" id="clubname" path="clubname" class="form-control" /></div>
+			<div class="col-xs-4"><form:input type="text" id="clubname" maxlength="20" path="clubname" class="form-control" /></div>
 			<div class="col-xs-4"><form:errors path="clubname" cssClass="error" element="div" /></div>
 		</div>
 		
 		<div class="col-xs-12">
 			<div class="col-xs-4"><label>Phone:</label></div>
-			<div class="col-xs-4"><form:input type="text" id="phonenumber" path="phonenumber" class="form-control" /></div>
+			<div class="col-xs-4"><form:input type="text" id="phonenumber" maxlength="10" path="phonenumber" class="form-control" /></div>
 			<div class="col-xs-4"><form:errors path="phonenumber" cssClass="error" element="div" /></div>
 		</div>
 		
 		<div class="col-xs-12">
 			<div class="col-xs-4"><label>User Name:</label></div>
-			<div class="col-xs-4"><form:input type="text" id="username" path="username" class="form-control" readonly="true"/></div>
+			<div class="col-xs-4"><form:input type="text" id="username"
+				maxlength="20" path="username" class="form-control" readonly="true"/></div>
 			<div class="col-xs-4"><form:errors path="username" cssClass="error" element="div"/></div>
 		</div>
 		
 		 <div class="col-xs-12">
 			<div class="col-xs-4"><label>Email :</label></div>
-			<div class="col-xs-4"><form:input type="text" id="email" path="email" class="form-control" /></div>
+			<div class="col-xs-4"><form:input type="text" id="email" maxlength="40" path="email" class="form-control" /></div>
 			<div class="col-xs-4"><form:errors path="email" cssClass="error" element="div" /></div>
 		</div>
 		
@@ -94,24 +94,20 @@
 		
 		<div class="col-xs-12">
 			<div class="col-xs-4"><label>SMS Text:</label></div>
-			<div class="col-xs-4"><form:textarea id="smsText" path="smsText" class="form-control" /></div>
+			<div class="col-xs-4"><form:textarea id="smsText" maxlength="160" path="smsText" class="form-control" /></div>
 			<div class="col-xs-4"><form:errors path="smsText" cssClass="smsText" element="div" /></div>
 		</div>
-		<br>
+		
 		<div class="col-xs-12" style="margin-top:5px">
-		<div class="col-xs-11">
-			<input type="button" id="deActivate" value="Deactivate Account" class="btn btn-primary pull-right">
-			<input type="button" id="reActivate" value="Reactivate Account" class="btn btn-primary pull-right">
-		</div>
+			<div class="col-xs-11">
+				<input type="button" id="deActivate" value="Deactivate Account" class="btn btn-primary pull-right">
+				<input type="button" id="reActivate" value="Reactivate Account" class="btn btn-primary pull-right">
+			</div>
 		<div class="col-xs-1"><input type="submit" value="Edit" class="btn btn-primary"></div>
 		
 		</div>
 	  </div>
 	</div>
-
-	
-	
-		
 	</div>
 </form:form>
 </body>

@@ -32,3 +32,7 @@ jQuery.fn.ForceNumericOnly =
 	        });
 	    });
 	};
+
+	$(document).ready(function() {
+	    $('[data-toggle=tooltip]').tooltip();
+	}); 

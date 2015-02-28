@@ -84,7 +84,9 @@ public class MembersDetailUploadBean {
 			return false;
 		}
 		try {
-            new java.sql.Date(new SimpleDateFormat("dd/MM/yyyy").parse(expiryDate).getTime());
+			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+			format.setLenient(false);
+            new java.sql.Date(format.parse(expiryDate).getTime());
         } catch(ParseException e) {
         	expiryDateError = "Invalid Date";
         	hasError = true;

@@ -7,32 +7,31 @@
   		<div class="container-fluid">
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	      		<ul class="nav navbar-nav"> 
-	      			<li id="myMember">
-	      				<a href="${pageContext.request.contextPath}/members/browsemembers"  >
+	      			<li id="myMember" data-toggle="tooltip" data-placement="bottom" 
+	      			title="Search your club members here.By default all members are shown">
+	      				<a href="${pageContext.request.contextPath}/members/browsemembers">
 	      					<span class='glyphicon glyphicon-search'></span></a>
 	      			</li>
 	      
-					<li id="addMember">
+					<li id="addMember" data-toggle="tooltip" data-placement="bottom" 
+	      			title="Add details of your new club member here">
 						<a href='${pageContext.request.contextPath}/members/member/ADD'>
 							<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 						</a>
 					</li>
-					<li id="modifyMember">
+					<li id="modifyMember" data-toggle="tooltip" data-placement="bottom" 
+	      			title="Update details of your existing club member here">
 						<a href='${pageContext.request.contextPath}/members/member/MODIFY'>
 							<span class='glyphicon glyphicon-pencil' ></span>
 						</a>
 					</li>
-					<li id="deleteMember">
+					<li id="deleteMember" data-toggle="tooltip" data-placement="bottom" 
+	      			title="Delete club member here">
 						<a href='${pageContext.request.contextPath}/members/member/DELETE'>
 							<span class='glyphicon glyphicon-remove' ></span>
 						</a>
 					</li>
 					
-					<li id="deleteMember">
-						<a href='${pageContext.request.contextPath}/members/member/upload'>
-							<span class='glyphicon glyphicon-upload'>Upload Excel</span>
-						</a>
-					</li>
 					
 		  		</ul>
 			</div>

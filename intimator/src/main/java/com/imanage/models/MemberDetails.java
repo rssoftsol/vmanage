@@ -13,6 +13,7 @@ import javax.persistence.Table;
 import javax.validation.Valid;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.NumberFormat;
@@ -26,18 +27,21 @@ public class MemberDetails {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID", unique = true, nullable = false)
 	private Integer id;
-	@NotEmpty(message="Member Id is mandatory")
-	private String memid;
-	@NotNull(message="Phone is mandatory")
-	@NumberFormat(style= Style.NUMBER)
-	private Long phone;
-	@NotEmpty(message="Name is mandatory")
 	
+	@NotEmpty(message="Member Id is mandatory")
+	@Size(max=20,message="Maximum length is 20")
+	private String memid;
+	
+	@NotNull(message="Phone is mandatory")
+	private Long phone;
+	
+	@NotEmpty(message="Name is mandatory")
+	@Size(max=20,message="Maximum length is 20")
 	private String name;
+	
 	@NotNull(message="Expiry Date is mandatory")
 	@Future(message="Invalid date")
 	private Date expirydate;
-	
 	
 	private ClubDetails clubDetails;
 	

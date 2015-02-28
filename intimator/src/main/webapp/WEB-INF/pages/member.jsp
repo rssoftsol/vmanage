@@ -16,15 +16,13 @@
 <script src="<c:url value="/resources/js/table.js" />"></script>
 <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
 <script src="<c:url value="/resources/js/bootstrap-datepicker.js" />"></script>
-<script src="<c:url value="/resources/js/main.js" />"></script>
 <link href="<c:url value="/resources/css/main.css" />" rel="stylesheet">
 
-<%@ include file="popup.html" %>
+<%@ include file="popupinfo.html" %>
+<%@ include file="popuperror.html" %>
+<script src="<c:url value="/resources/js/main.js" />"></script>
 
 <script type="text/javascript">
-if("${popupMessage}"!=''){
-	$('#popup').modal('show');
-}
 //alert('hi');
 /* var addMode = "AM";
 var modifyMode = "MM";
@@ -35,7 +33,8 @@ var get_mem_button_visibility = (mode != "ADD");
 var text_field_visibility = (mode != "DELETE");
 $(document).ready(function() {
     $('#example1').datepicker({
-        format: "dd/mm/yyyy"
+        format: "dd/mm/yyyy",
+        autoclose: true
     });
     if(!get_mem_button_visibility){
     	$("#getMemBtn").hide();
@@ -49,6 +48,14 @@ $(document).ready(function() {
   	  	$('form[name=form]').attr('action','${pageContext.request.contextPath}/members/view/${mode}/'+document.getElementById('memid').value);
   	  	$('form[name=form]').submit();
   	});
+    $('#uploadExcel').on( 'click', function () {
+  	  	$('form[name=form]').attr('action','${pageContext.request.contextPath}/members/member/upload');
+  	    $('form[name=form]').attr('method','GET');
+  	  	$('form[name=form]').submit();
+  	});
+    if(mode != 'ADD'){
+    	$("#uploadExcel").hide();
+    }
     $("#phone").ForceNumericOnly();
 } );
 
@@ -65,42 +72,43 @@ $(document).ready(function() {
 		<form:input type="hidden" id="id" path="id"/>
 		<div class="form-register">
 			<div class="panel panel-default">
-			<div class="panel-heading"><h3 class="panel-title">${headermsg}</h3></div>
-			<div class="panel-body greybg">
-		        
-		        <div class='col-xs-12'>
-			        <div class='col-xs-3'><label>Id:</label></div>
-			        <div class='col-xs-2'><form:input type="text" id='memid' path="memid" class="form-control"/></div>
-			        <div class='col-xs-2'>
-			        	<input type="button" value="Get Mem" id='getMemBtn' hidden='true'  class="btn btn-primary">
-			        </div>
-			        <div class='col-xs-5'><form:errors path="memid" cssClass="error" element="div"/></div>
+				<div class="panel-heading"><h3 class="panel-title">${headermsg}</h3></div>
+				<div class="panel-body greybg">
 			        
-		        </div>
-		        
-		        <div class='col-xs-12'>
-			        <div class='col-xs-3'><label>Name:</label></div>
-			        <div class='col-xs-4'><form:input type="text" id='name' path="name" class="form-control"/></div>
-			        <div class='col-xs-5'><form:errors path="name" cssClass="error" element="div"/></div>
-		        </div>
-		        
-		        <div class='col-xs-12'>
-			        <div class='col-xs-3'><label>Phone No:</label></div>
-			        <div class='col-xs-4'><form:input type="text" id='phone' path="phone" class="form-control"/></div>
-			        <div class='col-xs-5'><form:errors  path="phone" cssClass="error" element="div"/></div>
-		        </div>
-		        
-		        <div class='col-xs-12'>
-			        <div class='col-xs-3'><label>Expiry Date:</label></div>
-			        <div class="container col-xs-4">
-			            <div class="hero-unit">
-			                <form:input placeholder="click to show datepicker"  id="example1" type="text" path="expirydate" class="form-control"/>
-			            </div>
+			        <div class='col-xs-12'>
+				        <div class='col-xs-3'><label>Id:</label></div>
+				        <div class='col-xs-4'><form:input type="text" id='memid' maxlength="20" path="memid" class="form-control"/></div>
+				        <div class='col-xs-2'>
+				        	<input type="button" value="Get Mem" id='getMemBtn' hidden='true'  class="btn btn-primary">
+				        </div>
+				        <div class='col-xs-5'><form:errors path="memid" cssClass="alert alert-danger error" element="div"/></div>
+				        
 			        </div>
-			        <div class='col-xs-5'><form:errors  path="expirydate" cssClass="error" element="div"/></div>
-		       </div>
-		        <div><input type="submit" value="${mode}" class="btn btn-primary pull-right"></div>
-		    </div>
+			        
+			        <div class='col-xs-12'>
+				        <div class='col-xs-3'><label>Name:</label></div>
+				        <div class='col-xs-4'><form:input type="text" id='name' maxlength="20" path="name" class="form-control"/></div>
+				        <div class='col-xs-5'><form:errors path="name" cssClass="alert alert-danger error" element="div"/></div>
+			        </div>
+			        
+			        <div class='col-xs-12'>
+				        <div class='col-xs-3'><label>Phone No:</label></div>
+				        <div class='col-xs-4'><form:input type="text" id='phone' maxlength="10" path="phone" class="form-control"/></div>
+				        <div class='col-xs-5'><form:errors  path="phone" cssClass="alert alert-danger error" element="div"/></div>
+			        </div>
+			        
+			        <div class='col-xs-12'>
+				        <div class='col-xs-3'><label>Expiry Date:</label></div>
+				        <div class="container col-xs-4">
+				            <div class="hero-unit">
+				                <form:input placeholder="click to show datepicker"  id="example1" type="text" path="expirydate" class="form-control"/>
+				            </div>
+				        </div>
+				        <div class='col-xs-5 '><form:errors  path="expirydate" cssClass="alert alert-danger error" element="div"/></div>
+			       </div>
+			        <div><input type="submit" value="${mode}" class="btn btn-primary pull-right"></div>
+			    </div>
+			    <div class="panel-footer" id="uploadExcel">Click<a href="#"><b> here </b> </a> to upload members in bulk using excel</div>
 		    </div>
 		</div>
 	  </form:form>

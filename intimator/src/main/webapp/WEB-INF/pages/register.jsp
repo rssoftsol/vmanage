@@ -9,16 +9,14 @@
 <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
 <link href="<c:url value="/resources/css/register.css" />" rel="stylesheet">
 <script src="<c:url value="/resources/js/main.js" />"></script>
-<%@ include file="popup.html" %>
+<%@ include file="popupinfo.html" %>
+<%@ include file="popuperror.html" %>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
 <title>Registration</title>
 </head>
 <script type="text/javascript">
-if("${popupMessage}"!=''){
-	$('#popup').modal('show');
-}
 function checkPassword(t){
 	if(t.value!=document.getElementById('password').value){
 		t.value = '';
@@ -40,39 +38,41 @@ function checkPassword(t){
 	  <div class="panel-body greybg">
 	    <div class="col-xs-12">
 			<div class="col-xs-4"><label>Club Name:</label></div>
-			<div class="col-xs-4"><form:input type="text" id="clubname" path="clubname" class="form-control" required="true" autofocus="true"/></div>
+			<div class="col-xs-4"><form:input type="text" id="clubname" path="clubname" 
+			 maxlength="20" class="form-control" required="true" autofocus="true"/></div>
 			<div class="col-xs-4"><form:errors path="clubname" cssClass="error" element="div" /></div>
 		</div>
 		
 		<div class="col-xs-12">
 			<div class="col-xs-4"><label>Phone:</label></div>
-			<div class="col-xs-4"><form:input type="text" id="phonenumber" path="phonenumber" class="form-control" required="true" autofocus="true"/></div>
+			<div class="col-xs-4"><form:input type="text" id="phonenumber" path="phonenumber" 
+			maxlength="20" class="form-control" required="true" autofocus="true"/></div>
 			<div class="col-xs-4"><form:errors path="phonenumber" cssClass="error" element="div" /></div>
 		</div>
 		
 		<div class="col-xs-12">
 			<div class="col-xs-4"><label>User Name:</label></div>
 			<div class="col-xs-4"><form:input type="text" id="username" path="username" class="form-control" 
-			required="true" autofocus="true"/></div>
+			maxlength="20" required="true" autofocus="true"/></div>
 			<div class="col-xs-4"><form:errors path="username" cssClass="error" element="div"/></div>
 		</div>
 		
 		<div class="col-xs-12">
 			<div class="col-xs-4"><label>Password :</label></div>
-			<div class="col-xs-4"><form:input type="password" id="password" path="password" class="form-control"/></div>
+			<div class="col-xs-4"><form:input type="password" id="password" maxlength="20" path="password" class="form-control"/></div>
 			<div class="col-xs-4"><form:errors path="password" cssClass="error" element="div" /></div>
 		</div>
 		
 		<div class="col-xs-12">
 			<div class="col-xs-4"><label>Confirm Password :</label></div>
-			<div class="col-xs-4"><input type="password" id="confirmPassword" name="confirmPassword"
+			<div class="col-xs-4"><input type="password" id="confirmPassword" maxlength="20" name="confirmPassword"
 			 class="form-control" onblur ="return checkPassword(this);" required="true" autofocus="true"/></div>
 			 <div class="col-xs-4"></div>
 		 </div>
 		 
 		 <div class="col-xs-12">
 			<div class="col-xs-4"><label>Email :</label></div>
-			<div class="col-xs-4"><form:input type="text" id="email" path="email" class="form-control" 
+			<div class="col-xs-4"><form:input type="text" id="email" maxlength="40" path="email" class="form-control" 
 			required="true" autofocus="true"/></div>
 			<div class="col-xs-4"><form:errors path="email" cssClass="error" element="div" /></div>
 		</div>

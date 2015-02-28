@@ -59,15 +59,17 @@ public class RegistrationActionController {
 			if(existingClubDetails == null){
 				clubRegService.save(clubDetails);
 				message = "Successfully registered";
+				model.addAttribute("popupInfoMessage",message);
 				clubDetails = new ClubDetails();
 			}else{
 				message = "User Name already taken";
+				model.addAttribute("popupErrorMessage",message);
 				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		model.addAttribute("popupMessage",message);
+		
 		model.addAttribute("menumode", "R");
 	    return new ModelAndView("register", "command", clubDetails);
 	}
@@ -91,10 +93,12 @@ public class RegistrationActionController {
 			clubDetails.setIsAccountative("N");
 			clubRegService.update(clubDetails);
 			message = "Account Deactivated";
+			mav.addObject("popupInfoMessage", message);
 		}else{
 			message = "Account is already Deactivate";
+			mav.addObject("popupErrorMessage", message);
 		}
-		mav.addObject("popupMessage", message);
+		
 		mav.addObject("user", ((Session)session.getAttribute("session")).getUsername());
 		mav.addObject("isActive", clubDetails.getIsAccountative());
 		mav.addObject("command", clubDetails);
@@ -108,12 +112,13 @@ public class RegistrationActionController {
 		ClubDetails clubDetails = clubRegService.findByUserName(((Session)session.getAttribute("session")).getUsername());
 		if("Y".equalsIgnoreCase(clubDetails.getIsAccountative())){
 			message = "Account is already Active";
+			mav.addObject("popupErrorMessage", message);
 		}else{
 			clubDetails.setIsAccountative("Y");
 			clubRegService.update(clubDetails);
 			message = "Account Reactivated";
+			mav.addObject("popupInfoMessage", message);
 		}
-		mav.addObject("popupMessage", message);
 		mav.addObject("isActive", clubDetails.getIsAccountative());
 		mav.addObject("user", ((Session)session.getAttribute("session")).getUsername());
 		mav.addObject("command", clubDetails);
@@ -132,7 +137,7 @@ public class RegistrationActionController {
 		clubDetails.setRoleId(1);
 		clubRegService.update(clubDetails);
 		mav.addObject("command", clubDetails);
-		mav.addObject("popupMessage", "Details updated");
+		mav.addObject("popupInfoMessage", "Details updated");
 		mav.addObject("user", ((Session)session.getAttribute("session")).getUsername());
 		mav.addObject("isActive", clubDetails.getIsAccountative());
 		return mav;
