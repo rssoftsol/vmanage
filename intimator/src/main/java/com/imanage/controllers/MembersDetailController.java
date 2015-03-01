@@ -218,6 +218,7 @@ public class MembersDetailController {
 					}
 				}
 			}else{
+				mav = new ModelAndView("uploadexcel");
 				mav.addObject("popupErrorMessage", "Please select the file first");
 				return mav;
 			}

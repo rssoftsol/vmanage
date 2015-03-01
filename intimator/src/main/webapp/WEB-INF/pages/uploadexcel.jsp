@@ -25,6 +25,7 @@
 <script type="text/javascript">
 $('#addMember').addClass('active');
 $(document).ready(function() {
+	$('#uploading').hide();
     $('#downloadExcel').on( 'click', function () {
   	  	$('form[name=form]').attr('action','${pageContext.request.contextPath}/members/mymembers.xls');
   	  	$('form[name=form]').submit();
@@ -32,6 +33,11 @@ $(document).ready(function() {
     $('#singleupload').on( 'click', function () {
   	  	$('form[name=form]').attr('action','${pageContext.request.contextPath}/members/member/ADD');
   	  	$('form[name=form]').attr('method','GET');
+  	  	$('form[name=form]').submit();
+  	});
+    $('#upload').on( 'click', function () {
+    	$('#uploading').show();
+  	  	$('form[name=form]').attr('action','${pageContext.request.contextPath}/members/member/uploadAction');
   	  	$('form[name=form]').submit();
   	});
 } );
@@ -44,7 +50,7 @@ $(document).ready(function() {
 <title>Members Detail</title>
 </head>
 <body class="body" background="<c:url value="/resources/img/body-bg.jpg" />">
-
+	<div class="container" id="uploading">Uploading....</div>
 	<form:form name="form" enctype="multipart/form-data" action="${pageContext.request.contextPath}/members/member/uploadAction" method="post">
 		<div class="form-register">
 			<div class="panel panel-default">
@@ -55,14 +61,14 @@ $(document).ready(function() {
 				        <div class='col-xs-2'><label>File:</label></div>
 				        <div class='col-xs-8'><input type="file" id='file' name="file" class="form-control"/></div>
 				        <div class='col-xs-2'>
-				        	<input type="submit" value="Upload" id='upload' hidden='true'  class="btn btn-primary">
+				        	<input type="button" value="Upload" id='upload' hidden='true'  class="btn btn-primary">
 				        </div>
 			        </div>
 			    </div>
 			    <div class="panel-footer">Click<a href="#" id="singleupload"><b> here </b> </a> to add single member at a time</div>
 		    </div>
 		</div>
-		<div class="pull-right">Please<a href="#" id="downloadExcel"><b> Download </b> </a>valid excel format for uploading</div>
+		<div class=" container col-xs-6 col-xs-offset-4">Please<a href="#" id="downloadExcel"><b> Download </b> </a>valid excel format for uploading</div>
 	  </form:form>
 </body>
 </html>
