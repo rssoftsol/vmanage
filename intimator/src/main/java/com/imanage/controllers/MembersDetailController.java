@@ -35,14 +35,18 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.imanage.Session;
+import com.imanage.exception.ExcelException;
 import com.imanage.models.ClubDetails;
 import com.imanage.models.MemberDetails;
 import com.imanage.services.members.MemberRegistrationService;
 import com.imanage.services.register.ClubRegistrationService;
+import com.imanage.util.DateUtility;
 import com.imanage.util.MemberModeEnum;
 import com.imanage.util.crud.impl.CRUDHandlerImpl;
 import com.imanage.util.excel.members.MembersDetailExcelReader;
 import com.imanage.util.excel.members.MembersDetailUploadBean;
+import com.imanage.util.excel.uploadexcel.IUploadExcel;
+import com.imanage.util.excel.uploadexcel.impl.UploadMembersExcelImpl;
 
 @Controller
 @RequestMapping("/members")
@@ -162,72 +166,42 @@ public class MembersDetailController {
 	@RequestMapping(value="/member/uploadAction", method=RequestMethod.POST)
     public ModelAndView uploadExcelPage(@RequestParam("file") MultipartFile file) {
 		ModelAndView mav = null;
-		/*if(!"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet".equals(file.getContentType())){
+		if (file.isEmpty()){
 			mav = new ModelAndView("uploadexcel");
-			mav.addObject("popupMessage", "Invalid file format");
+			mav.addObject("popupErrorMessage", "Please select the file first");
 			return mav;
-		}*/
-		String validMembers = "";
-		String invalidMembers = "";
-		try {
-			if (!file.isEmpty()) {
-				Set<String> memberIds = new HashSet<String>();
-				Authentication authentication = SecurityContextHolder.getContext()
-						.getAuthentication();
-				ClubDetails clubDetails = clubRegistrationService.findByUserName(authentication.getName());
-				for(MemberDetails memberDetails : clubDetails.getMemberDetails()){
-					memberIds.add(memberDetails.getMemid());
-				}
-				MembersDetailExcelReader membersDetailExcelReader = new MembersDetailExcelReader();
-				membersDetailExcelReader.memberDetails = memberIds;
-				Vector<MembersDetailUploadBean> excelData = membersDetailExcelReader.
-						 importExcelSheet(file.getInputStream());
-				System.out.println("excelData--->"+excelData);
-				if(excelData == null){
-					mav = new ModelAndView("uploadexcel");
-					mav.addObject("popupErrorMessage", "Invalid file format");
-					return mav;
-				}else{
-					for(MembersDetailUploadBean membersDetailUploadBean : excelData){
-						if(membersDetailUploadBean.hasError){
-							invalidMembers = invalidMembers + membersDetailUploadBean.memberId+"~"+
-									membersDetailUploadBean.name+"~"+membersDetailUploadBean.phonenumber+"~"+
-									membersDetailUploadBean.expiryDate+"~"+membersDetailUploadBean.getErrorString()+"!";
-						}else{
-							validMembers = validMembers + membersDetailUploadBean.memberId+"~"+
-									membersDetailUploadBean.name+"~"+membersDetailUploadBean.phonenumber+"~"+
-									membersDetailUploadBean.expiryDate+"!";
-						}
-					}
-					if("".equalsIgnoreCase(invalidMembers)){
-						processMembersString(validMembers, clubDetails);
-						mav = new ModelAndView("uploadexcel");
-						mav.addObject("popupInfoMessage", "Upload completed");
-						return mav;
-					}else{
-						mav = new ModelAndView("confirmupload");
-						if("".equalsIgnoreCase(validMembers))
-							mav.addObject("UPLOADINFO", "All member's of excel has invalid data as listed above");
-						else
-							mav.addObject("UPLOADINFO", "Member's listed above has invalid data");
-						System.out.println("VALIDMEMBERS--->"+validMembers);
-						System.out.println("INVALIDMEMBERS--->"+invalidMembers);
-						mav.addObject("VALIDMEMBERS", validMembers);
-						mav.addObject("INVALIDMEMBERS", invalidMembers);
-						return mav;
-					}
-				}
-			}else{
-				mav = new ModelAndView("uploadexcel");
-				mav.addObject("popupErrorMessage", "Please select the file first");
-				return mav;
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
-		//mav.addObject("popupMessage", "Upload completed");
-		return mav;
+		Set<String> memberIds = new HashSet<String>();
+		Authentication authentication = SecurityContextHolder.getContext()
+				.getAuthentication();
+		ClubDetails clubDetails = clubRegistrationService.findByUserName(authentication.getName());
+		for(MemberDetails memberDetails : clubDetails.getMemberDetails()){
+			memberIds.add(memberDetails.getMemid());
+		}
+		UploadMembersExcelImpl uploadExcel = new UploadMembersExcelImpl();
+		uploadExcel.setMemberDetails(memberIds);
+		try {
+			uploadExcel.upload(file);
+		} catch (ExcelException e) {
+			mav = new ModelAndView("uploadexcel");
+			mav.addObject("popupErrorMessage", e.getMessage());
+			return mav;
+		}
+		if(uploadExcel.allDataInExcelIsValid()){
+			processMembersString(uploadExcel.getValidMembersString(), clubDetails);
+			mav = new ModelAndView("uploadexcel");
+			mav.addObject("popupInfoMessage", "Upload completed");
+			return mav;
+		}else{
+			mav = new ModelAndView("confirmupload");
+			if("".equalsIgnoreCase(uploadExcel.getValidMembersString()))
+				mav.addObject("UPLOADINFO", "All member's of excel has invalid data as listed above");
+			else
+				mav.addObject("UPLOADINFO", "Member's listed above has invalid data");
+			mav.addObject("VALIDMEMBERS", uploadExcel.getValidMembersString());
+			mav.addObject("INVALIDMEMBERS", uploadExcel.getInvalidMembersString());
+			return mav;
+		}
 	}
 	
 	@RequestMapping(value="/confirmupload", method=RequestMethod.POST)
@@ -252,49 +226,9 @@ public class MembersDetailController {
      * Handle request to download an Excel document
      */
     @RequestMapping(value = "/mymembers.xls", method = RequestMethod.POST)
-    public void downloadExcel(HttpServletRequest request,
+    public ModelAndView redirectTodownloadExcel(HttpServletRequest request,
             HttpServletResponse response) {
-        // create some sample data
-    	//ServletContext context = request.getServletContext();
-        ClassLoader classLoader = MembersDetailController.class.getClassLoader();
-		String path = classLoader.getResource("/resources").getPath();
-		String fullPath = path+"/sampleexcel/mymembers.xls";
-		File downloadFile = new File(fullPath);
-        
-        String mimeType = null;//context.getMimeType(fullPath);
-            // set to binary type
-        mimeType = "application/octet-stream";
-        System.out.println("MIME type: " + mimeType);
- 
-        // set content attributes for the response
-        response.setContentType(mimeType);
-        response.setContentLength((int) downloadFile.length());
- 
-        // set headers for the response
-        String headerKey = "Content-Disposition";
-        String headerValue = String.format("attachment; filename=\"%s\"",
-                downloadFile.getName());
-        response.setHeader(headerKey, headerValue);
- 
-        // get output stream of the response
-        try {
-        	FileInputStream inputStream = new FileInputStream(downloadFile);
-			OutputStream outStream = response.getOutputStream();
-			final int BUFFER_SIZE = 4096;
-			byte[] buffer = new byte[BUFFER_SIZE];
-			int bytesRead = -1;
- 
-			// write bytes read from the input stream into the output stream
-			while ((bytesRead = inputStream.read(buffer)) != -1) {
-			    outStream.write(buffer, 0, bytesRead);
-			}
- 
-			inputStream.close();
-			outStream.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    	return new ModelAndView("excelView");
     }
 	
 	private void processMembersString(String members, ClubDetails clubDetails){
@@ -306,7 +240,7 @@ public class MembersDetailController {
 						memberArr[0], memberArr[1], Long.valueOf(memberArr[2]), 
 						new java.sql.Date(new SimpleDateFormat("dd/MM/yyyy").parse(memberArr[3]).getTime()));
 				memberDetails.setClubDetails(clubDetails);
-				
+				memberDetails.setCreatedDate(DateUtility.getSQLCurrentTime());
 				memberRegistrationService.save(memberDetails);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block

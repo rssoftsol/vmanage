@@ -10,10 +10,12 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 
+import com.imanage.exception.ExcelException;
+
 public abstract class ExcelProcessor<T> implements IExcelProcessor<T>{
 	
 	@Override
-	public Vector<T> importExcelSheet(InputStream is){
+	public Vector<T> importExcelSheet(InputStream is) throws ExcelException{
 	    Vector<T> cellVectorHolder = new Vector<T>();
 	    try{
 	        Workbook workBook = WorkbookFactory.create(is);
@@ -22,7 +24,7 @@ public abstract class ExcelProcessor<T> implements IExcelProcessor<T>{
 	        if(rowIter.hasNext()){
 	        	Row headerRow = rowIter.next();
 	        	if(!validExcelFormat(headerRow.cellIterator())){
-	        		return null;
+	        		throw new ExcelException("Invalid file format");
 	        	}
 	        }
 	        while(rowIter.hasNext()){

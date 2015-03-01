@@ -1,6 +1,7 @@
 package com.imanage.models;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,15 +11,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.Valid;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.format.annotation.NumberFormat;
-import org.springframework.format.annotation.NumberFormat.Style;
-import org.springframework.validation.BindingResult;
 
 @Entity
 @Table(name="member_details")
@@ -44,6 +41,10 @@ public class MemberDetails {
 	private Date expirydate;
 	
 	private ClubDetails clubDetails;
+	
+	private Timestamp createdDate;
+	
+	private Timestamp modifiedDate;
 	
 	public MemberDetails() {
 		super();
@@ -92,7 +93,6 @@ public class MemberDetails {
 		this.name = name;
 	}
 	
-	//
 	public Date getExpirydate() {
 		return expirydate;
 	}
@@ -111,14 +111,25 @@ public class MemberDetails {
 		this.clubDetails = clubDetails;
 	}
 	
+	public Timestamp getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Timestamp createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public Timestamp getModifiedDate() {
+		return modifiedDate;
+	}
+
+	public void setModifiedDate(Timestamp modifiedDate) {
+		this.modifiedDate = modifiedDate;
+	}
+
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
 		return "phone:"+phone;
 	}
-	
-	public BindingResult validate(@Valid MemberDetails memberDetails, BindingResult result){
-		return result;
-	}
-	
 }

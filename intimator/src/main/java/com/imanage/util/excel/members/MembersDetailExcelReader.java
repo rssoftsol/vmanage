@@ -10,7 +10,9 @@ import com.imanage.models.MemberDetails;
 import com.imanage.util.excel.ExcelProcessor;
 
 public class MembersDetailExcelReader extends ExcelProcessor<MembersDetailUploadBean>{
+	
 	public Set<String> memberDetails = null;
+	
 	@Override
 	public void processExcelRow(
 			Vector<MembersDetailUploadBean> detailUploadBeans, Iterator cellIter) {

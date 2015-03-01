@@ -50,7 +50,7 @@ $(document).ready(function() {
 <title>Members Detail</title>
 </head>
 <body class="body" background="<c:url value="/resources/img/body-bg.jpg" />">
-	<div class="container" id="uploading">Uploading....</div>
+	<div class="container" id="uploading"><b>Uploading....</b></div>
 	<form:form name="form" enctype="multipart/form-data" action="${pageContext.request.contextPath}/members/member/uploadAction" method="post">
 		<div class="form-register">
 			<div class="panel panel-default">

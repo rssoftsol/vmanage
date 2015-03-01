@@ -19,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.imanage.Session;
 import com.imanage.models.ClubDetails;
 import com.imanage.services.register.ClubRegistrationService;
+import com.imanage.util.DateUtility;
 
 @Controller
 public class RegistrationActionController {
@@ -57,6 +58,7 @@ public class RegistrationActionController {
 		try {
 			ClubDetails existingClubDetails = clubRegService.findByUserName(clubDetails.getUsername());
 			if(existingClubDetails == null){
+				clubDetails.setCreatedDate(DateUtility.getSQLCurrentTime());
 				clubRegService.save(clubDetails);
 				message = "Successfully registered";
 				model.addAttribute("popupInfoMessage",message);
@@ -91,6 +93,7 @@ public class RegistrationActionController {
 		ClubDetails clubDetails = clubRegService.findByUserName(((Session)session.getAttribute("session")).getUsername());
 		if("Y".equalsIgnoreCase(clubDetails.getIsAccountative())){
 			clubDetails.setIsAccountative("N");
+			clubDetails.setModifiedDate(DateUtility.getSQLCurrentTime());
 			clubRegService.update(clubDetails);
 			message = "Account Deactivated";
 			mav.addObject("popupInfoMessage", message);
@@ -115,6 +118,7 @@ public class RegistrationActionController {
 			mav.addObject("popupErrorMessage", message);
 		}else{
 			clubDetails.setIsAccountative("Y");
+			clubDetails.setModifiedDate(DateUtility.getSQLCurrentTime());
 			clubRegService.update(clubDetails);
 			message = "Account Reactivated";
 			mav.addObject("popupInfoMessage", message);
@@ -133,8 +137,11 @@ public class RegistrationActionController {
 			mav.addObject("command", clubDetails);
 			return mav;
 		}
+		ClubDetails clubDetailstmp = clubRegService.findByUserName(((Session)session.getAttribute("session")).getUsername());
 		//clubDetails.setMemberDetails(clubDetailstmp.getMemberDetails());
 		clubDetails.setRoleId(1);
+		clubDetails.setCreatedDate(clubDetailstmp.getCreatedDate());
+		clubDetails.setModifiedDate(DateUtility.getSQLCurrentTime());
 		clubRegService.update(clubDetails);
 		mav.addObject("command", clubDetails);
 		mav.addObject("popupInfoMessage", "Details updated");

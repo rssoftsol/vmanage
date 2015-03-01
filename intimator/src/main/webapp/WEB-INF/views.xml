@@ -4,6 +4,6 @@
     xsi:schemaLocation="http://www.springframework.org/schema/beans
     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
      
-    <bean id="excelView" class="com.imanage.util.excel.ExcelBuilder" />
+    <bean id="excelView" class="com.imanage.util.excel.XLRequiredForUpload" />
      
 </beans>

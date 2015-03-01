@@ -1,9 +1,12 @@
 package com.imanage.util.crud.impl;
 
+import java.util.Calendar;
+
 import org.springframework.web.servlet.ModelAndView;
 
 import com.imanage.models.MemberDetails;
 import com.imanage.services.members.MemberRegistrationService;
+import com.imanage.util.DateUtility;
 import com.imanage.util.MemberModeEnum;
 import com.imanage.util.crud.CRUDHandler;
 
@@ -13,6 +16,7 @@ public class CRUDHandlerImpl implements CRUDHandler {
 	public String handleAddRequest(MemberDetails memberDetails, MemberDetails existingMemberDetails) {
 		String message = "Member "+memberDetails.getMemid()+" already exist";
 		if(existingMemberDetails == null){
+			memberDetails.setCreatedDate(DateUtility.getSQLCurrentTime());
 			memberRegistrationService.save(memberDetails);
 			return "Member Added successfully";
 		}
@@ -22,6 +26,8 @@ public class CRUDHandlerImpl implements CRUDHandler {
 	public String handleModifyRequest(MemberDetails memberDetails, MemberDetails existingMemberDetails) {
 		String message = "Member "+memberDetails.getMemid()+" doesn't exist";
 		if(existingMemberDetails != null){
+			memberDetails.setCreatedDate(existingMemberDetails.getCreatedDate());
+			memberDetails.setModifiedDate(DateUtility.getSQLCurrentTime());
 			memberRegistrationService.update(memberDetails);
 			return "Member record updated successfully";
 		}
@@ -63,7 +69,7 @@ public class CRUDHandlerImpl implements CRUDHandler {
 			//To Do
 			break;
 		}
-		ModelAndView mav = new ModelAndView("member", "popupMessage", message);
+		ModelAndView mav = new ModelAndView("member", "popupInfoMessage", message);
 		mav.addObject("commandd", new MemberDetails());
 		mav.addObject("mode", mode);
 		return mav;

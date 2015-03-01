@@ -1,5 +1,7 @@
 package com.imanage.models;
 
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -68,6 +70,10 @@ public class ClubDetails{
 	private String isAccountative;
 	
 	private Set<MemberDetails> memberDetails;
+	
+	private Timestamp createdDate;
+	
+	private Timestamp modifiedDate;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -167,6 +173,22 @@ public class ClubDetails{
 
 	public void setIsAccountative(String isAccountative) {
 		this.isAccountative = isAccountative;
+	}
+	
+	public Timestamp getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Timestamp createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public Timestamp getModifiedDate() {
+		return modifiedDate;
+	}
+
+	public void setModifiedDate(Timestamp modifiedDate) {
+		this.modifiedDate = modifiedDate;
 	}
 
 	@Override
