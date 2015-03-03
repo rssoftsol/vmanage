@@ -3,7 +3,6 @@ package com.imanage.services.members;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.imanage.models.ClubDetails;
 import com.imanage.models.MemberDetails;
 
 @Service("memberRegistrationService")

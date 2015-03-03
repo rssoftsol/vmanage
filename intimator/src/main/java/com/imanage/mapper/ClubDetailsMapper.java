@@ -2,12 +2,10 @@ package com.imanage.mapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashSet;
 
 import org.springframework.jdbc.core.RowMapper;
 
 import com.imanage.models.ClubDetails;
-import com.imanage.models.MemberDetails;
 
 public class ClubDetailsMapper implements RowMapper<ClubDetails>{
 	  

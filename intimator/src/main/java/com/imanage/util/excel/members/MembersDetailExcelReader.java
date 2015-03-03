@@ -6,7 +6,6 @@ import java.util.Vector;
 
 import org.apache.poi.xssf.usermodel.XSSFCell;
 
-import com.imanage.models.MemberDetails;
 import com.imanage.util.excel.ExcelProcessor;
 
 public class MembersDetailExcelReader extends ExcelProcessor<MembersDetailUploadBean>{

@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.imanage.Session;
 import com.imanage.models.ClubDetails;
-import com.imanage.models.MemberDetails;
 import com.imanage.models.security.ForgotPasswordBean;
 import com.imanage.models.security.PasswordResetReqBean;
 import com.imanage.services.register.ClubRegistrationService;

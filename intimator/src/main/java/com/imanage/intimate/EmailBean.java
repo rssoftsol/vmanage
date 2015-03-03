@@ -1,7 +1,5 @@
 package com.imanage.intimate;
 
-import java.io.File;
-
 import org.springframework.core.io.FileSystemResource;
 
 public class EmailBean {

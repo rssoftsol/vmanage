@@ -2,12 +2,9 @@ package com.imanage;
 
 
 import java.util.Date;
-import java.util.Set;
 
 import org.springframework.core.io.FileSystemResource;
 
-import com.imanage.intimate.Intimator;
-import com.imanage.models.MemberDetails;
 import com.imanage.util.DateUtility;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
@@ -17,15 +14,12 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-public class PDFGen {
+public abstract class PDFGen<T> {
 	
-	public static FileSystemResource getPDFDoc(Set<MemberDetails> members, String fileName, Intimator intimator) throws Exception{
-		boolean expires = false;
+	public FileSystemResource getPDFDoc() throws Exception{
 		ClassLoader classLoader = PDFGen.class.getClassLoader();
 		String path = classLoader.getResource("/resources").getPath();
 		FileSystemResource file = new FileSystemResource(path+"\\Membership_Expiry_Report_"+DateUtility.getTodaysDate("ddMMyyyy")+".pdf");
-		//File f = new File("D:\\test_data\\test"+".pdf");
-        /*OutputStream file = new FileOutputStream(f);*/
         Document document = new Document();
         PdfWriter.getInstance(document, file.getOutputStream());
         //Inserting Image in PDF
@@ -46,14 +40,9 @@ public class PDFGen {
 
         table.addCell("Name");
         table.addCell("Expiry");
-        for(MemberDetails details : members){
-        	if(details.getExpirydate().toString().equals(DateUtility.getTodaysDate("yyyy-MM-dd"))){
-	            table.addCell(details.getName());
-	            table.addCell(details.getExpirydate().toString());
-	    		intimator.intimateMember(details.getPhone(), "");
-	    		expires = true;
-        	}
-        }
+        
+        if(!createPdfPTable(table)) return null;
+        
         table.setSpacingBefore(30.0f);       // Space Before table starts, like margin-top in CSS
         table.setSpacingAfter(30.0f);        // Space After table starts, like margin-Bottom in CSS                                          
 
@@ -81,6 +70,7 @@ public class PDFGen {
         return file;
   }
 	
+	public abstract boolean createPdfPTable(PdfPTable pdfPTable); 
     public static void main(String[] args) {
  
         try {

@@ -1,11 +1,6 @@
 package com.imanage.daoimpl.security;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import com.imanage.dao.security.ClubDetailsDao;
 import com.imanage.mapper.ClubDetailsMapper;
 import com.imanage.models.ClubDetails;
-import com.imanage.models.MemberDetails;
 
 @Repository("clubDetailsDao")
 public class ClubDetailsDaoImpl implements ClubDetailsDao {

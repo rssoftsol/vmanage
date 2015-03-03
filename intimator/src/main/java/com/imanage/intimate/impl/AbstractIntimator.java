@@ -3,25 +3,36 @@ package com.imanage.intimate.impl;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
-import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import com.imanage.intimate.EmailBean;
 import com.imanage.intimate.Intimator;
+import com.imanage.models.EmailConfigBean;
 
 @Service("intimatorService")
-public class IntimatorImpl implements Intimator {
+public abstract class AbstractIntimator<T> implements Intimator {
+	protected Long mobileNo;
+	protected String text;
+	protected EmailBean emailBean;
+	@Autowired
+	EmailConfigBean emailConfigBean;
+	@Autowired
+	private JavaMailSenderImpl mailSenderImpl;
+	
+	public abstract void intimate(T t);
 
 	@Override
-	public void intimateMember(Long mobileNo, String text) {
+	public void intimateBySMS() {
 		// TODO Auto-generated method stub
 		System.out.println("sending message with mobile no. " + mobileNo
 				+ " and text as" + text);
 	}
 
 	@Override
-	public void intimateOwner(EmailBean emailBean, JavaMailSender mailSenderImpl) {
+	public void intimateByEmail() {
 
 		MimeMessage mimeMessage = mailSenderImpl.createMimeMessage();
 

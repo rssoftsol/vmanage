@@ -4,12 +4,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.jdbc.core.RowMapper;
 
-import com.imanage.models.ClubDetails;
 import com.imanage.models.MemberDetails;
 
 public class UploadExcelMapper implements RowMapper<MemberDetails>{
