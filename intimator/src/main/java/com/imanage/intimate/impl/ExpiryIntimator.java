@@ -1,6 +1,7 @@
 package com.imanage.intimate.impl;
 
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.stereotype.Service;
 
 import com.imanage.PDFGen;
 import com.imanage.intimate.EmailBean;
@@ -9,17 +10,16 @@ import com.imanage.models.MemberDetails;
 import com.imanage.util.DateUtility;
 import com.itextpdf.text.pdf.PdfPTable;
 
+@Service("intimatorService")
 public class ExpiryIntimator extends AbstractIntimator<ClubDetails> {
 	@Override
 	public void intimate(ClubDetails clubDetails) {
-		// TODO Auto-generated method stub
 		ExpiryIntimator.this.text = clubDetails.getSmsText();
-		setEmailBean(clubDetails);
 		intimateByEmail();
-		
 	}
 	
-	private void setEmailBean(final ClubDetails clubDetails){
+	@Override	
+	public void setEmailBean(final ClubDetails clubDetails){
 		PDFGen<MemberDetails> pdfGen = new PDFGen<MemberDetails>() {
 			@Override
 			public boolean createPdfPTable(PdfPTable pdfPTable) {
@@ -29,6 +29,7 @@ public class ExpiryIntimator extends AbstractIntimator<ClubDetails> {
 		        		pdfPTable.addCell(details.getName());
 		        		pdfPTable.addCell(details.getExpirydate().toString());
 		        		ExpiryIntimator.this.mobileNo = details.getPhone();
+		        		//put logger here
 		        		intimateBySMS();
 			    		expires = true;
 		        	}
@@ -46,9 +47,7 @@ public class ExpiryIntimator extends AbstractIntimator<ClubDetails> {
 		EmailBean emailBean = new EmailBean().withFromEmailId(emailConfigBean.getEmailFrom()).
 				withToEmailId(clubDetails.getEmail()).withMailSubject(emailConfigBean.getPdfEmailSubject()).
 				withEmailAttachment(file).withMailBody(file == null?emailConfigBean.getEmailNoPDFInfoText() : emailConfigBean.getEmailPDFInfoText());
-		
+		//put logger here
 		this.emailBean = emailBean;
-		
-		
 	}
 }

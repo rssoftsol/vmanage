@@ -3,8 +3,6 @@ package com.imanage.controllers.security;
 import java.util.Date;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -19,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.imanage.Session;
 import com.imanage.models.ClubDetails;
 import com.imanage.models.security.ForgotPasswordBean;
 import com.imanage.models.security.PasswordResetReqBean;
@@ -55,7 +52,7 @@ public class AccessController {
 
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = { "roleBasedAuthenticationUrl" })
-	public String roleBasedAuthenticationUrl(HttpSession session, Model model) {
+	public String roleBasedAuthenticationUrl(Model model) {
 		Authentication authentication = SecurityContextHolder.getContext()
 				.getAuthentication();
 		List<GrantedAuthority> authList = (List<GrantedAuthority>) authentication
@@ -63,8 +60,6 @@ public class AccessController {
 		String userRole = authList.get(0).getAuthority();
 		logger.info("userRole : " + userRole);
 		if (userRole.equalsIgnoreCase("ROLE_ADMIN")) {
-			Session.getSessionInstance().setUsername(authentication.getName());
-			session.setAttribute("session", Session.getSessionInstance());
 			return "redirect:/members/browsemembers";
 		} else {
 			return "redirect:membersdetail";
@@ -177,7 +172,7 @@ public class AccessController {
 	}
 	
 	@ModelAttribute
-	public void addCommonAttribute(Model model, HttpSession session){
+	public void addCommonAttribute(Model model){
 		Authentication authentication = SecurityContextHolder.getContext()
 				.getAuthentication();
 		

@@ -53,6 +53,7 @@ public class CRUDHandlerImpl implements CRUDHandler {
 		MemberDetails existingMemberDetails = memberRegistrationService.findByMemid(memberDetails.getMemid());
 		this.memberRegistrationService = memberRegistrationService;
 		String message = "";
+		//put logger here
 		switch (modeEnum) {
 		case ADD:
 			message = handleAddRequest(memberDetails, existingMemberDetails);

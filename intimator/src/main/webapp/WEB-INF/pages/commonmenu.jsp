@@ -22,7 +22,7 @@
 					</li>
 					<li id="register">
 						<a href='${pageContext.request.contextPath}/create.htm'>
-							<span class='glyphicon glyphicon-edit' ><b> Registration</b></span>
+							<span class='glyphicon glyphicon-edit' ><b> Subscribe</b></span>
 						</a>
 					</li>
 					<li id="login">

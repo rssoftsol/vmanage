@@ -1,10 +1,11 @@
 package com.imanage.controllers;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.imanage.Session;
 import com.imanage.models.ClubDetails;
 import com.imanage.services.register.ClubRegistrationService;
 import com.imanage.util.DateUtility;
@@ -57,6 +57,7 @@ public class RegistrationActionController {
 			ClubDetails existingClubDetails = clubRegService.findByUserName(clubDetails.getUsername());
 			if(existingClubDetails == null){
 				clubDetails.setCreatedDate(DateUtility.getSQLCurrentTime());
+				//put logger here
 				clubRegService.save(clubDetails);
 				message = "Successfully registered";
 				model.addAttribute("popupInfoMessage",message);
@@ -75,20 +76,24 @@ public class RegistrationActionController {
 	}
 	
 	@RequestMapping(value="/myprofile/edit", method = RequestMethod.GET)
-	public ModelAndView myProfilePage(HttpSession session, Model model, RedirectAttributes attributes) {
+	public ModelAndView myProfilePage(Model model, RedirectAttributes attributes) {
 		ModelAndView mav = new ModelAndView("myprofile");
-		ClubDetails clubDetails = clubRegService.findByUserName(((Session)session.getAttribute("session")).getUsername());
+		Authentication authentication = SecurityContextHolder.getContext()
+				.getAuthentication();
+		ClubDetails clubDetails = clubRegService.findByUserName(authentication.getName());
 		mav.addObject("command", clubDetails);
 		mav.addObject("isActive", clubDetails.getIsAccountative());
-		mav.addObject("user", ((Session)session.getAttribute("session")).getUsername());
+		mav.addObject("user", authentication.getName());
 		return mav;
 	}
 	
 	@RequestMapping(value="/myprofile/deActivate", method = RequestMethod.POST)
-	public ModelAndView deActivateAccount(HttpSession session) {
+	public ModelAndView deActivateAccount() {
 		ModelAndView mav = new ModelAndView("myprofile");
+		Authentication authentication = SecurityContextHolder.getContext()
+				.getAuthentication();
 		String message = "";
-		ClubDetails clubDetails = clubRegService.findByUserName(((Session)session.getAttribute("session")).getUsername());
+		ClubDetails clubDetails = clubRegService.findByUserName(authentication.getName());
 		if("Y".equalsIgnoreCase(clubDetails.getIsAccountative())){
 			clubDetails.setIsAccountative("N");
 			clubDetails.setModifiedDate(DateUtility.getSQLCurrentTime());
@@ -100,17 +105,19 @@ public class RegistrationActionController {
 			mav.addObject("popupErrorMessage", message);
 		}
 		
-		mav.addObject("user", ((Session)session.getAttribute("session")).getUsername());
+		mav.addObject("user", authentication.getName());
 		mav.addObject("isActive", clubDetails.getIsAccountative());
 		mav.addObject("command", clubDetails);
 		return mav;
 	}
 	
 	@RequestMapping(value="/myprofile/reActivate", method = RequestMethod.POST)
-	public ModelAndView reActivateAccount(HttpSession session) {
+	public ModelAndView reActivateAccount() {
 		ModelAndView mav = new ModelAndView("myprofile");
+		Authentication authentication = SecurityContextHolder.getContext()
+				.getAuthentication();
 		String message = "";
-		ClubDetails clubDetails = clubRegService.findByUserName(((Session)session.getAttribute("session")).getUsername());
+		ClubDetails clubDetails = clubRegService.findByUserName(authentication.getName());
 		if("Y".equalsIgnoreCase(clubDetails.getIsAccountative())){
 			message = "Account is already Active";
 			mav.addObject("popupErrorMessage", message);
@@ -122,34 +129,38 @@ public class RegistrationActionController {
 			mav.addObject("popupInfoMessage", message);
 		}
 		mav.addObject("isActive", clubDetails.getIsAccountative());
-		mav.addObject("user", ((Session)session.getAttribute("session")).getUsername());
+		mav.addObject("user", authentication.getName());
 		mav.addObject("command", clubDetails);
 		return mav;
 	}
 	
 	@RequestMapping(value="/myprofile/editAction.htm", method = RequestMethod.POST)
 	public ModelAndView myProfileAction(@ModelAttribute("command") 
-    @Valid ClubDetails clubDetails, BindingResult result, HttpSession session) {
+    @Valid ClubDetails clubDetails, BindingResult result) {
 		ModelAndView mav = new ModelAndView("myprofile");
+		Authentication authentication = SecurityContextHolder.getContext()
+				.getAuthentication();
 		if(result.hasErrors()){
 			mav.addObject("command", clubDetails);
 			return mav;
 		}
-		ClubDetails clubDetailstmp = clubRegService.findByUserName(((Session)session.getAttribute("session")).getUsername());
+		ClubDetails clubDetailstmp = clubRegService.findByUserName(authentication.getName());
 		//clubDetails.setMemberDetails(clubDetailstmp.getMemberDetails());
 		clubDetails.setRoleId(1);
 		clubDetails.setCreatedDate(clubDetailstmp.getCreatedDate());
 		clubDetails.setModifiedDate(DateUtility.getSQLCurrentTime());
+		clubDetails.setIsAccountative(clubDetailstmp.getIsAccountative());
+		//put logger here
 		clubRegService.update(clubDetails);
 		mav.addObject("command", clubDetails);
 		mav.addObject("popupInfoMessage", "Details updated");
-		mav.addObject("user", ((Session)session.getAttribute("session")).getUsername());
+		mav.addObject("user", authentication.getName());
 		mav.addObject("isActive", clubDetails.getIsAccountative());
 		return mav;
 	}
 	
 	@ModelAttribute
-	public void addCommonAttribute(Model model, HttpSession session){
+	public void addCommonAttribute(Model model){
 		model.addAttribute("date", new java.util.Date().toString());
 		model.addAttribute("mainmode", "MYPROFILE");
 	}

@@ -1,10 +1,8 @@
 package com.imanage.util.excel.uploadexcel.impl;
 
-import java.io.IOException;
 import java.util.Set;
 import java.util.Vector;
 
-import com.imanage.exception.ExcelException;
 import com.imanage.util.excel.members.MembersDetailExcelReader;
 import com.imanage.util.excel.members.MembersDetailUploadBean;
 import com.imanage.util.excel.uploadexcel.AbstractUploadExcel;
@@ -21,7 +19,6 @@ public class UploadMembersExcelImpl extends AbstractUploadExcel<MembersDetailUpl
 
 	@Override
 	public boolean isExcel() {
-		// TODO Auto-generated method stub
 		return "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet".equals(file.getContentType());
 	}
 
@@ -31,19 +28,13 @@ public class UploadMembersExcelImpl extends AbstractUploadExcel<MembersDetailUpl
 	}
 
 	@Override
-	public void processMyExcel() throws ExcelException {
-		try {
-			MembersDetailExcelReader membersDetailExcelReader = new MembersDetailExcelReader();
-			membersDetailExcelReader.memberDetails = memberIds;
-			Vector<MembersDetailUploadBean> excelData = membersDetailExcelReader.
-					 importExcelSheet(file.getInputStream());
-			afterProcessing(excelData);
-		} catch (ExcelException e) {
-			throw e;
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void processMyExcel() throws Exception {
+		MembersDetailExcelReader membersDetailExcelReader = new MembersDetailExcelReader();
+		membersDetailExcelReader.memberDetails = memberIds;
+		Vector<MembersDetailUploadBean> excelData = membersDetailExcelReader.
+				 importExcelSheet(file.getInputStream());
+		//put logger here
+		afterProcessing(excelData);
 	}
 	
 	@Override
@@ -59,6 +50,7 @@ public class UploadMembersExcelImpl extends AbstractUploadExcel<MembersDetailUpl
 						membersDetailUploadBean.expiryDate+"!";
 			}
 		}
+		//put logger here
 	}
 
 	public String getInvalidMembersString() {
@@ -68,7 +60,4 @@ public class UploadMembersExcelImpl extends AbstractUploadExcel<MembersDetailUpl
 	public String getValidMembersString() {
 		return validMembersString;
 	}
-	
-	
-	
 }

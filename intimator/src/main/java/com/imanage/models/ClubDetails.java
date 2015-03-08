@@ -33,7 +33,6 @@ public class ClubDetails{
 	
 	@Column(name="password",length=40)
 	@NotEmpty(message="Password is mandatory")
-	@Size(max=20,message="Maximum length is 20")
 	private String password;
 	
 	@Column(name="newPassword",length=40)

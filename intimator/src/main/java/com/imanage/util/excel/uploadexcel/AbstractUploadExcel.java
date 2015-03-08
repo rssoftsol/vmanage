@@ -9,7 +9,7 @@ import com.imanage.exception.ExcelException;
 public abstract class AbstractUploadExcel<T> implements IUploadExcel {
 	protected MultipartFile file;
 	@Override
-	public void upload(MultipartFile file) throws ExcelException {
+	public void upload(MultipartFile file) throws Exception {
 		// TODO Auto-generated method stub
 		this.file = file;
 		if(isExcel()){
@@ -23,7 +23,7 @@ public abstract class AbstractUploadExcel<T> implements IUploadExcel {
 	
 	public abstract boolean allDataInExcelIsValid();
 	
-	public abstract void processMyExcel()  throws ExcelException;
+	public abstract void processMyExcel()  throws Exception;
 	
-	public abstract void afterProcessing(Vector<T> excelData)  throws ExcelException;
+	public abstract void afterProcessing(Vector<T> excelData)  throws Exception;
 }

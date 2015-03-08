@@ -34,7 +34,7 @@ function checkPassword(t){
 <%-- <form:errors path="clubDetails.*" cssClass="errorblock" element="div" />
  --%><div class="form-register">
 	<div class="panel panel-default">
-	  <div class="panel-heading header"><h3 class="panel-title">Registration</h3></div>
+	  <div class="panel-heading header"><h3 class="panel-title">Subscription</h3></div>
 	  <div class="panel-body greybg">
 	    <div class="col-xs-12">
 			<div class="col-xs-4"><label>Club Name:</label></div>

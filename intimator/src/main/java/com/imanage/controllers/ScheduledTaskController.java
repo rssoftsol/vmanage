@@ -5,9 +5,10 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 
-import com.imanage.intimate.Intimator;
 import com.imanage.intimate.impl.ExpiryIntimator;
 import com.imanage.models.ClubDetails;
 import com.imanage.services.register.ClubRegistrationService;
@@ -21,7 +22,7 @@ public class ScheduledTaskController {
 	ClubRegistrationService clubRegistrationService;
 	
 	@Autowired
-	Intimator intimator;
+	ExpiryIntimator intimator;
 	
     //@Scheduled(fixedRate = 500000,initialDelay=5000)
     public void reportCurrentTime() {
@@ -30,7 +31,8 @@ public class ScheduledTaskController {
         for(ClubDetails clubDetails : clubs){
         	try {
         		if("N".equalsIgnoreCase(clubDetails.getIsAccountative())) continue;
-        		new ExpiryIntimator().intimate(clubDetails);	
+        		//put logger here
+        		intimator.intimate(clubDetails);	
         		
 			} catch (Exception e) {
 				// TODO Auto-generated catch block

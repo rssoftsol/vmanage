@@ -9,7 +9,6 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,14 +28,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.imanage.Session;
-import com.imanage.exception.ExcelException;
 import com.imanage.models.ClubDetails;
 import com.imanage.models.MemberDetails;
 import com.imanage.services.members.MemberRegistrationService;
 import com.imanage.services.register.ClubRegistrationService;
 import com.imanage.util.DateUtility;
 import com.imanage.util.MemberModeEnum;
+import com.imanage.util.crud.CRUDHandler;
 import com.imanage.util.crud.impl.CRUDHandlerImpl;
 import com.imanage.util.excel.uploadexcel.impl.UploadMembersExcelImpl;
 
@@ -51,9 +49,11 @@ public class MembersDetailController {
 	MemberRegistrationService memberRegistrationService;
 	
 	@RequestMapping(value="/browsemembers", method = RequestMethod.GET)
-	public String browseMembersPage(HttpSession session, Model model, RedirectAttributes attributes) {
+	public String browseMembersPage(Model model, RedirectAttributes attributes) {
 		String data = "";
-		ClubDetails clubDetails = clubRegistrationService.findByUserName(((Session)session.getAttribute("session")).getUsername());
+		Authentication authentication = SecurityContextHolder.getContext()
+				.getAuthentication();
+		ClubDetails clubDetails = clubRegistrationService.findByUserName(authentication.getName());
 		String view =null;
 		if("Y".equalsIgnoreCase(clubDetails.getIsAccountative())){
 			view = "membersdetail";
@@ -100,11 +100,13 @@ public class MembersDetailController {
 	}
 	
 	@RequestMapping(value="/view/{mode}/{memid}", method=RequestMethod.POST)
-    public ModelAndView viewMemberDetails(@PathVariable("memid") String id, @PathVariable("mode") String mode, 
-    		HttpSession session) {
+    public ModelAndView viewMemberDetails(@PathVariable("memid") String id, @PathVariable("mode") String mode) {
 		ModelAndView mav = new ModelAndView("member");
 		mav.addObject("mode", mode);
-		ClubDetails clubDetails = clubRegistrationService.findByUserName(((Session)session.getAttribute("session")).getUsername());
+		Authentication authentication = SecurityContextHolder.getContext()
+				.getAuthentication();
+		//put logger here
+		ClubDetails clubDetails = clubRegistrationService.findByUserName(authentication.getName());
 		Set<MemberDetails> memberDetails = clubDetails.getMemberDetails();
 		
 		for(MemberDetails memberDetail : memberDetails){
@@ -129,21 +131,25 @@ public class MembersDetailController {
 	
 	@RequestMapping(value="/memberAction/{mode}", method=RequestMethod.POST)
     public ModelAndView memberAction(@ModelAttribute("commandd") 
-    @Valid MemberDetails memberDetails, BindingResult result, HttpSession session, @PathVariable("mode") String mode) {
+    @Valid MemberDetails memberDetails, BindingResult result, @PathVariable("mode") String mode) {
 		if(result.hasErrors()){
 			ModelAndView mav = new ModelAndView("member");
 			mav.addObject("commandd", memberDetails);
 			mav.addObject("mode", mode);
 			return mav;
 		}
-		ClubDetails clubDetails = clubRegistrationService.findByUserName(((Session)session.getAttribute("session")).getUsername());
+		Authentication authentication = SecurityContextHolder.getContext()
+				.getAuthentication();
+		ClubDetails clubDetails = clubRegistrationService.findByUserName(authentication.getName());
 		memberDetails.setClubDetails(clubDetails);
 		return new CRUDHandlerImpl().processCRUDRequest(mode, memberDetails, memberRegistrationService);
 	}
 	
 	@ModelAttribute
-	public void addCommonAttribute(Model model, HttpSession session){
-		model.addAttribute("user", ((Session)session.getAttribute("session")).getUsername());
+	public void addCommonAttribute(Model model){
+		Authentication authentication = SecurityContextHolder.getContext()
+				.getAuthentication();
+		model.addAttribute("user", authentication.getName());
 		model.addAttribute("date", new java.util.Date().toString());
 		model.addAttribute("mainmode", "MEMBER");
 		model.addAttribute("headermsg", "Provide Member Details"); 
@@ -174,7 +180,7 @@ public class MembersDetailController {
 		uploadExcel.setMemberDetails(memberIds);
 		try {
 			uploadExcel.upload(file);
-		} catch (ExcelException e) {
+		} catch (Exception e) {
 			mav = new ModelAndView("uploadexcel");
 			mav.addObject("popupErrorMessage", e.getMessage());
 			return mav;
@@ -233,10 +239,13 @@ public class MembersDetailController {
 						new java.sql.Date(new SimpleDateFormat("dd/MM/yyyy").parse(memberArr[3]).getTime()));
 				memberDetails.setClubDetails(clubDetails);
 				memberDetails.setCreatedDate(DateUtility.getSQLCurrentTime());
-				memberRegistrationService.save(memberDetails);
+				//put logger here
+				CRUDHandler crudHandler = new CRUDHandlerImpl();
+				crudHandler.processCRUDRequest(MemberModeEnum.ADD.toString(), memberDetails, memberRegistrationService);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				//put logger here
 			}
 		}
 	}
