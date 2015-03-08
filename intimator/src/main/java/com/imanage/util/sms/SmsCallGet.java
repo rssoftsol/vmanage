@@ -16,9 +16,11 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component
 public class SmsCallGet {
-
-
 
 	/**
 	 * @param args
@@ -89,13 +91,58 @@ public class SmsCallGet {
 	}
 
 	private String getURLPath(String text, String phoneNo) {
-		String twar = getURL()+"httpapi/send?username=chandrashekhar.m.patil@gmail.com&password=shekhar123&sender_id=SMSIND&route=T"
+		String twar = getURL()+"?username="+username+"&password="+password+"&sender_id="+senderId+"&route="+route
 				+ "&phonenumber="+phoneNo+"&message="+text;
 		return twar;
 	}
 
+	@Value("${smsConfig.websiteLink}")
+	private String websiteLink;
+	
+	@Value("${smsConfig.username}")
+	private String username;
+	
+	@Value("${smsConfig.password}")
+	private String password;
+	
+	@Value("${smsConfig.senderId}")
+	private String senderId;
+	
+	@Value("${smsConfig.route}")
+	private String route;
+	
+	
 	private String getURL() {
-
-		return "http://smsc.biz/";
+		return websiteLink;
+	}
+	public String getWebsiteLink() {
+		return websiteLink;
+	}
+	public void setWebsiteLink(String websiteLink) {
+		this.websiteLink = websiteLink;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public String getSenderId() {
+		return senderId;
+	}
+	public void setSenderId(String senderId) {
+		this.senderId = senderId;
+	}
+	public String getRoute() {
+		return route;
+	}
+	public void setRoute(String route) {
+		this.route = route;
 	}
 }

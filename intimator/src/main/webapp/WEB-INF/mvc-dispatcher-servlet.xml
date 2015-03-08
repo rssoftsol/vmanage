@@ -44,7 +44,7 @@
     </bean>
     
 	<context:property-placeholder
-		location="classpath:database.properties,classpath:emailConfig.properties" />
+		location="classpath:database.properties,classpath:emailConfig.properties,classpath:smsConfig.properties" />
 
 	<bean id="messageSource"
 		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">

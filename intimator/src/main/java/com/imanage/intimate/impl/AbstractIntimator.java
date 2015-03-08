@@ -17,10 +17,15 @@ public abstract class AbstractIntimator<T> implements Intimator {
 	protected Long mobileNo;
 	protected String text;
 	protected EmailBean emailBean;
+	
 	@Autowired
 	EmailConfigBean emailConfigBean;
+	
 	@Autowired
 	private JavaMailSenderImpl mailSenderImpl;
+	
+	@Autowired
+	private SmsCallGet smsCallGet;
 	
 	public abstract void intimate(T t);
 	
@@ -34,7 +39,6 @@ public abstract class AbstractIntimator<T> implements Intimator {
 		// TODO Auto-generated method stub
 		System.out.println("sending message with mobile no. " + mobileNo
 				+ " and text as" + text);
-		SmsCallGet smsCallGet = new SmsCallGet();
 		smsCallGet.sendMessage(text, String.valueOf(mobileNo));
 	}
 
