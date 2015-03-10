@@ -19,12 +19,12 @@ public class UploadMembersExcelImpl extends AbstractUploadExcel<MembersDetailUpl
 
 	@Override
 	public boolean isExcel() {
-		return "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet".equals(file.getContentType());
+		return "application/csv".equals(file.getContentType());
 	}
 
 	@Override
 	public boolean allDataInExcelIsValid() {
-		return invalidMembersString == null;
+		return "".equalsIgnoreCase(invalidMembersString);
 	}
 
 	@Override

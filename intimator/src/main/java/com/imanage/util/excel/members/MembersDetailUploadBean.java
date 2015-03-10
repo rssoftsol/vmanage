@@ -53,7 +53,7 @@ public class MembersDetailUploadBean {
 	
 	public boolean validPhonenumber(){
 		if(phonenumber == null || "".equalsIgnoreCase(phonenumber)){
-			phonenumber = "Phone number cannot be empty";
+			phonenumberError = "Phone number cannot be empty";
 			hasError = true;
 			return false;
 		}
@@ -83,7 +83,7 @@ public class MembersDetailUploadBean {
 			return false;
 		}
 		try {
-			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+			SimpleDateFormat format = new SimpleDateFormat("dd-MMMM-yyyy");
 			format.setLenient(false);
             new java.sql.Date(format.parse(expiryDate).getTime());
         } catch(ParseException e) {

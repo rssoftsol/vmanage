@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.Vector;
 
-import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFCell;
 
 import com.imanage.util.excel.ExcelProcessor;
 
@@ -20,18 +20,20 @@ public class MembersDetailExcelReader extends ExcelProcessor<MembersDetailUpload
 		MembersDetailUploadBean detailUploadBean = new MembersDetailUploadBean();
 		
 		while(cellIter.hasNext()){
-            XSSFCell cell = (XSSFCell) cellIter.next();
+			HSSFCell cell = (HSSFCell) cellIter.next();
             switch (_case) {
 				case 0:
-					if(cell.getCellType() == 0)
-						detailUploadBean.memberId = cell.getRawValue();
-					else
+					if(cell.getCellType() == 0){
+						cell.setCellType(HSSFCell.CELL_TYPE_STRING);
+						detailUploadBean.memberId = cell.getStringCellValue();
+					}else
 						detailUploadBean.memberId = cell.toString();
 					break;
 				case 1:
-					if(cell.getCellType() == 0)
-						detailUploadBean.phonenumber = cell.getRawValue();
-					else
+					if(cell.getCellType() == 0){
+						cell.setCellType(HSSFCell.CELL_TYPE_STRING);
+						detailUploadBean.phonenumber = cell.getStringCellValue();
+					}else
 						detailUploadBean.phonenumber = cell.toString();
 					break;
 					
@@ -47,6 +49,7 @@ public class MembersDetailExcelReader extends ExcelProcessor<MembersDetailUpload
         }
 		detailUploadBeans.addElement(detailUploadBean);
 		validateProcessedRow(detailUploadBean);
+		System.out.println("MembersDetailUploadBean :"+detailUploadBean);
 	}
 	
 	@Override

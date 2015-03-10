@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.util.Iterator;
 import java.util.Vector;
 
+import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -29,14 +30,24 @@ public abstract class ExcelProcessor<T> implements IExcelProcessor<T>{
 	        }
 	        while(rowIter.hasNext()){
 	        	Row row = rowIter.next();
+	        	if(!isRowValid(row)) continue;
 	            processExcelRow(cellVectorHolder, row.cellIterator());
 	        }
 	    }catch (Exception e){
 	        System.out.println(e.getMessage());
+	        throw new ExcelException("Invalid file format");
 	    }
 	    return cellVectorHolder;
 	}
 	
+	private boolean isRowValid(Row row){
+		Iterator cellIter = row.cellIterator();
+		while(cellIter.hasNext()){
+			HSSFCell cell = (HSSFCell) cellIter.next();
+			if(cell!=null && !cell.toString().equalsIgnoreCase("")) return true;
+		}
+		return false;
+	}
 	@Override
 	public void exportExcelSheet(Vector<Vector<XSSFCell>> data) {
 		// TODO Auto-generated method stub
