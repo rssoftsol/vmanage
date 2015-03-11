@@ -42,7 +42,7 @@ public class MembersDetailExcelReader extends ExcelProcessor<MembersDetailUpload
 					break;
 	
 				case 3:
-					detailUploadBean.expiryDate = cell.toString();
+					detailUploadBean.setExpiryDate(cell.toString());
 					break;
 			}
            _case++;

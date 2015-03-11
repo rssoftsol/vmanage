@@ -43,11 +43,11 @@ public class UploadMembersExcelImpl extends AbstractUploadExcel<MembersDetailUpl
 			if(membersDetailUploadBean.hasError){
 				invalidMembersString = invalidMembersString + membersDetailUploadBean.memberId+"~"+
 						membersDetailUploadBean.name+"~"+membersDetailUploadBean.phonenumber+"~"+
-						membersDetailUploadBean.expiryDate+"~"+membersDetailUploadBean.getErrorString()+"!";
+						membersDetailUploadBean.getExpiryDate()+"~"+membersDetailUploadBean.getErrorString()+"!";
 			}else{
 				validMembersString = validMembersString + membersDetailUploadBean.memberId+"~"+
 						membersDetailUploadBean.name+"~"+membersDetailUploadBean.phonenumber+"~"+
-						membersDetailUploadBean.expiryDate+"!";
+						membersDetailUploadBean.getExpiryDate()+"!";
 			}
 		}
 		//put logger here
