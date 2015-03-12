@@ -30,7 +30,7 @@ public class RegistrationActionController {
 	
 	
 	@RequestMapping(method = RequestMethod.GET,value="/create.htm")
-	public String redirectToLogin(Model model) {
+	public String subscribe(Model model) {
 		model.addAttribute("clubDetails", new ClubDetails());
 		model.addAttribute("command", new ClubDetails());
 		model.addAttribute("menumode", "R");
@@ -38,14 +38,15 @@ public class RegistrationActionController {
 	}
 	
 	@RequestMapping(value="/createAction.htm", method = RequestMethod.POST)
-	public ModelAndView registrationHandler(Model model, @ModelAttribute("command")
-     @Valid ClubDetails clubDetails, BindingResult result){
+	public String registrationHandler(Model model, @ModelAttribute("command")
+     @Valid ClubDetails clubDetails, BindingResult result, RedirectAttributes attributes){
+		String view = "";
 		if(result.hasErrors()){
-			ModelAndView mav = new ModelAndView("register");
+			view = "register";
 			clubDetails.setPassword("");
-			mav.addObject("command", clubDetails);
+			model.addAttribute("command", clubDetails);
 			model.addAttribute("menumode", "R");
-			return mav;
+			return view;
 		}
 		clubDetails.setPassword(passwordEncoder.encodePassword(clubDetails.getPassword(), clubDetails.getUsername()));
 		clubDetails.setRoleId(1);
@@ -60,19 +61,20 @@ public class RegistrationActionController {
 				//put logger here
 				clubRegService.save(clubDetails);
 				message = "Successfully registered";
-				model.addAttribute("popupInfoMessage",message);
+				attributes.addFlashAttribute("popupInfoMessage",message);
 				clubDetails = new ClubDetails();
 			}else{
 				message = "User Name already taken";
 				model.addAttribute("popupErrorMessage",message);
-				
+				model.addAttribute("menumode", "R");
+				return "register";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 		model.addAttribute("menumode", "R");
-	    return new ModelAndView("register", "command", clubDetails);
+	    return "redirect:/create.htm";//new ModelAndView("register", "command", clubDetails);
 	}
 	
 	@RequestMapping(value="/myprofile/edit", method = RequestMethod.GET)
