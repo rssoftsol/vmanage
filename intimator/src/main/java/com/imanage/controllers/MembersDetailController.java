@@ -130,19 +130,23 @@ public class MembersDetailController {
 	}
 	
 	@RequestMapping(value="/memberAction/{mode}", method=RequestMethod.POST)
-    public ModelAndView memberAction(@ModelAttribute("commandd") 
-    @Valid MemberDetails memberDetails, BindingResult result, @PathVariable("mode") String mode) {
-		if(result.hasErrors()){
-			ModelAndView mav = new ModelAndView("member");
-			mav.addObject("commandd", memberDetails);
-			mav.addObject("mode", mode);
-			return mav;
+    public String memberAction(@ModelAttribute("commandd") 
+    @Valid MemberDetails memberDetails, BindingResult result, @PathVariable("mode") String mode, Model model,
+    RedirectAttributes redirectAttributes) {
+		if(result.hasErrors() && !"DELETE".equals(mode)){
+			model.addAttribute("commandd", memberDetails);
+			model.addAttribute("mode", mode);
+			return "member";
 		}
 		Authentication authentication = SecurityContextHolder.getContext()
 				.getAuthentication();
 		ClubDetails clubDetails = clubRegistrationService.findByUserName(authentication.getName());
 		memberDetails.setClubDetails(clubDetails);
-		return new CRUDHandlerImpl().processCRUDRequest(mode, memberDetails, memberRegistrationService);
+		String message = new CRUDHandlerImpl().processCRUDRequest(mode, memberDetails, memberRegistrationService);
+		model.addAttribute("commandd", new MemberDetails());
+		model.addAttribute("mode", mode);
+		redirectAttributes.addFlashAttribute("popupInfoMessage", message);
+		return "redirect:/members/member/"+mode;
 	}
 	
 	@ModelAttribute
@@ -162,12 +166,11 @@ public class MembersDetailController {
 	}
 	
 	@RequestMapping(value="/member/uploadAction", method=RequestMethod.POST)
-    public ModelAndView uploadExcelPage(@RequestParam("file") MultipartFile file) {
-		ModelAndView mav = null;
+    public String uploadExcelPage(@RequestParam("file") MultipartFile file, Model model, 
+    		RedirectAttributes redirectAttributes) {
 		if (file.isEmpty()){
-			mav = new ModelAndView("uploadexcel");
-			mav.addObject("popupErrorMessage", "Please select the file first");
-			return mav;
+			model.addAttribute("popupErrorMessage", "Please select the file first");
+			return "uploadexcel";
 		}
 		Set<String> memberIds = new HashSet<String>();
 		Authentication authentication = SecurityContextHolder.getContext()
@@ -181,24 +184,21 @@ public class MembersDetailController {
 		try {
 			uploadExcel.upload(file);
 		} catch (Exception e) {
-			mav = new ModelAndView("uploadexcel");
-			mav.addObject("popupErrorMessage", e.getMessage());
-			return mav;
+			redirectAttributes.addFlashAttribute("popupErrorMessage", e.getMessage());
+			return "redirect:/members/member/upload";
 		}
 		if(uploadExcel.allDataInExcelIsValid()){
 			processMembersString(uploadExcel.getValidMembersString(), clubDetails);
-			mav = new ModelAndView("uploadexcel");
-			mav.addObject("popupInfoMessage", "Upload completed");
-			return mav;
+			redirectAttributes.addFlashAttribute("popupInfoMessage", "Upload completed");
+			return "redirect:/members/member/upload";
 		}else{
-			mav = new ModelAndView("confirmupload");
 			if("".equalsIgnoreCase(uploadExcel.getValidMembersString()))
-				mav.addObject("UPLOADINFO", "All member's of excel has invalid data as listed above");
+				redirectAttributes.addFlashAttribute("UPLOADINFO", "All member's of excel has invalid data as listed above");
 			else
-				mav.addObject("UPLOADINFO", "Member's listed above has invalid data");
-			mav.addObject("VALIDMEMBERS", uploadExcel.getValidMembersString());
-			mav.addObject("INVALIDMEMBERS", uploadExcel.getInvalidMembersString());
-			return mav;
+				redirectAttributes.addFlashAttribute("UPLOADINFO", "Member's listed above has invalid data");
+			redirectAttributes.addFlashAttribute("VALIDMEMBERS", uploadExcel.getValidMembersString());
+			redirectAttributes.addFlashAttribute("INVALIDMEMBERS", uploadExcel.getInvalidMembersString());
+			return "redirect:/members/confirmupload";
 		}
 	}
 	

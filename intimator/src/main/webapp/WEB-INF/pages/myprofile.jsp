@@ -101,7 +101,7 @@
 		<div class="col-xs-12" style="margin-top:5px">
 			<div class="col-xs-11">
 				<input type="button" id="deActivate" value="Deactivate Account" class="btn btn-primary pull-right">
-				<input type="button" id="reActivate" value="Reactivate Account" class="btn btn-primary pull-right">
+				<input type="button" id="reActivate" value="Activate Account" class="btn btn-primary pull-right">
 			</div>
 		<div class="col-xs-1"><input type="submit" value="Edit" class="btn btn-primary"></div>
 		

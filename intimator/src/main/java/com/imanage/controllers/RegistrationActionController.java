@@ -127,7 +127,7 @@ public class RegistrationActionController {
 			clubDetails.setIsAccountative("Y");
 			clubDetails.setModifiedDate(DateUtility.getSQLCurrentTime());
 			clubRegService.update(clubDetails);
-			message = "Account Reactivated";
+			message = "Account Activated";
 			mav.addObject("popupInfoMessage", message);
 		}
 		mav.addObject("isActive", clubDetails.getIsAccountative());
@@ -137,13 +137,13 @@ public class RegistrationActionController {
 	}
 	
 	@RequestMapping(value="/myprofile/editAction.htm", method = RequestMethod.POST)
-	public ModelAndView myProfileAction(@ModelAttribute("command") 
-    @Valid ClubDetails clubDetails, BindingResult result) {
-		ModelAndView mav = new ModelAndView("myprofile");
+	public String myProfileAction(@ModelAttribute("command") 
+    @Valid ClubDetails clubDetails, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+		String mav = "myprofile";
 		Authentication authentication = SecurityContextHolder.getContext()
 				.getAuthentication();
 		if(result.hasErrors()){
-			mav.addObject("command", clubDetails);
+			model.addAttribute("command", clubDetails);
 			return mav;
 		}
 		ClubDetails clubDetailstmp = clubRegService.findByUserName(authentication.getName());
@@ -154,11 +154,11 @@ public class RegistrationActionController {
 		clubDetails.setIsAccountative(clubDetailstmp.getIsAccountative());
 		//put logger here
 		clubRegService.update(clubDetails);
-		mav.addObject("command", clubDetails);
-		mav.addObject("popupInfoMessage", "Details updated");
-		mav.addObject("user", authentication.getName());
-		mav.addObject("isActive", clubDetails.getIsAccountative());
-		return mav;
+		model.addAttribute("command", clubDetails);
+		redirectAttributes.addFlashAttribute("popupInfoMessage", "Details updated");
+		model.addAttribute("user", authentication.getName());
+		model.addAttribute("isActive", clubDetails.getIsAccountative());
+		return "redirect:/myprofile/edit";
 	}
 	
 	@ModelAttribute

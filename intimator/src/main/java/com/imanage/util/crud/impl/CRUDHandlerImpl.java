@@ -1,7 +1,5 @@
 package com.imanage.util.crud.impl;
 
-import org.springframework.web.servlet.ModelAndView;
-
 import com.imanage.models.MemberDetails;
 import com.imanage.services.members.MemberRegistrationService;
 import com.imanage.util.DateUtility;
@@ -47,7 +45,7 @@ public class CRUDHandlerImpl implements CRUDHandler {
 	}
 	
 	@Override
-	public ModelAndView processCRUDRequest(String mode,
+	public String processCRUDRequest(String mode,
 			MemberDetails memberDetails, MemberRegistrationService memberRegistrationService) {
 		MemberModeEnum modeEnum = MemberModeEnum.getMemberModeEnum(mode);
 		MemberDetails existingMemberDetails = memberRegistrationService.findByMemid(memberDetails.getMemid());
@@ -68,10 +66,8 @@ public class CRUDHandlerImpl implements CRUDHandler {
 			//To Do
 			break;
 		}
-		ModelAndView mav = new ModelAndView("member", "popupInfoMessage", message);
-		mav.addObject("commandd", new MemberDetails());
-		mav.addObject("mode", mode);
-		return mav;
+		
+		return message;
 	}
 	
 }

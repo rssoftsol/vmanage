@@ -11,7 +11,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
 
 import com.imanage.intimate.impl.ExpiryIntimator;
 import com.imanage.models.ClubDetails;
