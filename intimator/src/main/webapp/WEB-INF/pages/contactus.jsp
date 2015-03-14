@@ -14,6 +14,7 @@
 <title>Contact Us</title>
 </head>
 <body>
-contact us
+Phone:1234567890/0123456789
+Email:rssoftsol@gmail.com
 </body>
 </html>

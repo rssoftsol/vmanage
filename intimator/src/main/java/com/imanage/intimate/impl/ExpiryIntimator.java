@@ -14,6 +14,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 public class ExpiryIntimator extends AbstractIntimator<ClubDetails> {
 	@Override
 	public void intimate(ClubDetails clubDetails) {
+		doInitialization(clubDetails);
 		ExpiryIntimator.this.text = clubDetails.getSmsText();
 		intimateByEmail();
 	}

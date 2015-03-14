@@ -14,6 +14,10 @@
 <title>About us</title>
 </head>
 <body>
-About usssss
+<p>With growing technology everything has become online. So why you still are using excel to maintain list of your members.</p>
+<p>Give us a chance to help manage your members list. We will be responsible for intimating your member about 
+their membership expiry.</p>
+<p>Also we will let you know the members whose membership is getting expired. 
+Please feel free to contact us, in case of any doubt.</p>
 </body>
 </html>
