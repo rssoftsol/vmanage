@@ -50,8 +50,8 @@ public abstract class AbstractIntimator<T> implements Intimator {
 		try {
 			MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(
 					mimeMessage, true);
-			mimeMessageHelper.setFrom(emailBean.getFromEmailId());
-			mimeMessageHelper.setTo("chandrashekhar.m.patil@gmail.com");
+			mimeMessageHelper.setFrom("chandrashekhar.m.patil@gmail.com");
+			mimeMessageHelper.setTo(emailBean.getFromEmailId());
 			mimeMessageHelper.setSubject(emailBean.getMailSubject());
 
 			/*
