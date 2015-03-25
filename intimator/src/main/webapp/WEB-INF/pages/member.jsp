@@ -43,6 +43,7 @@ $(document).ready(function() {
     	$( "#name" ).prop( "readonly", true );
     	$( "#phone" ).prop( "readonly", true );
     	$( "#example1" ).prop( "readonly", true );
+    	$( "#remarks" ).prop( "disabled", true );
     }
     $('#getMemBtn').on( 'click', function () {
   	  	$('form[name=form]').attr('action','${pageContext.request.contextPath}/members/view/${mode}/'+document.getElementById('memid').value);
@@ -106,6 +107,12 @@ $(document).ready(function() {
 				        </div>
 				        <div class='col-xs-5 '><form:errors  path="expirydate" cssClass="alert alert-danger error" element="div"/></div>
 			       </div>
+			       
+			       <div class="col-xs-12">
+						<div class="col-xs-3"><label>Remarks:</label></div>
+						<div class="col-xs-4"><form:textarea id="remarks" maxlength="160" 
+						path="remarks" class="form-control"/></div>
+					</div>
 			        <div><input type="submit" value="${mode}" class="btn btn-primary pull-right"></div>
 			    </div>
 			    <div class="panel-footer" id="uploadExcel">Click<a href="#"><b> here </b> </a> to upload members in bulk using excel</div>

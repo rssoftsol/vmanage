@@ -45,4 +45,9 @@ public class EmailBean {
 		return this;
 	}
 	
+	@Override
+	public String toString() {
+		return "fromEmailId: "+fromEmailId+" -toEmailId:"+toEmailId+" -mailSubject:"+ mailSubject+" -mailBody:"+mailBody;
+	}
+	
 }

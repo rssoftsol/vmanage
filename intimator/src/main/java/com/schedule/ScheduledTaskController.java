@@ -33,8 +33,8 @@ public class ScheduledTaskController {
 		System.out.println("i am initalized");
 	}
 	
-    /*@Scheduled(cron="0 46 11 * * *?")*/
-	@Scheduled(cron="0 0 12 * * *")
+    @Scheduled(cron="0 30 9 * * *")
+	//@Scheduled(fixedRate=500000)
     public void reportCurrentTime() {
         System.out.println("The time is now " + dateFormat.format(new Date()));
         List<ClubDetails> clubs = clubRegistrationService.findAll();
@@ -42,6 +42,7 @@ public class ScheduledTaskController {
         	try {
         		if("N".equalsIgnoreCase(clubDetails.getIsAccountative())) continue;
         		//put logger here
+        		System.out.println("Active club found:"+clubDetails);
         		intimator.intimate(clubDetails);	
         		
 			} catch (Exception e) {

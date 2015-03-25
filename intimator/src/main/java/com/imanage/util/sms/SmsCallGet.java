@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
@@ -73,7 +74,7 @@ public class SmsCallGet {
 			}
 			in.close();
 			//put logger here
-			System.out.println(response.toString());
+			System.out.println("Response from sms gateway: "+response.toString());
 
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
@@ -93,7 +94,7 @@ public class SmsCallGet {
 	private String getURLPath(String text, String phoneNo) {
 		String twar = getURL()+"?username="+username+"&password="+password+"&sender_id="+senderId+"&route="+route
 				+ "&phonenumber="+phoneNo+"&message="+text;
-		return twar;
+		return URLEncoder.encode(twar);
 	}
 
 	@Value("${smsConfig.websiteLink}")

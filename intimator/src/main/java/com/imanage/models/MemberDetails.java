@@ -46,6 +46,8 @@ public class MemberDetails {
 	
 	private Timestamp modifiedDate;
 	
+	private String remarks;
+	
 	public MemberDetails() {
 		super();
 	}
@@ -126,10 +128,19 @@ public class MemberDetails {
 	public void setModifiedDate(Timestamp modifiedDate) {
 		this.modifiedDate = modifiedDate;
 	}
+	
+	public String getRemarks() {
+		return remarks;
+	}
+
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
 
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "phone:"+phone;
+		return "memid: "+memid+" -name"+name+" -Phone: "+phone+" -ExpiryDate:"+expirydate+
+				" -createdDate:"+createdDate+" -modifiedDate:"+modifiedDate;
 	}
 }

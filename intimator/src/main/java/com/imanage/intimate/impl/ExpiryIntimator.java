@@ -14,8 +14,8 @@ import com.itextpdf.text.pdf.PdfPTable;
 public class ExpiryIntimator extends AbstractIntimator<ClubDetails> {
 	@Override
 	public void intimate(ClubDetails clubDetails) {
-		doInitialization(clubDetails);
 		ExpiryIntimator.this.text = clubDetails.getSmsText();
+		doInitialization(clubDetails);
 		intimateByEmail();
 	}
 	
@@ -31,6 +31,7 @@ public class ExpiryIntimator extends AbstractIntimator<ClubDetails> {
 		        		pdfPTable.addCell(details.getExpirydate().toString());
 		        		ExpiryIntimator.this.mobileNo = details.getPhone();
 		        		//put logger here
+		        		System.out.println("Member with give expiry date exist:"+details);
 		        		intimateBySMS();
 			    		expires = true;
 		        	}

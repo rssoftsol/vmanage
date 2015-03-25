@@ -60,7 +60,7 @@ public class MembersDetailController {
 			
 			for(MemberDetails memberDetail : clubDetails.getMemberDetails()){
 				data = data + memberDetail.getMemid()+"~"+memberDetail.getName()+"~"+memberDetail.getPhone()
-						+"~"+memberDetail.getExpirydate()+"!";
+						+"~"+memberDetail.getExpirydate()+"~"+(memberDetail.getRemarks()!=null?memberDetail.getRemarks():"-")+"!";
 			}
 			model.addAttribute("mode", "BROWSE");
 			model.addAttribute("dataset", data);

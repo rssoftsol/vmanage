@@ -38,13 +38,13 @@ public abstract class AbstractIntimator<T> implements Intimator {
 	public void intimateBySMS() {
 		// TODO Auto-generated method stub
 		System.out.println("sending message with mobile no. " + mobileNo
-				+ " and text as" + text);
+				+ " and text as " + text);
 		smsCallGet.sendMessage(text, String.valueOf(mobileNo));
 	}
 
 	@Override
 	public void intimateByEmail() {
-
+		System.out.println("Entered into intimateByEmail:"+emailBean);
 		MimeMessage mimeMessage = mailSenderImpl.createMimeMessage();
 
 		try {
@@ -69,13 +69,15 @@ public abstract class AbstractIntimator<T> implements Intimator {
 			}
 			mailSenderImpl.send(mimeMessage);
 			//put logger here
-			System.out.println("Sent successfully...!");
+			System.out.println("Sent successfully... !");
 		} catch (MessagingException e) {
 			System.out.println(e.getMessage());
 			//put logger here
 		} catch (MailSendException e){
 			System.out.println(e.getMessage());
 			//put logger here
+		} catch (Exception e){
+			System.out.println("Mail sending exception occured:"+e.getMessage());
 		}
 
 	}

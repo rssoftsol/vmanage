@@ -11,6 +11,7 @@ $(document).ready(function() {
             { "title": "Name" },
             { "title": "Phone No." },
             { "title": "Expiry Date", "class": "center" },
+            { "title": "Remarks" }
          ]
     } ); 
 } );
