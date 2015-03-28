@@ -1,5 +1,8 @@
 package com.imanage.util.crud.impl;
 
+import java.util.Iterator;
+import java.util.Set;
+
 import com.imanage.models.MemberDetails;
 import com.imanage.services.members.MemberRegistrationService;
 import com.imanage.util.DateUtility;
@@ -44,12 +47,23 @@ public class CRUDHandlerImpl implements CRUDHandler {
 		
 	}
 	
+	private MemberDetails getMatchingMemberFromSet(Set<MemberDetails> existingMembers, MemberDetails memberDetails){
+		MemberDetails tmpmemberDetails = null;
+		for (Iterator<MemberDetails> iterator = existingMembers.iterator(); iterator.hasNext();) {
+			tmpmemberDetails = iterator.next();
+			if(tmpmemberDetails.getMemid().equalsIgnoreCase(memberDetails.getMemid())){
+				break;
+			}
+			tmpmemberDetails = null;
+		}
+		return tmpmemberDetails;
+	}
+	
 	@Override
 	public String processCRUDRequest(String mode,
-			MemberDetails memberDetails, MemberRegistrationService memberRegistrationService) {
+			MemberDetails memberDetails, Set<MemberDetails> existingMembers) {
 		MemberModeEnum modeEnum = MemberModeEnum.getMemberModeEnum(mode);
-		MemberDetails existingMemberDetails = memberRegistrationService.findByMemid(memberDetails.getMemid());
-		this.memberRegistrationService = memberRegistrationService;
+		MemberDetails existingMemberDetails = getMatchingMemberFromSet(existingMembers, memberDetails);
 		String message = "";
 		//put logger here
 		switch (modeEnum) {

@@ -142,7 +142,7 @@ public class MembersDetailController {
 				.getAuthentication();
 		ClubDetails clubDetails = clubRegistrationService.findByUserName(authentication.getName());
 		memberDetails.setClubDetails(clubDetails);
-		String message = new CRUDHandlerImpl().processCRUDRequest(mode, memberDetails, memberRegistrationService);
+		String message = new CRUDHandlerImpl().processCRUDRequest(mode, memberDetails, clubDetails.getMemberDetails());
 		model.addAttribute("commandd", new MemberDetails());
 		model.addAttribute("mode", mode);
 		redirectAttributes.addFlashAttribute("popupInfoMessage", message);
@@ -241,7 +241,7 @@ public class MembersDetailController {
 				memberDetails.setCreatedDate(DateUtility.getSQLCurrentTime());
 				//put logger here
 				CRUDHandler crudHandler = new CRUDHandlerImpl();
-				crudHandler.processCRUDRequest(MemberModeEnum.ADD.toString(), memberDetails, memberRegistrationService);
+				crudHandler.processCRUDRequest(MemberModeEnum.ADD.toString(), memberDetails, clubDetails.getMemberDetails());
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

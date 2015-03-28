@@ -93,8 +93,8 @@ public class SmsCallGet {
 
 	private String getURLPath(String text, String phoneNo) {
 		String twar = getURL()+"?username="+username+"&password="+password+"&sender_id="+senderId+"&route="+route
-				+ "&phonenumber="+phoneNo+"&message="+text;
-		return URLEncoder.encode(twar);
+				+ "&phonenumber="+phoneNo+"&message="+URLEncoder.encode(text);
+		return twar;
 	}
 
 	@Value("${smsConfig.websiteLink}")

@@ -1,11 +1,12 @@
 package com.imanage.util.crud;
 
+import java.util.Set;
+
 import com.imanage.models.MemberDetails;
-import com.imanage.services.members.MemberRegistrationService;
 
 public interface CRUDHandler {
 
 	public String processCRUDRequest(String mode, MemberDetails memberDetails, 
-			MemberRegistrationService memberRegistrationService);
+			Set<MemberDetails> existingMemberDetails);
 	
 }
