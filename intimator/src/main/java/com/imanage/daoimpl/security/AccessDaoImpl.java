@@ -36,7 +36,7 @@ public class AccessDaoImpl implements AccessDao {
 		List<ClubDetails> customers = jdbcTemplate
 				.query(sql, new ClubDetailsMapper());
 		if (!customers.isEmpty()) {
-			return customers.get(0).getUsername();
+			return customers.get(0).getEmail();
 		}
 		return null;
 	}
