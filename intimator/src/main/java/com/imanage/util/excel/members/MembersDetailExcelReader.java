@@ -11,7 +11,7 @@ import com.imanage.util.excel.ExcelProcessor;
 public class MembersDetailExcelReader extends ExcelProcessor<MembersDetailUploadBean>{
 	
 	public Set<String> memberDetails = null;
-	
+	public String dateFormat = "dd/mm/yyyy";
 	@Override
 	public void processExcelRow(
 			Vector<MembersDetailUploadBean> detailUploadBeans, Iterator cellIter) {
@@ -42,7 +42,18 @@ public class MembersDetailExcelReader extends ExcelProcessor<MembersDetailUpload
 					break;
 	
 				case 3:
-					detailUploadBean.setExpiryDate(cell.toString());
+					if(cell.getCellType() != 0){
+						detailUploadBean.setExpiryDate(cell.toString(), dateFormat);
+					}else{
+						detailUploadBean.setExpiryDate(cell.toString());
+					}
+					break;
+					
+				case 4:
+					detailUploadBean.remarks = "-";
+					if(cell!=null){
+						detailUploadBean.remarks = cell.toString();
+					}
 					break;
 			}
            _case++;
@@ -58,6 +69,7 @@ public class MembersDetailExcelReader extends ExcelProcessor<MembersDetailUpload
 		detailUploadBean.validMemberId(memberDetails);
 		detailUploadBean.validName();
 		detailUploadBean.validPhonenumber();
+		detailUploadBean.validRemarks();
 	}
 	
 	@Override
@@ -76,5 +88,5 @@ public class MembersDetailExcelReader extends ExcelProcessor<MembersDetailUpload
 }
 
 enum Header{
-	MEMBERID,PHONE,NAME,EXPIRYDATE;
+	MEMBERID,PHONE,NAME,EXPIRYDATE,REMARKS;
 }

@@ -36,13 +36,16 @@ public class ForgotPasswordManager implements ForgotPasswordService {
  
 		String uId = Utility.generateAlphanumericUId();
 		Date time = new Date(new java.util.Date().getTime());
-		String loginName = "rahul";//checkEmailId(forgotPasswordBean.getToEmailId());
+		String emailId = checkEmailId(forgotPasswordBean.getUserName());
+		if(emailId == null){
+			return;
+		}
 		logger.info("Time : "+time.getTime());
 		PasswordResetReqBean passwordResetReqBean = new PasswordResetReqBean();
 		passwordResetReqBean.setuId(uId);
-		passwordResetReqBean.setUserName(loginName);
+		passwordResetReqBean.setUserName(forgotPasswordBean.getUserName());
 		passwordResetReqBean.setTime(time);
-		logger.info("LoginName : "+loginName);
+		logger.info("LoginName : "+forgotPasswordBean.getUserName());
 		int updatedRows = accessDao.insertResetPasswordEntry(passwordResetReqBean);
 		logger.info("updatedRows : "+updatedRows); 
 		if(updatedRows>0){
@@ -57,7 +60,7 @@ public class ForgotPasswordManager implements ForgotPasswordService {
 				MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(
 						mimeMessage, true);
 				mimeMessageHelper.setFrom(emailConfigBean.getEmailFrom());
-				mimeMessageHelper.setTo(forgotPasswordBean.getToEmailId());
+				mimeMessageHelper.setTo(emailId);
 				mimeMessageHelper
 						.setSubject(emailConfigBean.getEmailSubject());
 				mimeMessageHelper.setText(emailText, true);
@@ -70,9 +73,9 @@ public class ForgotPasswordManager implements ForgotPasswordService {
 	}
 
 	@Override
-	public String checkEmailId(String toEmailId) {
-		String loginName = accessDao.checkEmailId(toEmailId);
-		return loginName;
+	public String checkEmailId(String userName) {
+		String emailId = accessDao.checkEmailId(userName);
+		return emailId;
 	}
 
 }

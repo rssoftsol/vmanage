@@ -8,10 +8,17 @@ import com.imanage.exception.ExcelException;
 
 public abstract class AbstractUploadExcel<T> implements IUploadExcel {
 	protected MultipartFile file;
+	public String dateFormat = "dd/mm/yyyy";
 	@Override
 	public void upload(MultipartFile file) throws Exception {
+		upload(file, null);
+	}
+	
+	@Override
+	public void upload(MultipartFile file, String dateFormat) throws Exception {
 		// TODO Auto-generated method stub
 		this.file = file;
+		this.dateFormat = dateFormat;
 		if(isExcel()){
 			processMyExcel();
 		}else{

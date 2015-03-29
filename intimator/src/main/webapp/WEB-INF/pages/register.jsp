@@ -28,7 +28,7 @@ function checkPassword(t){
  	$("#phonenumber").ForceNumericOnly();
 });
 </script>
-<body class="body" background="<c:url value="/resources/img/body-bg.jpg" />">
+<body background="<c:url value="/resources/img/body-bg.jpg" />">
 <form:form action="${pageContext.request.contextPath}/createAction.htm" method="post" commandName="command">
 	<form:hidden path="smsText" value="ur mem expire today"/>
 <%-- <form:errors path="clubDetails.*" cssClass="errorblock" element="div" />

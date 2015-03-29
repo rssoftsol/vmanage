@@ -48,10 +48,10 @@ public class RegistrationActionController {
 			model.addAttribute("menumode", "R");
 			return view;
 		}
-		clubDetails.setPassword(passwordEncoder.encodePassword(clubDetails.getPassword(), clubDetails.getUsername()));
+		clubDetails.setPassword(passwordEncoder.encodePassword(clubDetails.getPassword(), clubDetails.getUsername().toLowerCase()));
 		clubDetails.setRoleId(1);
 		clubDetails.setIsAccountative("Y");
-		clubDetails.setNewPassword(passwordEncoder.encodePassword(clubDetails.getPassword(), clubDetails.getUsername()));
+		clubDetails.setNewPassword(passwordEncoder.encodePassword(clubDetails.getPassword(), clubDetails.getUsername().toLowerCase()));
 		String message = "Sorry, Registeration failed";
 		System.out.println("clubDetails: "+clubDetails);
 		try {

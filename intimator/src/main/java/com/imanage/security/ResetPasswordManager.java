@@ -25,7 +25,7 @@ public class ResetPasswordManager implements ResetPasswordService {
 	@Override
 	public int resetPassword(ClubDetails clubDetails,String uId) {
 		String password = clubDetails.getPassword();
-		String encodedPassword = passwordEncoder.encodePassword(password, clubDetails.getUsername());
+		String encodedPassword = passwordEncoder.encodePassword(password, clubDetails.getUsername().toLowerCase());
 		clubDetails.setPassword(encodedPassword);
 		int rowsUpdated = accessDao.resetPassword(clubDetails,uId);
 		return rowsUpdated;

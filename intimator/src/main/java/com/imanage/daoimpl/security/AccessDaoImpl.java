@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.imanage.dao.security.AccessDao;
+import com.imanage.mapper.ClubDetailsMapper;
 import com.imanage.mapper.PasswordResetReqMapper;
 import com.imanage.models.ClubDetails;
 import com.imanage.models.security.PasswordResetReqBean;
@@ -30,14 +31,14 @@ public class AccessDaoImpl implements AccessDao {
 
 	@Override
 	public String checkEmailId(String toEmailId) {
-		String sql = "select * from club_details where email='"
+		String sql = "select * from club_details where username='"
 				+ toEmailId.toLowerCase().trim() + "'";
-		/*List<Customer> customers = jdbcTemplate
-				.query(sql, new CustomerMapper());
+		List<ClubDetails> customers = jdbcTemplate
+				.query(sql, new ClubDetailsMapper());
 		if (!customers.isEmpty()) {
-			return customers.get(0).getLoginName();
-		}*/
-		return "otari.rahul@gmail.com";
+			return customers.get(0).getUsername();
+		}
+		return null;
 	}
 
 	@Override

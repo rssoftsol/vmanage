@@ -22,13 +22,12 @@
 					Enter your e-mail address below and we'll send you an e-mail message containing your new password.
 				</p>
 				<div class="forgotPasswd-form-input">
-					<label style="color: gray; font-size: 14px;">E-mail Address </label> <input type="text" class="submitClass"
-						id="toEmailId" name="toEmailId" value=""
-						onchange=""><span
-						class=""></span>
+					<span><label>User Name </label> <form:input type="text" class="submitClass"
+						id="toEmailId" path="userName"/></span>
+						<span><form:errors path="userName" cssClass="error" element="span" /></span>
 				</div>
 				<div class="">
-					<input type="submit" id="sendEmailBtn" value="Send" class="btn btn-primary"><form:errors path='toEmailId' />
+					<input type="submit" id="sendEmailBtn" value="Send" class="btn btn-primary">
 				</div>
 			</form:form>
 		</div>

@@ -3,6 +3,8 @@ package com.imanage.controllers.security;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -10,6 +12,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -81,10 +84,18 @@ public class AccessController {
 
 	@RequestMapping(value = "/forgotPasswordSubmit.htm")
 	public String forgotPasswordSubmit(Model model,
-			@ModelAttribute ForgotPasswordBean forgotPasswordBean) {
+			@Valid ForgotPasswordBean forgotPasswordBean, BindingResult result) {
+		if(result.hasErrors()){
+			model.addAttribute("forgotPasswordBean", forgotPasswordBean);
+			return "security/forgotPassword";
+		}
 		logger.info("forgotPasswordBean: " + forgotPasswordBean.getToEmailId());
 		forgotPasswordService.sendMail(forgotPasswordBean);
-		return "redirect:login";
+		if(forgotPasswordBean.getToEmailId() != null){
+			return "redirect:login";
+		}else{
+			return "redirect:/forgotPassword.htm";
+		}
 	}
 
 	@RequestMapping(value = "/checkEmailId.htm")

@@ -3,14 +3,22 @@ package com.imanage.util.crud.impl;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+
 import com.imanage.models.MemberDetails;
 import com.imanage.services.members.MemberRegistrationService;
 import com.imanage.util.DateUtility;
 import com.imanage.util.MemberModeEnum;
 import com.imanage.util.crud.CRUDHandler;
 
+@Component
 public class CRUDHandlerImpl implements CRUDHandler {
 	
+	@Autowired
 	MemberRegistrationService memberRegistrationService;
 	public String handleAddRequest(MemberDetails memberDetails, MemberDetails existingMemberDetails) {
 		String message = "Member "+memberDetails.getMemid()+" already exist";

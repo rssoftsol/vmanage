@@ -45,8 +45,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 			boolean credentialsNonExpired = true;
 			boolean accountNonLocked = true;
 			return new User(
-					clubDetails.getUsername(), 
-					clubDetails.getPassword().toLowerCase(),
+					clubDetails.getUsername().toLowerCase(), 
+					clubDetails.getPassword(),
 					enabled,
 					accountNonExpired,
 					credentialsNonExpired,

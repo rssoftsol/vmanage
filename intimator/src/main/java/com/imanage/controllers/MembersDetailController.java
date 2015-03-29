@@ -48,6 +48,9 @@ public class MembersDetailController {
 	@Autowired
 	MemberRegistrationService memberRegistrationService;
 	
+	@Autowired
+	CRUDHandlerImpl cRUDHandler;
+	
 	@RequestMapping(value="/browsemembers", method = RequestMethod.GET)
 	public String browseMembersPage(Model model, RedirectAttributes attributes) {
 		String data = "";
@@ -142,7 +145,7 @@ public class MembersDetailController {
 				.getAuthentication();
 		ClubDetails clubDetails = clubRegistrationService.findByUserName(authentication.getName());
 		memberDetails.setClubDetails(clubDetails);
-		String message = new CRUDHandlerImpl().processCRUDRequest(mode, memberDetails, clubDetails.getMemberDetails());
+		String message = cRUDHandler.processCRUDRequest(mode, memberDetails, clubDetails.getMemberDetails());
 		model.addAttribute("commandd", new MemberDetails());
 		model.addAttribute("mode", mode);
 		redirectAttributes.addFlashAttribute("popupInfoMessage", message);
@@ -167,7 +170,11 @@ public class MembersDetailController {
 	
 	@RequestMapping(value="/member/uploadAction", method=RequestMethod.POST)
     public String uploadExcelPage(@RequestParam("file") MultipartFile file, Model model, 
-    		RedirectAttributes redirectAttributes) {
+    		RedirectAttributes redirectAttributes,@RequestParam("dateFormat") String dateFormat) {
+		if("0".equalsIgnoreCase(dateFormat)){
+			model.addAttribute("popupErrorMessage", "Please select the Date format first");
+			return "uploadexcel";
+		}
 		if (file.isEmpty()){
 			model.addAttribute("popupErrorMessage", "Please select the file first");
 			return "uploadexcel";
@@ -182,7 +189,7 @@ public class MembersDetailController {
 		UploadMembersExcelImpl uploadExcel = new UploadMembersExcelImpl();
 		uploadExcel.setMemberDetails(memberIds);
 		try {
-			uploadExcel.upload(file);
+			uploadExcel.upload(file, dateFormat);
 		} catch (Exception e) {
 			redirectAttributes.addFlashAttribute("popupErrorMessage", e.getMessage());
 			return "redirect:/members/member/upload";
@@ -193,12 +200,12 @@ public class MembersDetailController {
 			return "redirect:/members/member/upload";
 		}else{
 			if("".equalsIgnoreCase(uploadExcel.getValidMembersString()))
-				redirectAttributes.addFlashAttribute("UPLOADINFO", "All member's of excel has invalid data as listed above");
+				model.addAttribute("UPLOADINFO", "All member's of excel has invalid data as listed above");
 			else
-				redirectAttributes.addFlashAttribute("UPLOADINFO", "Member's listed above has invalid data");
-			redirectAttributes.addFlashAttribute("VALIDMEMBERS", uploadExcel.getValidMembersString());
-			redirectAttributes.addFlashAttribute("INVALIDMEMBERS", uploadExcel.getInvalidMembersString());
-			return "redirect:/members/confirmupload";
+				model.addAttribute("UPLOADINFO", "Member's listed above has invalid data");
+			model.addAttribute("VALIDMEMBERS", uploadExcel.getValidMembersString());
+			model.addAttribute("INVALIDMEMBERS", uploadExcel.getInvalidMembersString());
+			return "confirmupload";
 		}
 	}
 	
@@ -236,12 +243,11 @@ public class MembersDetailController {
 			try {
 				MemberDetails memberDetails = new MemberDetails(
 						memberArr[0], memberArr[1], Long.valueOf(memberArr[2]), 
-						new java.sql.Date(new SimpleDateFormat("dd/MM/yyyy").parse(memberArr[3]).getTime()));
+						new java.sql.Date(new SimpleDateFormat("dd/MM/yyyy").parse(memberArr[3]).getTime()), memberArr[4]);
 				memberDetails.setClubDetails(clubDetails);
 				memberDetails.setCreatedDate(DateUtility.getSQLCurrentTime());
 				//put logger here
-				CRUDHandler crudHandler = new CRUDHandlerImpl();
-				crudHandler.processCRUDRequest(MemberModeEnum.ADD.toString(), memberDetails, clubDetails.getMemberDetails());
+				cRUDHandler.processCRUDRequest(MemberModeEnum.ADD.toString(), memberDetails, clubDetails.getMemberDetails());
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

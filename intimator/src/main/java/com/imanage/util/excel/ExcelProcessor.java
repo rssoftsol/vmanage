@@ -28,9 +28,12 @@ public abstract class ExcelProcessor<T> implements IExcelProcessor<T>{
 	        		throw new ExcelException("Invalid file format");
 	        	}
 	        }
+	        int count = 0;
 	        while(rowIter.hasNext()){
+	        	System.out.println(++count);
+	        	
 	        	Row row = rowIter.next();
-	        	if(!isRowValid(row)) continue;
+	        	if(row == null || !isRowValid(row)) continue;
 	            processExcelRow(cellVectorHolder, row.cellIterator());
 	        }
 	    }catch (Exception e){

@@ -52,11 +52,12 @@ public class MemberDetails {
 		super();
 	}
 	
-	public MemberDetails(String memid, String name, Long phone, Date expirydate){
+	public MemberDetails(String memid, String name, Long phone, Date expirydate, String remarks){
 		this.memid = memid;
 		this.name = name;
 		this.phone = phone;
 		this.expirydate = expirydate;
+		this.remarks = remarks;
 	}
 	
 	@Id
@@ -139,7 +140,6 @@ public class MemberDetails {
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		return "memid: "+memid+" -name"+name+" -Phone: "+phone+" -ExpiryDate:"+expirydate+
 				" -createdDate:"+createdDate+" -modifiedDate:"+modifiedDate;
 	}

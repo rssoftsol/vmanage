@@ -19,7 +19,7 @@ public class UploadMembersExcelImpl extends AbstractUploadExcel<MembersDetailUpl
 
 	@Override
 	public boolean isExcel() {
-		return "application/csv".equals(file.getContentType());
+		return "application/csv".equals(file.getContentType()) || "application/vnd.ms-excel".equals(file.getContentType());
 	}
 
 	@Override
@@ -31,9 +31,11 @@ public class UploadMembersExcelImpl extends AbstractUploadExcel<MembersDetailUpl
 	public void processMyExcel() throws Exception {
 		MembersDetailExcelReader membersDetailExcelReader = new MembersDetailExcelReader();
 		membersDetailExcelReader.memberDetails = memberIds;
+		membersDetailExcelReader.dateFormat = dateFormat;
 		Vector<MembersDetailUploadBean> excelData = membersDetailExcelReader.
 				 importExcelSheet(file.getInputStream());
 		//put logger here
+		System.out.println("excelData:"+excelData);
 		afterProcessing(excelData);
 	}
 	
@@ -43,13 +45,17 @@ public class UploadMembersExcelImpl extends AbstractUploadExcel<MembersDetailUpl
 			if(membersDetailUploadBean.hasError){
 				invalidMembersString = invalidMembersString + membersDetailUploadBean.memberId+"~"+
 						membersDetailUploadBean.name+"~"+membersDetailUploadBean.phonenumber+"~"+
-						membersDetailUploadBean.getExpiryDate()+"~"+membersDetailUploadBean.getErrorString()+"!";
+						membersDetailUploadBean.getExpiryDate()+"~"+membersDetailUploadBean.remarks+"~"
+						+membersDetailUploadBean.getErrorString()+"!";
 			}else{
 				validMembersString = validMembersString + membersDetailUploadBean.memberId+"~"+
 						membersDetailUploadBean.name+"~"+membersDetailUploadBean.phonenumber+"~"+
-						membersDetailUploadBean.getExpiryDate()+"!";
+						membersDetailUploadBean.getExpiryDate()+"~"+
+						membersDetailUploadBean.remarks+"!";
 			}
 		}
+		System.out.println("invalidMembersString:"+invalidMembersString);
+		System.out.println("validMembersString:"+validMembersString);
 		//put logger here
 	}
 
