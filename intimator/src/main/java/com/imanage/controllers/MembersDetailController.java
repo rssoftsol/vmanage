@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,7 +35,6 @@ import com.imanage.services.members.MemberRegistrationService;
 import com.imanage.services.register.ClubRegistrationService;
 import com.imanage.util.DateUtility;
 import com.imanage.util.MemberModeEnum;
-import com.imanage.util.crud.CRUDHandler;
 import com.imanage.util.crud.impl.CRUDHandlerImpl;
 import com.imanage.util.excel.uploadexcel.impl.UploadMembersExcelImpl;
 
@@ -164,6 +164,8 @@ public class MembersDetailController {
 	
 	@RequestMapping(value="/member/upload", method=RequestMethod.GET)
     public ModelAndView uploadExcelPage() {
+		String s = null;
+		s.toLowerCase();
 		ModelAndView mav = new ModelAndView("uploadexcel");
 		return mav;
 	}
@@ -235,6 +237,15 @@ public class MembersDetailController {
             HttpServletResponse response) {
     	return new ModelAndView("excelView");
     }
+    
+    @ExceptionHandler(Exception.class)
+	public ModelAndView handleAllException(Exception ex) {
+    	ex.printStackTrace();
+		ModelAndView model = new ModelAndView("error/exception_error");
+		return model;
+ 
+	}
+
 	
 	private void processMembersString(String members, ClubDetails clubDetails){
 		String[] validmembersArr = members.split("!");

@@ -13,12 +13,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.imanage.models.ClubDetails;
 import com.imanage.models.security.ForgotPasswordBean;
@@ -194,4 +196,12 @@ public class AccessController {
 			model.addAttribute("mainmode", "MEMBER");
 		}
 	}
+	
+	 @ExceptionHandler(Exception.class)
+		public ModelAndView handleAllException(Exception ex) {
+	    	ex.printStackTrace();
+			ModelAndView model = new ModelAndView("error/exception_error");
+			return model;
+	 }
+	 
 }

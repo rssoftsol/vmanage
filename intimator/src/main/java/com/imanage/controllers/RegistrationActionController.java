@@ -9,6 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -52,6 +53,7 @@ public class RegistrationActionController {
 		clubDetails.setRoleId(1);
 		clubDetails.setIsAccountative("Y");
 		clubDetails.setNewPassword(passwordEncoder.encodePassword(clubDetails.getPassword(), clubDetails.getUsername().toLowerCase()));
+		clubDetails.setSmsText("Dear Member, your "+clubDetails.getClubname()+" membership is getting expired today. Kindly renew");
 		String message = "Sorry, Registeration failed";
 		System.out.println("clubDetails: "+clubDetails);
 		try {
@@ -166,5 +168,12 @@ public class RegistrationActionController {
 		model.addAttribute("date", new java.util.Date().toString());
 		model.addAttribute("mainmode", "MYPROFILE");
 	}
+	
+	 @ExceptionHandler(Exception.class)
+		public ModelAndView handleAllException(Exception ex) {
+	    	ex.printStackTrace();
+			ModelAndView model = new ModelAndView("error/exception_error");
+			return model;
+	 }
 
 }

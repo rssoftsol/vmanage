@@ -33,7 +33,7 @@ public class ScheduledTaskController {
 		System.out.println("i am initalized");
 	}
 	
-    @Scheduled(cron="0 30 9 * * *")
+    @Scheduled(cron="0 30 10 * * *")
 	//@Scheduled(fixedRate=500000)
     public void reportCurrentTime() {
         System.out.println("The time is now " + dateFormat.format(new Date()));
