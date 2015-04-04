@@ -14,7 +14,11 @@
 <title>Contact Us</title>
 </head>
 <body>
-Phone:1234567890/0123456789
-Email:rssoftsol@gmail.com
+	<div class="container">
+		<b>Call us :</b>7506338587
+	</div>
+	<div class="container">
+		<b>Email us :</b>rssoftsol@monitormembership.co.in
+	</div>
 </body>
 </html>
