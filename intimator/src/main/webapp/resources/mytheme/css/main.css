@@ -4,7 +4,7 @@
 .navbar-default .navbar-nav > .active > a:hover,
 .navbar-default .navbar-nav > .active > a:focus {
   color: #ffffff;
-  background-color: #800000;
+  background: url(../img/maroonbgimg.jpg);
 }
 
 .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
@@ -12,13 +12,13 @@
     color: #80ffff;
 }
 .navbar-default {
-    background-color: #400080;
+    background: url(../img/navbarimg1.jpg);
     border-color: #e7e7e7;
 }
 
 .navbar-submenu {
-    background-color: #ff8040;
-    border-color: #e7e7e7;
+    background: url(../img/navbarimg6.jpg);
+    border-color: #000000;
 }
 
 
@@ -28,7 +28,7 @@
 
 .panel-default > .panel-heading {
   color: #ffffff;
-  background-color: #8080ff;
+  background: url(../img/navbarimg2.jpg);
   border-color: #ddd;
 }
 .greybg {
@@ -37,11 +37,11 @@
 }
 
 .modal-info-header {
-  background-color: #80ff80;
+  background: url(../img/bluebgimg.jpg);
 }
 
 .modal-error-header {
-  background-color: #ff8080;
+  background: url(../img/maroonbgimg.jpg);
 }
 
 

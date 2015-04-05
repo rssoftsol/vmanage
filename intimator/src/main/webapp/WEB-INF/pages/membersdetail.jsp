@@ -1,20 +1,14 @@
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<%@include file="style/style.jsp" %>
+<script src="<c:url value="/resources/js/memberdetails.js" />"></script>
 <%@include file="menu.jsp" %>
 <%@include file="submenu.jsp" %>
-<html>
-<link href="<c:url value="/resources/css/jquery.dataTables.css" />" rel="stylesheet">
 
-<link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet">
-<script src="<c:url value="/resources/js/jquery-1.11.1.min.js" />"></script>
-<script src="<c:url value="/resources/js/jquery.dataTables.min.js" />"></script>
-
-<script src="<c:url value="/resources/js/memberdetails.js" />"></script>
-<script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
-<link href="<c:url value="/resources/css/main.css" />" rel="stylesheet">
-<script src="<c:url value="/resources/js/main.js" />"></script>
-
+<title>Intimator-Members Detail</title>
+</head>
 
 <script type="text/javascript">
 /* dataSet = [['4', 'sharat', '1234', '2015-01-27'], ['3', 'Dillu', '8451046250', '2015-03-28'], 
@@ -40,11 +34,7 @@ for(var i=0;i<dataMainArr.length;i++){
 }
 dataSet = dataMainfinalArr;
 </script>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Intimator-Members Detail</title>
-</head>
-<body class="body" background="<c:url value="/resources/img/body-bg.jpg" />">
+<body class="header" >
 <div id='demo'class="center-start half-width"></div>
 </body>
 </html>

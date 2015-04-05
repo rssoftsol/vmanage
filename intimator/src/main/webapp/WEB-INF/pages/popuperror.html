@@ -4,8 +4,8 @@
       <div class="modal-header modal-error-header">
         <h4 class="modal-title glyphicon glyphicon-warning-sign" id="myModalLabel">Error</h4>
       </div>
-      <div class="modal-body">
-      	<div>${popupErrorMessage}</div> 
+      <div>
+      	<div class="container">${popupErrorMessage}</div> 
 	  </div>
 	  <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal">ok</button>
@@ -14,9 +14,11 @@
   </div>
 </div><!-- /.modal -->
 <script type="text/javascript">
-if("${popupErrorMessage}"!=''){
-	$('#popuperror').modal('show');
-}
+$(document).ready(function() {
+	if("${popupErrorMessage}"!=''){
+		$('#popuperror').modal('show');
+	}
+});
 </script>
 
 

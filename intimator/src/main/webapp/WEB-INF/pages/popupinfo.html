@@ -5,7 +5,7 @@
         <h4 class="modal-title glyphicon glyphicon-info-sign" id="myModalLabel">Info</h4>
       </div>
       <div class="modal-body">
-      	<div>${popupInfoMessage}</div> 
+      	<div class="container">${popupInfoMessage}</div> 
 	  </div>
 	  <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal">ok</button>
@@ -14,9 +14,12 @@
   </div>
 </div><!-- /.modal -->
 <script type="text/javascript">
-if("${popupInfoMessage}"!=''){
-	$('#popupinfo').modal('show');
-}
+$(document).ready(function() {
+	if("${popupInfoMessage}"!=''){
+		$('#popupinfo').modal('show');
+	}
+});
+
 </script>
 
 

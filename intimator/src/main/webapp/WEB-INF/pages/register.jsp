@@ -1,18 +1,11 @@
-<%@include file="commonmenu.jsp" %>
-<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet">
-<link href="<c:url value="/resources/css/main.css" />" rel="stylesheet">
-
-<script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
-<link href="<c:url value="/resources/css/register.css" />" rel="stylesheet">
-<script src="<c:url value="/resources/js/main.js" />"></script>
-<%@ include file="popupinfo.html" %>
-<%@ include file="popuperror.html" %>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<%@include file="style/style.jsp" %>
+<%@include file="commonmenu.jsp" %>
+<%@ include file="popupinfo.html" %>
+<%@ include file="popuperror.html" %>
 
 <title>Intimator-Subscription</title>
 </head>
@@ -28,7 +21,7 @@ function checkPassword(t){
  	$("#phonenumber").ForceNumericOnly();
 });
 </script>
-<body background="<c:url value="/resources/img/body-bg.jpg" />">
+<body class="header">
 <form:form action="${pageContext.request.contextPath}/createAction.htm" method="post" commandName="command">
 	<form:hidden path="smsText" value="ur mem expire today"/>
 <%-- <form:errors path="clubDetails.*" cssClass="errorblock" element="div" />
@@ -89,7 +82,7 @@ function checkPassword(t){
 			<div class="col-xs-4"><label>Membership type:</label></div>
 			<div class="col-xs-4">Regular<input type="radio" checked="checked" id="regular" name="membershiptype" value="R"/>
 			&nbsp;&nbsp;
-			Premium<input type="radio" id="premium" name="membershipType" value="premium"/></div>
+			Premium<input type="radio" id="premium" name="membershipType" value="P"/></div>
 			<div class="col-xs-4"><form:errors path="membershiptype" cssClass="error" element="div" /></div>
 		</div>
 		<div><input type="submit" value="Register" class="btn btn-primary pull-right"></div>

@@ -1,26 +1,15 @@
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<%@include file="style/style.jsp" %>
 <%@include file="menu.jsp" %>
 <%@include file="submenu.jsp" %>
-<html>
-<link href="<c:url value="/resources/css/jquery.dataTables.css" />" rel="stylesheet">
-
-<link href="<c:url value="/resources/css/bootstrap.css" />" rel="stylesheet">
-<link href="<c:url value="/resources/css/datepicker.css" />" rel="stylesheet">
-<link href="<c:url value="/resources/css/register.css" />" rel="stylesheet">
-
-
-<script src="<c:url value="/resources/js/jquery.dataTables.min.js" />"></script>
-
-<script src="<c:url value="/resources/js/table.js" />"></script>
-<script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
-<script src="<c:url value="/resources/js/bootstrap-datepicker.js" />"></script>
-<link href="<c:url value="/resources/css/main.css" />" rel="stylesheet">
-
 <%@ include file="popupinfo.html" %>
 <%@ include file="popuperror.html" %>
-<script src="<c:url value="/resources/js/main.js" />"></script>
+
+<title>Intimator-Member Operations</title>
+</head>
+
 
 <script type="text/javascript">
 //alert('hi');
@@ -63,17 +52,13 @@ $(document).ready(function() {
 
 
 </script>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Intimator-Member Operations</title>
-</head>
-<body class="body" background="<c:url value="/resources/img/body-bg.jpg" />">
+<body class="header" >
 
 	<form:form name="form" action="${pageContext.request.contextPath}/members/memberAction/${mode}" method="post" commandName="commandd">
 		<form:input type="hidden" id="id" path="id"/>
 		<div class="form-register">
 			<div class="panel panel-default">
-				<div class="panel-heading"><h3 class="panel-title">${headermsg}</h3></div>
+				<div class="panel-heading header"><h3 class="panel-title">${headermsg}</h3></div>
 				<div class="panel-body greybg">
 			        
 			        <div class='col-xs-12'>

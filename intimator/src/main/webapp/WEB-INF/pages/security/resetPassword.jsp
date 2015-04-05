@@ -2,19 +2,22 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet">
-<link href="<c:url value="/resources/css/main.css" />" rel="stylesheet">
-
-<script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
-<link href="<c:url value="/resources/css/register.css" />" rel="stylesheet">
-<script src="<c:url value="/resources/js/main.js" />"></script>
-<title><spring:message code="resetPassword.title" /></title>
-<link href="<c:url value="/resources/css/register.css" />" rel="stylesheet">
+<%@include file="../style/style.jsp" %>
 </head>
-<body background="<c:url value="/resources/img/body-bg.jpg" />">
+<script>
+function reset(){
+	document.getElementById('passwd').value = '';
+	document.getElementById('c_password').value = '';
+}
+function validateConfirmPassword(){
+	if(document.getElementById('passwd').value != document.getElementById('c_password').value){
+		alert("Password mismatch");
+		return false;
+	}
+}
+
+</script>
+<body class="header">
 	<form:form method="post" action="resetPasswordSubmit.htm?uId=${uId}"
 					id="resetPasswordForm" name="resetPasswordForm"
 					commandName="clubDetailsBean" class="form-signin">
@@ -39,9 +42,9 @@
 								<input type="password" id="c_password"
 									name="c_password" size="20" placeholder="Confirm password" class="form-control">
 							</div>
-							<div>
+							<div style="margin-top: 5%">
 								<input type="submit" value="<spring:message code="resetPassword.resetBtn" />" 
-								class="btn btn-primary">
+								class="btn btn-primary" onclick="return validateConfirmPassword();">
 								<input type="button" value="<spring:message code="resetPassword.clearBtn" />" onclick="reset();" 
 								class="btn btn-primary">
 							</div>

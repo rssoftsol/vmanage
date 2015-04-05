@@ -1,17 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@include file="../style/style.jsp" %>
 
-<link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet">
-<script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
-<link href="<c:url value="/resources/css/main.css" />" rel="stylesheet">
-<link href="<c:url value="/resources/css/signin.css" />" rel="stylesheet">
-
-
-<title>Forgot Password</title>
-<body class="forgotimage">
+<title>Intimator-Forgot Password</title>
+<body class="header">
 		<div class="container">
 			<label>Forgot Password : </label>
 			<!-- forgotPasswd-box -->

@@ -1,17 +1,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<%@include file="commonmenu.jsp" %>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-
-<link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet">
-<script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
-<link href="<c:url value="/resources/css/main.css" />" rel="stylesheet">
-<link href="<c:url value="/resources/css/signin.css" />" rel="stylesheet">
-<title>intimator-Login</title>
+<%@include file="style/style.jsp" %>
+<%@include file="commonmenu.jsp" %>
+<title>Intimator-Login</title>
 </head>
-<body class="body" background="<c:url value="/resources/img/body-bg.jpg" />">
+<body class="header">
 	<div class="container">
 			<!-- mainLogin-container -->
 				<%-- <c:if test="${failureMessage != ''}"> --%>

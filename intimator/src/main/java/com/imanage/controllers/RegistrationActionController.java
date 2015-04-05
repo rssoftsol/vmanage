@@ -57,23 +57,20 @@ public class RegistrationActionController {
 		clubDetails.setSmsText("Dear Member, your "+clubDetails.getClubname()+" membership is getting expired today. Kindly renew");
 		String message = "Sorry, Registeration failed";
 		System.out.println("clubDetails: "+clubDetails);
-		try {
-			ClubDetails existingClubDetails = clubRegService.findByUserName(clubDetails.getUsername());
-			if(existingClubDetails == null){
-				clubDetails.setCreatedDate(DateUtility.getSQLCurrentTime());
-				//put logger here
-				clubRegService.save(clubDetails);
-				message = "Successfully registered";
-				attributes.addFlashAttribute("popupInfoMessage",message);
-				clubDetails = new ClubDetails();
-			}else{
-				message = "User Name already taken";
-				model.addAttribute("popupErrorMessage",message);
-				model.addAttribute("menumode", "R");
-				return "register";
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		ClubDetails existingClubDetails = clubRegService.findByUserName(clubDetails.getUsername());
+		if(existingClubDetails == null){
+			clubDetails.setCreatedDate(DateUtility.getSQLCurrentTime());
+			//put logger here
+			clubRegService.save(clubDetails);
+			message = "Successfully registered";
+			attributes.addFlashAttribute("popupInfoMessage",message);
+			clubDetails = new ClubDetails();
+		}else{
+			clubDetails.setPassword("");
+			message = "User Name already taken";
+			model.addAttribute("popupErrorMessage",message);
+			model.addAttribute("menumode", "R");
+			return "register";
 		}
 		
 		model.addAttribute("menumode", "R");

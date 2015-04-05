@@ -200,7 +200,7 @@ public class AccessController {
 	 @ExceptionHandler(Exception.class)
 		public ModelAndView handleAllException(Exception ex) {
 	    	ex.printStackTrace();
-			ModelAndView model = new ModelAndView("error/exception_error");
+			ModelAndView model = new ModelAndView("error/exception_error_public");
 			return model;
 	 }
 	 

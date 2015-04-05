@@ -1,28 +1,11 @@
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@include file="menu.jsp" %>
+
 <html>
-<link href="<c:url value="/resources/css/jquery.dataTables.css" />" rel="stylesheet">
-
-<link href="<c:url value="/resources/css/bootstrap.css" />" rel="stylesheet">
-<link href="<c:url value="/resources/css/datepicker.css" />" rel="stylesheet">
-<link href="<c:url value="/resources/css/main.css" />" rel="stylesheet">
-<link href="<c:url value="/resources/css/register.css" />" rel="stylesheet">
-
-
-<script src="<c:url value="/resources/js/jquery.dataTables.min.js" />"></script>
-
-<script src="<c:url value="/resources/js/table.js" />"></script>
-<script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
-<script src="<c:url value="/resources/js/bootstrap-datepicker.js" />"></script>
-<script src="<c:url value="/resources/js/main.js" />"></script>
-<script src="<c:url value="/resources/js/jquery.maxlength.js" />"></script>
-<%@ include file="popupinfo.html" %>
-<%@ include file="popuperror.html" %>
-
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<%@include file="style/style.jsp" %>
+<%@ include file="popupinfo.html" %>
+<%@ include file="popuperror.html" %>
+<%@include file="menu.jsp" %>
 
 <title>Intimator-My Profile</title>
 </head>
@@ -58,7 +41,7 @@
 	  	});
 	});
 </script>
-<body class="body" background="<c:url value="/resources/img/body-bg.jpg" />">
+<body class="header">
  <div class="form-register">
 	<div class="panel panel-default">
 	  <div class="panel-heading header"><h3 class="panel-title">My Profile</h3></div>
