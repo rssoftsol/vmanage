@@ -42,7 +42,7 @@ dataSet = dataMainfinalArr;
 </script>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Members Detail</title>
+<title>Intimator-Members Detail</title>
 </head>
 <body class="body" background="<c:url value="/resources/img/body-bg.jpg" />">
 <div id='demo'class="center-start half-width"></div>

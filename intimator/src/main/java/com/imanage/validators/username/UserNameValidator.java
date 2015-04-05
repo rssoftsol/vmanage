@@ -23,6 +23,7 @@ public class UserNameValidator implements ConstraintValidator<IsUserNameValid, S
 	@Override
 	public boolean isValid(String userName, ConstraintValidatorContext ctx) {
 		// TODO Auto-generated method stub
+		if(userName == null) return true;
 		if(accessDao.checkEmailId(userName) != null){
 			return true;
 		}

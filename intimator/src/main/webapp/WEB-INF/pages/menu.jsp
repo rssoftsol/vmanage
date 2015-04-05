@@ -12,7 +12,7 @@
 					<li><a><span>Welcome ${user}</span></a></li>
 					<li id="myprofile" data-toggle="tooltip" data-placement="bottom" 
 	      			title="View or edit your details here">
-						<a href='${pageContext.request.contextPath}/myprofile/edit'>
+						<a href='${pageContext.request.contextPath}/myprofile/view'>
 							<span class="glyphicon glyphicon-user"> MyProfile</span>
 						</a>
 					</li>

@@ -42,7 +42,7 @@ $(document).ready(function() {
     if(!text_field_visibility){
     	$( "#name" ).prop( "readonly", true );
     	$( "#phone" ).prop( "readonly", true );
-    	$( "#example1" ).prop( "readonly", true );
+    	$( "#example1" ).prop( "disabled", true );
     	$( "#remarks" ).prop( "disabled", true );
     }
     $('#getMemBtn').on( 'click', function () {
@@ -65,7 +65,7 @@ $(document).ready(function() {
 </script>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Members Detail</title>
+<title>Intimator-Member Operations</title>
 </head>
 <body class="body" background="<c:url value="/resources/img/body-bg.jpg" />">
 

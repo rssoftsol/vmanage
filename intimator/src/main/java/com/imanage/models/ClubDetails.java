@@ -12,10 +12,13 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
+
+import com.imanage.validators.phone.Phone;
 
 @Entity
 @Table(name="club_details")
@@ -43,6 +46,7 @@ public class ClubDetails{
 	
 	@Column(name="phonenumber",length=20)
 	@NotNull(message="Phone is mandatory")
+	@Phone
 	private Long phonenumber;
 	
 	@Column(name="clubname",length=20)

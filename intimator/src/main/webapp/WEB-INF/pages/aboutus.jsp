@@ -11,7 +11,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
-<title>About us</title>
+<title>Intimator-About us</title>
 </head>
 <body>
 	<div class="container">

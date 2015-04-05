@@ -17,6 +17,8 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.imanage.validators.phone.Phone;
+
 @Entity
 @Table(name="member_details")
 public class MemberDetails {
@@ -30,6 +32,7 @@ public class MemberDetails {
 	private String memid;
 	
 	@NotNull(message="Phone is mandatory")
+	@Phone
 	private Long phone;
 	
 	@NotEmpty(message="Name is mandatory")

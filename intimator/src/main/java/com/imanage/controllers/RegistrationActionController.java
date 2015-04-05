@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -79,8 +80,9 @@ public class RegistrationActionController {
 	    return "redirect:/create.htm";//new ModelAndView("register", "command", clubDetails);
 	}
 	
-	@RequestMapping(value="/myprofile/edit", method = RequestMethod.GET)
-	public ModelAndView myProfilePage(Model model, RedirectAttributes attributes) {
+	
+	@RequestMapping(value="/myprofile/view", method = RequestMethod.GET)
+	public ModelAndView myProfilePage() {
 		ModelAndView mav = new ModelAndView("myprofile");
 		Authentication authentication = SecurityContextHolder.getContext()
 				.getAuthentication();
@@ -88,12 +90,25 @@ public class RegistrationActionController {
 		mav.addObject("command", clubDetails);
 		mav.addObject("isActive", clubDetails.getIsAccountative());
 		mav.addObject("user", authentication.getName());
+		mav.addObject("rw", "R");
+		return mav;
+	}
+	
+	@RequestMapping(value="/myprofile/edit", method = RequestMethod.GET)
+	public ModelAndView myProfileEditPage() {
+		ModelAndView mav = new ModelAndView("myprofile");
+		Authentication authentication = SecurityContextHolder.getContext()
+				.getAuthentication();
+		ClubDetails clubDetails = clubRegService.findByUserName(authentication.getName());
+		mav.addObject("command", clubDetails);
+		mav.addObject("isActive", clubDetails.getIsAccountative());
+		mav.addObject("user", authentication.getName());
+		mav.addObject("rw", "W");
 		return mav;
 	}
 	
 	@RequestMapping(value="/myprofile/deActivate", method = RequestMethod.POST)
-	public ModelAndView deActivateAccount() {
-		ModelAndView mav = new ModelAndView("myprofile");
+	public String deActivateAccount(RedirectAttributes redirectAttributes) {
 		Authentication authentication = SecurityContextHolder.getContext()
 				.getAuthentication();
 		String message = "";
@@ -103,39 +118,31 @@ public class RegistrationActionController {
 			clubDetails.setModifiedDate(DateUtility.getSQLCurrentTime());
 			clubRegService.update(clubDetails);
 			message = "Account Deactivated";
-			mav.addObject("popupInfoMessage", message);
+			redirectAttributes.addFlashAttribute("popupInfoMessage", message);
 		}else{
 			message = "Account is already Deactivate";
-			mav.addObject("popupErrorMessage", message);
+			redirectAttributes.addFlashAttribute("popupErrorMessage", message);
 		}
-		
-		mav.addObject("user", authentication.getName());
-		mav.addObject("isActive", clubDetails.getIsAccountative());
-		mav.addObject("command", clubDetails);
-		return mav;
+		return "redirect:/myprofile/view";
 	}
 	
 	@RequestMapping(value="/myprofile/reActivate", method = RequestMethod.POST)
-	public ModelAndView reActivateAccount() {
-		ModelAndView mav = new ModelAndView("myprofile");
+	public String reActivateAccount(RedirectAttributes redirectAttributes) {
 		Authentication authentication = SecurityContextHolder.getContext()
 				.getAuthentication();
 		String message = "";
 		ClubDetails clubDetails = clubRegService.findByUserName(authentication.getName());
 		if("Y".equalsIgnoreCase(clubDetails.getIsAccountative())){
 			message = "Account is already Active";
-			mav.addObject("popupErrorMessage", message);
+			redirectAttributes.addFlashAttribute("popupErrorMessage", message);
 		}else{
 			clubDetails.setIsAccountative("Y");
 			clubDetails.setModifiedDate(DateUtility.getSQLCurrentTime());
 			clubRegService.update(clubDetails);
 			message = "Account Activated";
-			mav.addObject("popupInfoMessage", message);
+			redirectAttributes.addFlashAttribute("popupInfoMessage", message);
 		}
-		mav.addObject("isActive", clubDetails.getIsAccountative());
-		mav.addObject("user", authentication.getName());
-		mav.addObject("command", clubDetails);
-		return mav;
+		return "redirect:/myprofile/view";
 	}
 	
 	@RequestMapping(value="/myprofile/editAction.htm", method = RequestMethod.POST)
@@ -160,7 +167,7 @@ public class RegistrationActionController {
 		redirectAttributes.addFlashAttribute("popupInfoMessage", "Details updated");
 		model.addAttribute("user", authentication.getName());
 		model.addAttribute("isActive", clubDetails.getIsAccountative());
-		return "redirect:/myprofile/edit";
+		return "redirect:/myprofile/view";
 	}
 	
 	@ModelAttribute

@@ -47,7 +47,7 @@ $(document).ready(function() {
 </script>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Members Detail</title>
+<title>Intimator-Upload Members Detail</title>
 </head>
 <body class="body" background="<c:url value="/resources/img/body-bg.jpg" />">
 	<div class="container" id="uploading"><b>Uploading....</b></div>

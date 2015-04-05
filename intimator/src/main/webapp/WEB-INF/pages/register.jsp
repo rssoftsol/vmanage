@@ -14,7 +14,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
-<title>Registration</title>
+<title>Intimator-Subscription</title>
 </head>
 <script type="text/javascript">
 function checkPassword(t){

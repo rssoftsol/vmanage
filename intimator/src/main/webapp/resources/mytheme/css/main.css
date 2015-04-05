@@ -7,6 +7,10 @@
   background-color: #800000;
 }
 
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+    background-color: transparent;
+    color: #80ffff;
+}
 .navbar-default {
     background-color: #400080;
     border-color: #e7e7e7;

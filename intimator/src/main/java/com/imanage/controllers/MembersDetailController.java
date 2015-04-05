@@ -69,7 +69,7 @@ public class MembersDetailController {
 			model.addAttribute("dataset", data);
 		}else{
 			attributes.addFlashAttribute("popupInfoMessage","Please Activate the Account first");
-			return "redirect:/myprofile/edit";
+			return "redirect:/myprofile/view";
 		}
 		return view;
 	}
@@ -164,8 +164,6 @@ public class MembersDetailController {
 	
 	@RequestMapping(value="/member/upload", method=RequestMethod.GET)
     public ModelAndView uploadExcelPage() {
-		String s = null;
-		s.toLowerCase();
 		ModelAndView mav = new ModelAndView("uploadexcel");
 		return mav;
 	}

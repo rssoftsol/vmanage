@@ -9,7 +9,7 @@
 <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
 <link href="<c:url value="/resources/css/main.css" />" rel="stylesheet">
 <link href="<c:url value="/resources/css/signin.css" />" rel="stylesheet">
-<title>intimator</title>
+<title>intimator-Login</title>
 </head>
 <body class="body" background="<c:url value="/resources/img/body-bg.jpg" />">
 	<div class="container">
@@ -23,7 +23,7 @@
 				<form method="post" action="j_spring_security_check" name="f" class="form-signin">
 					<h2>Login  </h2>or
 				<a href="create.htm">
-						<b>Register</b>
+						<b>Subscribe</b>
 				</a>
 			<!-- register-box -->
 					<div><label><font color="red">${failureMessage}</font></label></div>
