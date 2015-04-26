@@ -35,6 +35,8 @@ for(var i=0;i<dataMainArr.length;i++){
 dataSet = dataMainfinalArr;
 </script>
 <body class="header" >
-<div id='demo'class="center-start half-width"></div>
+<div class='alert alert-danger error'>${smsBalance}</div>
+<div class='alert alert-danger error'>${alert}</div>
+<div id='demo'></div>
 </body>
 </html>

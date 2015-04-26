@@ -1,18 +1,7 @@
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
 
 <html>
-<link href="<c:url value="/resources/css/jquery.dataTables.css" />" rel="stylesheet">
-
-<link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet">
-<script src="<c:url value="/resources/js/jquery-1.11.1.min.js" />"></script>
-<script src="<c:url value="/resources/js/jquery.dataTables.min.js" />"></script>
-
+<%@include file="style/style.jsp" %>
 <script src="<c:url value="/resources/js/admin.js" />"></script>
-<script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
-<link href="<c:url value="/resources/css/main.css" />" rel="stylesheet">
-<script src="<c:url value="/resources/js/main.js" />"></script>
-
 
 <script type="text/javascript">
 /* dataSet = [['4', 'sharat', '1234', '2015-01-27'], ['3', 'Dillu', '8451046250', '2015-03-28'], 
@@ -42,7 +31,8 @@ dataSet = dataMainfinalArr;
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Subscribed Clubs</title>
 </head>
-<body class="body" background="<c:url value="/resources/img/body-bg.jpg" />">
+<body class="header" >
 <div id='demo'></div>
+<div>click<a href="${pageContext.request.contextPath}/admin/updatesmsbalance.htm"> here </a>to update sms balance of any user</div>
 </body>
 </html>

@@ -32,10 +32,10 @@ public class SmsCallGet {
 		String phoneNo = "8451046250";
 		test.sendMessage(text, phoneNo);
 	}
-	public void sendMessage(String text, String phoneNo) {
-
+	public String sendMessage(String text, String phoneNo) {
+		
+		StringBuffer response = new StringBuffer();
 		try {
-
 			final TrustManager[] trustAllCerts = new TrustManager[] { 
 					new X509TrustManager() 
 					{
@@ -67,8 +67,6 @@ public class SmsCallGet {
 			BufferedReader in = new BufferedReader(
 			        new InputStreamReader(conn.getInputStream()));
 			String inputLine;
-			StringBuffer response = new StringBuffer();
-	 
 			while ((inputLine = in.readLine()) != null) {
 				response.append(inputLine);
 			}
@@ -88,7 +86,7 @@ public class SmsCallGet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		return response.toString();
 	}
 
 	private String getURLPath(String text, String phoneNo) {
@@ -106,10 +104,8 @@ public class SmsCallGet {
 	@Value("${smsConfig.password}")
 	private String password;
 	
-	@Value("${smsConfig.senderId}")
 	private String senderId;
 	
-	@Value("${smsConfig.route}")
 	private String route;
 	
 	

@@ -3,6 +3,7 @@ package com.imanage.models;
 import java.sql.Timestamp;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,9 +11,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
@@ -24,9 +25,6 @@ import com.imanage.validators.phone.Phone;
 @Table(name="club_details")
 public class ClubDetails{
 	
-	@Id
-	@Column(name="club_id")
-    @GeneratedValue
 	private Integer club_id;
 	
 	@Column(name="username",length=20)
@@ -76,6 +74,10 @@ public class ClubDetails{
 	private Timestamp createdDate;
 	
 	private Timestamp modifiedDate;
+	
+	private Set<ESMSSender> smsSenders;
+	
+	private ESMSCreditBal smsCreditBal;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -191,6 +193,24 @@ public class ClubDetails{
 
 	public void setModifiedDate(Timestamp modifiedDate) {
 		this.modifiedDate = modifiedDate;
+	}
+	
+	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER,mappedBy = "clubDetails")
+	public Set<ESMSSender> getSmsSenders() {
+		return smsSenders;
+	}
+
+	public void setSmsSenders(Set<ESMSSender> smsSenders) {
+		this.smsSenders = smsSenders;
+	}
+	
+	@OneToOne(fetch = FetchType.EAGER, mappedBy = "clubDetails", cascade = CascadeType.ALL)
+	public ESMSCreditBal getSmsCreditBal() {
+		return smsCreditBal;
+	}
+
+	public void setSmsCreditBal(ESMSCreditBal smsCreditBal) {
+		this.smsCreditBal = smsCreditBal;
 	}
 
 	@Override

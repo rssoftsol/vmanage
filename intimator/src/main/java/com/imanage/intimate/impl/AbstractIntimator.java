@@ -35,11 +35,11 @@ public abstract class AbstractIntimator<T> implements Intimator {
 		setEmailBean(t);
 	}
 	@Override
-	public void intimateBySMS() {
+	public String intimateBySMS() {
 		// TODO Auto-generated method stub
 		System.out.println("sending message with mobile no. " + mobileNo
 				+ " and text as " + text);
-		smsCallGet.sendMessage(text, String.valueOf(mobileNo));
+		return smsCallGet.sendMessage(text, String.valueOf(mobileNo));
 	}
 
 	@Override

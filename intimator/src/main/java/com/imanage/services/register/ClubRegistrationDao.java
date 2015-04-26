@@ -15,5 +15,7 @@ public interface ClubRegistrationDao {
 	ClubDetails findBySpecific(String value);
 	
 	List<ClubDetails> findAll();
+	
+	ClubDetails findByClubId(Integer clubId);
 
 }

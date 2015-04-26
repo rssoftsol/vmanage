@@ -18,46 +18,75 @@ public class MembersDetailExcelReader extends ExcelProcessor<MembersDetailUpload
 		// TODO Auto-generated method stub
 		int _case = 0;
 		MembersDetailUploadBean detailUploadBean = new MembersDetailUploadBean();
-		
+		int previousCell = -1;
+	    int currentCell = 0;
 		while(cellIter.hasNext()){
 			HSSFCell cell = (HSSFCell) cellIter.next();
+			currentCell = cell.getColumnIndex();
+			boolean blank = previousCell != currentCell-1;
             switch (_case) {
 				case 0:
-					if(cell.getCellType() == 0){
-						cell.setCellType(HSSFCell.CELL_TYPE_STRING);
-						detailUploadBean.memberId = cell.getStringCellValue();
-					}else
-						detailUploadBean.memberId = cell.toString();
-					break;
-				case 1:
-					if(cell.getCellType() == 0){
-						cell.setCellType(HSSFCell.CELL_TYPE_STRING);
-						detailUploadBean.phonenumber = cell.getStringCellValue();
-					}else
-						detailUploadBean.phonenumber = cell.toString();
-					break;
-					
-				case 2:
-					detailUploadBean.name = cell.toString();
-					break;
-	
-				case 3:
-					if(cell.getCellType() != 0){
-						detailUploadBean.setExpiryDate(cell.toString(), dateFormat);
-					}else{
-						detailUploadBean.setExpiryDate(cell.toString());
+					detailUploadBean.memberId = "";
+					if (!blank)  {
+						if(cell.getCellType() == 0){
+							cell.setCellType(HSSFCell.CELL_TYPE_STRING);
+							detailUploadBean.memberId = cell.getStringCellValue();
+						}else
+							detailUploadBean.memberId = cell.toString();
+						break;
 					}
-					break;
-					
+					_case++;
+					previousCell++;
+					blank = previousCell != currentCell-1;
+				case 1:
+					detailUploadBean.phonenumber = "";
+					if (!blank)  {
+						if(cell.getCellType() == 0){
+							cell.setCellType(HSSFCell.CELL_TYPE_STRING);
+							detailUploadBean.phonenumber = cell.getStringCellValue();
+						}else
+							detailUploadBean.phonenumber = cell.toString();
+						break;
+					}
+					_case++;
+					previousCell++;
+					blank = previousCell != currentCell-1;
+				case 2:
+					detailUploadBean.name = "";
+					if (!blank)  {
+						detailUploadBean.name = cell.toString();
+						break;
+					}
+					_case++;
+					previousCell++;
+					blank = previousCell != currentCell-1;
+				case 3:
+					detailUploadBean.setExpiryDate("");
+					if (!blank)  {
+						if(cell.getCellType() != 0){
+							detailUploadBean.setExpiryDate(cell.toString(), dateFormat);
+						}else{
+							detailUploadBean.setExpiryDate(cell.toString());
+						}
+						break;
+					}
+					_case++;
+					previousCell++;
+					blank = previousCell != currentCell-1;
 				case 4:
 					detailUploadBean.remarks = "-";
-					if(cell!=null){
+					if(!blank || cell!=null){
 						detailUploadBean.remarks = cell.toString();
 					}
+					previousCell++;
+					blank = previousCell != currentCell-1;
+					_case++;
 					break;
 			}
+            previousCell = currentCell;
            _case++;
         }
+		detailUploadBean.isDupicate(detailUploadBeans);
 		detailUploadBeans.addElement(detailUploadBean);
 		validateProcessedRow(detailUploadBean);
 		System.out.println("MembersDetailUploadBean :"+detailUploadBean);

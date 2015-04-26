@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Set;
+import java.util.Vector;
 
 import com.imanage.util.Utility;
 
@@ -24,29 +25,37 @@ public class MembersDetailUploadBean {
 	}
 	
 	public void setExpiryDate(String expiryDate) {
-		SimpleDateFormat inputFormat = new SimpleDateFormat("dd-MMMM-yyyy");
-		SimpleDateFormat requiredFormat = new SimpleDateFormat("dd/MM/yyyy");
-		inputFormat.setLenient(false);
-        try {
-        	expiryDate = requiredFormat.format(new Date(inputFormat.parse(expiryDate).getTime()));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(expiryDate!=null && !("".equals(expiryDate))){
+			SimpleDateFormat inputFormat = new SimpleDateFormat("dd-MMMM-yyyy");
+			SimpleDateFormat requiredFormat = new SimpleDateFormat("dd/MM/yyyy");
+			inputFormat.setLenient(false);
+	        try {
+	        	expiryDate = requiredFormat.format(new Date(inputFormat.parse(expiryDate).getTime()));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			this.expiryDate = expiryDate;
+		}else{
+			this.expiryDate = "";
 		}
-		this.expiryDate = expiryDate;
 	}
 	
 	public void setExpiryDate(String expiryDate, String inputFormat) {
-		SimpleDateFormat inputDateFormat = new SimpleDateFormat(inputFormat);
-		SimpleDateFormat requiredFormat = new SimpleDateFormat("dd/MM/yyyy");
-		inputDateFormat.setLenient(false);
-        try {
-        	expiryDate = requiredFormat.format(new Date(inputDateFormat.parse(expiryDate).getTime()));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(expiryDate!=null && !("".equals(expiryDate))){
+			SimpleDateFormat inputDateFormat = new SimpleDateFormat(inputFormat);
+			SimpleDateFormat requiredFormat = new SimpleDateFormat("dd/MM/yyyy");
+			inputDateFormat.setLenient(false);
+	        try {
+	        	expiryDate = requiredFormat.format(new Date(inputDateFormat.parse(expiryDate).getTime()));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			this.expiryDate = expiryDate;
+		}else{
+			this.expiryDate = "";
 		}
-		this.expiryDate = expiryDate;
 	}
 	
 	public String getErrorString(){
@@ -67,6 +76,9 @@ public class MembersDetailUploadBean {
 		if(expiryDateError!=null){
 			error = error + seperator + expiryDateError;
 		}
+		if(duplicateMemberError!=null){
+			error = error + seperator + duplicateMemberError;
+		}
 		return error;
 	}
 	public boolean validMemberId(Set<String> memberIds){
@@ -80,9 +92,19 @@ public class MembersDetailUploadBean {
 			hasError = true;
 			return false;
 		}
+		
 		return true;
 	}
 	
+	private String duplicateMemberError;               
+	public boolean isDupicate(Vector<MembersDetailUploadBean> detailUploadBeans){
+		if(detailUploadBeans.contains(this)){
+			duplicateMemberError = "Member ID duplicate";
+			hasError = true;
+			return true;
+		}
+		return false;
+	}
 	public boolean validPhonenumber(){
 		if(phonenumber == null || "".equalsIgnoreCase(phonenumber)){
 			phonenumberError = "Phone number cannot be empty";
@@ -109,7 +131,7 @@ public class MembersDetailUploadBean {
 	}
 	
 	public boolean validDate(){
-		if(expiryDate == null){
+		if(expiryDate == null || "".equalsIgnoreCase(expiryDate)){
 			expiryDateError = "ExpiryDate cannot be empty";
 			hasError = true;
 			return false;
@@ -138,11 +160,32 @@ public class MembersDetailUploadBean {
 		return hasError+ " " + memberId+" "+phonenumber+" "+expiryDate+" "+name+" "+remarks;
 	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		// TODO Auto-generated method stub
+		System.out.println("equals");
+		if(obj instanceof MembersDetailUploadBean){
+			MembersDetailUploadBean membersDetailUploadBean = (MembersDetailUploadBean)obj;
+			if(memberId!=null && memberId.equalsIgnoreCase(membersDetailUploadBean.memberId)){
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public static void main(String[] args) {
 		/*MembersDetailUploadBean membersDetailUploadBean = new MembersDetailUploadBean();
 		membersDetailUploadBean.expiryDate = "266/07/1987";
 		membersDetailUploadBean.validDate();*/
-		String str = "string"; 
-		System.out.println(str.substring(0, 6));
+		Vector<MembersDetailUploadBean> detailUploadBeans = new Vector<MembersDetailUploadBean>();
+		MembersDetailUploadBean membersDetailUploadBean1 = new MembersDetailUploadBean();
+		MembersDetailUploadBean membersDetailUploadBean2 = new MembersDetailUploadBean();
+		MembersDetailUploadBean membersDetailUploadBean3 = new MembersDetailUploadBean();
+		membersDetailUploadBean1.memberId ="1";
+		membersDetailUploadBean3.memberId ="1";
+		detailUploadBeans.add(membersDetailUploadBean1);
+		detailUploadBeans.add(membersDetailUploadBean2);
+		
+		System.out.println(detailUploadBeans.contains(membersDetailUploadBean3));
 	}
 }

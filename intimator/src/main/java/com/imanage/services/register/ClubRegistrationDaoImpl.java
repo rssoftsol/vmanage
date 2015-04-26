@@ -38,5 +38,13 @@ public class ClubRegistrationDaoImpl extends CustomHibernateDaoSupport implement
 	public List<ClubDetails> findAll() {
 		return getHibernateTemplate().find("from ClubDetails");
 	}
-	
+
+	@Override
+	public ClubDetails findByClubId(Integer clubId) {
+		List<ClubDetails> list = getHibernateTemplate().find("from ClubDetails where club_id=?", clubId);
+		if(list != null && list.size()>0){
+			return list.get(0);
+		}
+		return null;
+	}
 }

@@ -1,25 +1,67 @@
 package com.imanage.util.crud.impl;
 
+import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
+import com.imanage.intimate.impl.ExpiryIntimator;
+import com.imanage.models.ClubDetails;
 import com.imanage.models.MemberDetails;
 import com.imanage.services.members.MemberRegistrationService;
+import com.imanage.services.register.ClubRegistrationService;
 import com.imanage.util.DateUtility;
 import com.imanage.util.MemberModeEnum;
 import com.imanage.util.crud.CRUDHandler;
+import com.imanage.util.sms.SmsCallGet;
 
 @Component
 public class CRUDHandlerImpl implements CRUDHandler {
 	
 	@Autowired
 	MemberRegistrationService memberRegistrationService;
+	
+	@Autowired
+	SmsCallGet smsCallGet;
+	
+	@Autowired
+	ExpiryIntimator expiryIntimator;
+	
+	public String handleSMSSendRequest(Set<MemberDetails> members, String smsText,
+			boolean all, ClubDetails clubDetails) {
+		String message = "SMS successfully sent to the members";
+		smsCallGet.setRoute("P");
+		smsCallGet.setRoute("PROMOTIONAL");
+		Set<MemberDetails> sendTo = null;
+		if(!all){
+			sendTo = new HashSet<MemberDetails>();
+			for(MemberDetails details : members){
+	        	if(details.getExpirydate().getTime()<new Date().getTime()){
+	        		sendTo.add(details);
+	        	}
+	        }
+		}else{
+			sendTo = members;
+		}
+		int bal = clubDetails.getSmsCreditBal().getBalance();
+		if(sendTo.size() > bal){
+			message = "Insufficient Balance";
+		}else{
+			/*for(MemberDetails details : sendTo){
+        		String response = smsCallGet.sendMessage(smsText, details.getPhone().toString());
+        		bal--;
+	        }
+			clubDetails.getSmsCreditBal().setBalance(bal);
+			clubRegistrationService.update(clubDetails);*/
+			expiryIntimator.intimate(clubDetails, all, smsText);
+		}
+		
+		return message;
+	}
+	
 	public String handleAddRequest(MemberDetails memberDetails, MemberDetails existingMemberDetails) {
 		String message = "Member "+memberDetails.getMemid()+" already exist";
 		if(existingMemberDetails == null){

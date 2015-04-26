@@ -1,5 +1,8 @@
 package com.imanage.controllers;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,14 +14,16 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.imanage.models.ClubDetails;
+import com.imanage.models.ESMSCreditBal;
+import com.imanage.models.ESMSSender;
 import com.imanage.services.register.ClubRegistrationService;
+import com.imanage.services.smssender.SMSSenderService;
 import com.imanage.util.DateUtility;
 
 @Controller
@@ -30,6 +35,8 @@ public class RegistrationActionController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
+	@Autowired
+	private SMSSenderService smsSenderService;
 	
 	@RequestMapping(method = RequestMethod.GET,value="/create.htm")
 	public String subscribe(Model model) {
@@ -55,6 +62,14 @@ public class RegistrationActionController {
 		clubDetails.setIsAccountative("Y");
 		clubDetails.setNewPassword(passwordEncoder.encodePassword(clubDetails.getPassword(), clubDetails.getUsername().toLowerCase()));
 		clubDetails.setSmsText("Dear Member, your "+clubDetails.getClubname()+" membership is getting expired today. Kindly renew");
+		ESMSCreditBal smsCreditBal = new ESMSCreditBal("PROMOTINAL", 500, "P");
+		smsCreditBal.setClubDetails(clubDetails);
+		clubDetails.setSmsCreditBal(smsCreditBal);
+		Set<ESMSSender> senderList = new HashSet<ESMSSender>();
+		ESMSSender smsSender = new ESMSSender("PROMOTIONAL", "P");
+		smsSender.setClubDetails(clubDetails);
+		senderList.add(smsSender);
+		clubDetails.setSmsSenders(senderList);
 		String message = "Sorry, Registeration failed";
 		System.out.println("clubDetails: "+clubDetails);
 		ClubDetails existingClubDetails = clubRegService.findByUserName(clubDetails.getUsername());
@@ -62,6 +77,7 @@ public class RegistrationActionController {
 			clubDetails.setCreatedDate(DateUtility.getSQLCurrentTime());
 			//put logger here
 			clubRegService.save(clubDetails);
+			//smsSenderService.save(smsSender);
 			message = "Successfully registered";
 			attributes.addFlashAttribute("popupInfoMessage",message);
 			clubDetails = new ClubDetails();
@@ -173,11 +189,11 @@ public class RegistrationActionController {
 		model.addAttribute("mainmode", "MYPROFILE");
 	}
 	
-	 @ExceptionHandler(Exception.class)
-		public ModelAndView handleAllException(Exception ex) {
+	@ExceptionHandler(Exception.class)
+	public ModelAndView handleAllException(Exception ex) {
 	    	ex.printStackTrace();
-			ModelAndView model = new ModelAndView("error/exception_error");
+			ModelAndView model = new ModelAndView("error/exception_error_public");
 			return model;
-	 }
+	}
 
 }

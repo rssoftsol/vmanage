@@ -40,7 +40,7 @@ public abstract class PDFGen<T> {
 
         table.addCell("Name");
         table.addCell("Expiry");
-        
+        table.addCell("Member Notification");
         if(!createPdfPTable(table)) return null;
         
         table.setSpacingBefore(30.0f);       // Space Before table starts, like margin-top in CSS
@@ -51,7 +51,7 @@ public abstract class PDFGen<T> {
        //Text formating in PDF
 
        //Now Insert Every Thing Into PDF Document
-        document.open();//PDF document opened........                  
+        document.open();//PF document opened........                  
 
        // document.add(image);
 

@@ -39,6 +39,10 @@
 	  	  	$('form[name=form2]').attr('action','${pageContext.request.contextPath}/myprofile/edit');
 	  	  	$('form[name=form2]').submit();
 	  	});
+	    
+	    $('#addSender').on( 'click', function () {
+	  	  	window.location = '${pageContext.request.contextPath}/members/createSmsSender.htm';
+	  	});
 	});
 </script>
 <body class="header">
@@ -77,6 +81,16 @@
 					<div class="col-xs-4"><label>Email :</label></div>
 					<div class="col-xs-4"><form:input type="text" id="email" maxlength="40" path="email" class="form-control" /></div>
 					<div class="col-xs-4"><form:errors path="email" cssClass="error" element="div" /></div>
+				</div>
+				
+				<div class="col-xs-12">
+					<div class="col-xs-4"><label>SMS Sender :</label></div>
+					<div class="col-xs-4">
+						<form:select path="smsCreditBal.senderId" class="form-control">
+        					<form:options items="${command.smsSenders}" />
+						</form:select>
+					</div>
+					<div>Click<a href="#" id="addSender"> here </a>to add more sender</div>
 				</div>
 				
 				<div class="col-xs-12">
@@ -122,6 +136,11 @@
 				 <div class="col-xs-12">
 					<div class="col-xs-4"><label>Email :</label></div>
 					<div class="col-xs-4"><small><label>${command.email}</label></small></div>
+				</div>
+				
+				<div class="col-xs-12">
+					<div class="col-xs-4"><label>SMS Sender :</label></div>
+					<div class="col-xs-4"><small><label>${command.smsCreditBal.senderId}</label></small></div>
 				</div>
 				
 				<div class="col-xs-12">

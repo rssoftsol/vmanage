@@ -43,4 +43,9 @@ public class ClubRegistrationServiceImpl implements ClubRegistrationService{
 		return clubRegistrationDao.findAll();
 	}
 
+	@Override
+	public ClubDetails findByClubId(Integer clubId) {
+		// TODO Auto-generated method stub
+		return clubRegistrationDao.findByClubId(clubId);
+	}
 }

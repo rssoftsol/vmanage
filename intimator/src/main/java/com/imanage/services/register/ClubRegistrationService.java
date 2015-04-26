@@ -14,5 +14,7 @@ public interface ClubRegistrationService {
 	
 	ClubDetails findByUserName(String value);
 	
+	ClubDetails findByClubId(Integer clubId);
+	
 	List<ClubDetails> findAll();
 }

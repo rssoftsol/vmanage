@@ -32,6 +32,12 @@
 						</a>
 					</li>
 					
+					<li id="sms" data-toggle="tooltip" data-placement="bottom" 
+	      			title="send sms to club member here">
+						<a href='${pageContext.request.contextPath}/members/myOffer.htm'>
+							<span>SMS</span>
+						</a>
+					</li>
 					
 		  		</ul>
 			</div>
@@ -47,6 +53,8 @@
 		$('#modifyMember').addClass('active');
 	else if(mode == "DELETE")
 		$('#deleteMember').addClass('active');
+	else if(mode == "SMS")
+		$('#sms').addClass('active');
 </script>
 </html>
 
