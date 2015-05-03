@@ -33,10 +33,16 @@ for(var i=0;i<dataMainArr.length;i++){
 	}
 }
 dataSet = dataMainfinalArr;
+$(document).ready(function() {
+var lowBalanceAlert = "${alert}";
+	if(lowBalanceAlert==''){
+		$("#lowBalanceAlert").hide();
+	}
+});
 </script>
 <body class="header" >
-<div class='alert alert-danger error'>${smsBalance}</div>
-<div class='alert alert-danger error'>${alert}</div>
+<div class='alert alert-info'>SMS Credit Balance: ${smsBalance}</div>
+<div class='alert alert-danger error' id="lowBalanceAlert">Warning: ${alert}</div>
 <div id='demo'></div>
 </body>
 </html>

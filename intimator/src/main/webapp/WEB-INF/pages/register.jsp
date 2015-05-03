@@ -78,7 +78,7 @@ function checkPassword(t){
 			 <div class="col-xs-5"><form:errors path="clubDetails.roleid" cssClass="error" element="div" /></div>
 		</div> --%>
 		
-		<div class="col-xs-12">
+		<div class="col-xs-12" style="visibility: hidden;">
 			<div class="col-xs-4"><label>Membership type:</label></div>
 			<div class="col-xs-4">Regular<input type="radio" checked="checked" id="regular" name="membershiptype" value="R"/>
 			&nbsp;&nbsp;

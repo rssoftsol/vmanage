@@ -30,11 +30,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.imanage.models.ClubDetails;
-import com.imanage.models.ESMSSender;
 import com.imanage.models.MemberDetails;
 import com.imanage.services.members.MemberRegistrationService;
 import com.imanage.services.register.ClubRegistrationService;
-import com.imanage.services.smssender.SMSSenderService;
 import com.imanage.util.DateUtility;
 import com.imanage.util.MemberModeEnum;
 import com.imanage.util.crud.impl.CRUDHandlerImpl;
@@ -158,7 +156,11 @@ public class MembersDetailController {
 		String message = cRUDHandler.processCRUDRequest(mode, memberDetails, clubDetails.getMemberDetails());
 		model.addAttribute("commandd", new MemberDetails());
 		model.addAttribute("mode", mode);
-		redirectAttributes.addFlashAttribute("popupInfoMessage", message);
+		if(message.contains("error")){
+			redirectAttributes.addFlashAttribute("popupErrorMessage", message.replace("error-", ""));
+		}else{
+			redirectAttributes.addFlashAttribute("popupInfoMessage", message);
+		}
 		return "redirect:/members/member/"+mode;
 	}
 	
@@ -259,6 +261,10 @@ public class MembersDetailController {
 		Authentication authentication = SecurityContextHolder.getContext()
 				.getAuthentication();
 		//put logger here
+		if(DateUtility.getHourOfTheDay()>20 || DateUtility.getHourOfTheDay()<9){
+			attributes.addFlashAttribute("popupErrorMessage", "Offers can be broadcasted only between 9 AM and 8 PM");
+			return "redirect:/members/myOffer.htm";
+		}
 		if(smsText == null || "".equalsIgnoreCase(smsText)){
 			attributes.addFlashAttribute("popupErrorMessage", "SMS Text Missing");
 			return "redirect:/members/myOffer.htm";
@@ -266,53 +272,15 @@ public class MembersDetailController {
 		ClubDetails clubDetails = clubRegistrationService.findByUserName(authentication.getName());
 		String message = cRUDHandler.handleSMSSendRequest(clubDetails.getMemberDetails(), 
 				smsText, "1".equals(smsTo), clubDetails);
-		attributes.addFlashAttribute("popupInfoMessage", message);
+		if(message.contains("error")){
+			attributes.addFlashAttribute("popupErrorMessage", message.replace("error-", ""));
+		}else{
+			attributes.addFlashAttribute("popupInfoMessage", message);
+		}
 		return "redirect:/members/myOffer.htm";
 	}
     
-    @RequestMapping(value="/createSmsSender.htm", method=RequestMethod.GET)
-    public ModelAndView sms() {
-		ModelAndView mav = new ModelAndView("addsmssender");
-		mav.addObject("mainmode", "MYPROFILE");
-		mav.addObject("command", new ESMSSender());
-		return mav;
-	}
     
-    @Autowired
-    SMSSenderService smsSenderService;
-    
-    @RequestMapping(value="/createSmsSenderAction.htm", method=RequestMethod.POST)
-    public String sendSms(@ModelAttribute("command") 
-    @Valid ESMSSender esmsSenders, BindingResult result, RedirectAttributes redirectAttributes, Model model) {
-    	if(result.hasErrors()){
-    		model.addAttribute("command", esmsSenders);
-    		return "addsmssender";
-    	}
-		Authentication authentication = SecurityContextHolder.getContext()
-				.getAuthentication();
-		//put logger here
-		ClubDetails clubDetails = clubRegistrationService.findByUserName(authentication.getName());
-		Set<ESMSSender> smsSenders = clubDetails.getSmsSenders();
-		for(ESMSSender smsDetail : smsSenders){
-			if(smsDetail.getId().equalsIgnoreCase(esmsSenders.getId())){
-				redirectAttributes.addFlashAttribute("popupErrorMessage", "Sender Id already exist");
-				return "redirect:/members/createSmsSender.htm";
-			}
-		}
-		smsCallGet.setSenderId(esmsSenders.getId());
-		smsCallGet.setRoute("P");
-		String response = smsCallGet.sendMessage("You have registered with new Sender Id:"+esmsSenders.getId(), 
-				String.valueOf(clubDetails.getPhonenumber()));
-		if("1".equals(response)){
-			redirectAttributes.addFlashAttribute("popupInfoMessage", "Sender Id registered Successfully");
-		}else{
-			redirectAttributes.addFlashAttribute("popupErrorMessage", "Sender Id registeration Failed, "
-					+ "response returned:"+response);
-		}
-		esmsSenders.setClubDetails(clubDetails);
-		smsSenderService.save(esmsSenders);
-		return "redirect:/members/createSmsSender.htm";
-	}
     
     @ExceptionHandler(Exception.class)
 	public ModelAndView handleAllException(Exception ex) {
@@ -321,7 +289,6 @@ public class MembersDetailController {
 		return model;
  
 	}
-
 	
 	private void processMembersString(String members, ClubDetails clubDetails){
 		String[] validmembersArr = members.split("!");

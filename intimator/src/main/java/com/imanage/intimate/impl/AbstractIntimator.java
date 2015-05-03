@@ -27,10 +27,14 @@ public abstract class AbstractIntimator<T> implements Intimator {
 	@Autowired
 	private SmsCallGet smsCallGet;
 	
+	private String senderId = "PROMOTIONAL";
+	
+	private String route = "P";
+	
 	public abstract void intimate(T t);
 	
 	public abstract void setEmailBean(T t);
-
+	
 	public void doInitialization(T t){
 		setEmailBean(t);
 	}
@@ -39,6 +43,8 @@ public abstract class AbstractIntimator<T> implements Intimator {
 		// TODO Auto-generated method stub
 		System.out.println("sending message with mobile no. " + mobileNo
 				+ " and text as " + text);
+		smsCallGet.setSenderId(senderId);
+		smsCallGet.setRoute(route);
 		return smsCallGet.sendMessage(text, String.valueOf(mobileNo));
 	}
 
@@ -81,4 +87,14 @@ public abstract class AbstractIntimator<T> implements Intimator {
 		}
 
 	}
+
+	public void setSenderId(String senderId) {
+		this.senderId = senderId;
+	}
+
+	public void setRoute(String route) {
+		this.route = route;
+	}
+	
+	
 }

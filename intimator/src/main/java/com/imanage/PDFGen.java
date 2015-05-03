@@ -5,7 +5,6 @@ import java.util.Date;
 
 import org.springframework.core.io.FileSystemResource;
 
-import com.imanage.util.DateUtility;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
@@ -16,10 +15,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 public abstract class PDFGen<T> {
 	
-	public FileSystemResource getPDFDoc() throws Exception{
-		ClassLoader classLoader = PDFGen.class.getClassLoader();
-		String path = classLoader.getResource("/resources").getPath();
-		FileSystemResource file = new FileSystemResource(path+"\\Membership_Expiry_Report_"+DateUtility.getTodaysDate("ddMMyyyy")+".pdf");
+	public FileSystemResource getPDFDoc(FileSystemResource file) throws Exception{
         Document document = new Document();
         PdfWriter.getInstance(document, file.getOutputStream());
         //Inserting Image in PDF
@@ -27,11 +23,11 @@ public abstract class PDFGen<T> {
            //image.scaleAbsolute(120f, 60f);//image width,height    
 
         //Inserting Table in PDF
-        PdfPTable table=new PdfPTable(2);
+        PdfPTable table=new PdfPTable(3);
 
-        PdfPCell cell = new PdfPCell (new Paragraph ("Membership expiry details"));
+        PdfPCell cell = new PdfPCell (new Paragraph ("Notification Report"));
 
-        cell.setColspan (2);
+        cell.setColspan (3);
         cell.setHorizontalAlignment (Element.ALIGN_CENTER);
         cell.setPadding (10.0f);
         cell.setBackgroundColor (new BaseColor (140, 221, 8));                                  

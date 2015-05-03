@@ -5,8 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.imanage.models.ESMSCreditBal;
-import com.imanage.models.ESMSSender;
-import com.imanage.services.smssender.SMSSenderDao;
 import com.imanage.util.CustomHibernateDaoSupport;
 
 @Repository("smsCreditBalDao")

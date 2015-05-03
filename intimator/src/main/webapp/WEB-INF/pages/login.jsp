@@ -37,7 +37,7 @@
 					<div >
 						<input type="submit" class="btn btn-lg btn-primary btn-block" value="LOGIN" onclick="">
 							<a id="forgot-password-link"
-							href="forgotPassword.htm"><b>Forgot Password?</b></a>
+							href="forgotPassword.htm" style="visibility: hidden;"><b>Forgot Password?</b></a>
 					</div>
 				</form>
 			<!-- mainLogin-box -->

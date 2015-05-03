@@ -7,6 +7,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.imanage.intimate.NotificationType;
+import com.imanage.models.ClubDetails;
+import com.imanage.models.MemberDetails;
+
 public class Utility {
 
 	private static SecureRandom random = new SecureRandom();
@@ -61,6 +65,20 @@ public class Utility {
 	        if (!Character.isDigit(c)) return false;
 	    }
 	    return true;
+	}
+	
+	public static boolean checkSMSBalance(ClubDetails clubDetails, NotificationType notificationType){
+		int count = 0;
+		for(MemberDetails memberDetails : clubDetails.getMemberDetails()){
+			if((notificationType == NotificationType.MANUAL_REMINDER && memberDetails.getExpirydate().getTime()< DateUtility.getTodaysDate())
+					|| (notificationType == NotificationType.SCHEDULAR_REMINDER && memberDetails.getExpirydate().getTime() == DateUtility.getTodaysDate())){
+				count++;
+			}
+		}
+		if(count>clubDetails.getSmsCreditBal().getBalance()){
+			return false;
+		}
+		return true;
 	}
 	
 	public static void main(String[] args) throws ParseException {

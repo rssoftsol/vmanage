@@ -104,8 +104,10 @@ public class SmsCallGet {
 	@Value("${smsConfig.password}")
 	private String password;
 	
+	@Value("${smsConfig.senderId}")
 	private String senderId;
 	
+	@Value("${smsConfig.route}")
 	private String route;
 	
 	

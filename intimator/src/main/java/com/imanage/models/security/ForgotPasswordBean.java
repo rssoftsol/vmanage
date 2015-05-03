@@ -1,7 +1,5 @@
 package com.imanage.models.security;
 
-import javax.validation.constraints.NotNull;
-
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.imanage.validators.username.IsUserNameValid;

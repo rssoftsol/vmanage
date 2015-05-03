@@ -27,16 +27,22 @@ public class ESMSSender {
 	@Size(max=40,message="Maximum length is 40")
 	private String senderId;
 	
+	@Column(name="SMSTEXT",length=20)
+	@NotEmpty(message="SMS text is mandatory")
+	@Size(max=160,message="Maximum length is 160")
+	private String smsText;
+	
 	private String route;
 	
 	public ESMSSender(){
 		super();
 	}
 	
-	public ESMSSender(String senderId, String route) {
+	public ESMSSender(String senderId, String route, String smsText) {
 		super();
 		this.senderId = senderId;
 		this.route = route;
+		this.smsText = smsText;
 	}
 
 	@ManyToOne  
@@ -74,6 +80,14 @@ public class ESMSSender {
 
 	public void setSenderId(String senderId) {
 		this.senderId = senderId;
+	}
+	
+	public String getSmsText() {
+		return smsText;
+	}
+
+	public void setSmsText(String smsText) {
+		this.smsText = smsText;
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package com.imanage.models;
 
 import java.sql.Timestamp;
+import java.util.Iterator;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -211,6 +212,19 @@ public class ClubDetails{
 
 	public void setSmsCreditBal(ESMSCreditBal smsCreditBal) {
 		this.smsCreditBal = smsCreditBal;
+	}
+	
+	public ESMSSender getSMSSender(String senderID){
+		ESMSSender esmsSender = null;
+		Iterator<ESMSSender> iterator = smsSenders.iterator();
+		while (iterator.hasNext()) {
+			esmsSender = (ESMSSender) iterator.next();
+			if(esmsSender.getSenderId().equalsIgnoreCase(senderID)){
+				return esmsSender;
+			}
+			
+		}
+		return esmsSender;
 	}
 
 	@Override

@@ -8,15 +8,14 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.imanage.intimate.impl.ExpiryIntimator;
+import com.imanage.intimate.NotificationType;
+import com.imanage.intimate.impl.NotifyingService;
 import com.imanage.models.ClubDetails;
 import com.imanage.models.MemberDetails;
 import com.imanage.services.members.MemberRegistrationService;
-import com.imanage.services.register.ClubRegistrationService;
 import com.imanage.util.DateUtility;
 import com.imanage.util.MemberModeEnum;
 import com.imanage.util.crud.CRUDHandler;
-import com.imanage.util.sms.SmsCallGet;
 
 @Component
 public class CRUDHandlerImpl implements CRUDHandler {
@@ -25,17 +24,13 @@ public class CRUDHandlerImpl implements CRUDHandler {
 	MemberRegistrationService memberRegistrationService;
 	
 	@Autowired
-	SmsCallGet smsCallGet;
-	
-	@Autowired
-	ExpiryIntimator expiryIntimator;
+	NotifyingService notifyingService;
 	
 	public String handleSMSSendRequest(Set<MemberDetails> members, String smsText,
 			boolean all, ClubDetails clubDetails) {
-		String message = "SMS successfully sent to the members";
-		smsCallGet.setRoute("P");
-		smsCallGet.setRoute("PROMOTIONAL");
+		String message = "SMS Queued for sending";
 		Set<MemberDetails> sendTo = null;
+		NotificationType notificationType = all?NotificationType.OFFER_TO_ALL : NotificationType.OFFER_TO_MEMBERSHIP_EXPIRED;
 		if(!all){
 			sendTo = new HashSet<MemberDetails>();
 			for(MemberDetails details : members){
@@ -48,7 +43,7 @@ public class CRUDHandlerImpl implements CRUDHandler {
 		}
 		int bal = clubDetails.getSmsCreditBal().getBalance();
 		if(sendTo.size() > bal){
-			message = "Insufficient Balance";
+			message = "error-Insufficient Balance";
 		}else{
 			/*for(MemberDetails details : sendTo){
         		String response = smsCallGet.sendMessage(smsText, details.getPhone().toString());
@@ -56,14 +51,14 @@ public class CRUDHandlerImpl implements CRUDHandler {
 	        }
 			clubDetails.getSmsCreditBal().setBalance(bal);
 			clubRegistrationService.update(clubDetails);*/
-			expiryIntimator.intimate(clubDetails, all, smsText);
+			notifyingService.intimate(clubDetails, notificationType, smsText);
 		}
 		
 		return message;
 	}
 	
 	public String handleAddRequest(MemberDetails memberDetails, MemberDetails existingMemberDetails) {
-		String message = "Member "+memberDetails.getMemid()+" already exist";
+		String message = "error-Member "+memberDetails.getMemid()+" already exist";
 		if(existingMemberDetails == null){
 			memberDetails.setCreatedDate(DateUtility.getSQLCurrentTime());
 			memberRegistrationService.save(memberDetails);
@@ -73,7 +68,7 @@ public class CRUDHandlerImpl implements CRUDHandler {
 	}
 
 	public String handleModifyRequest(MemberDetails memberDetails, MemberDetails existingMemberDetails) {
-		String message = "Member "+memberDetails.getMemid()+" doesn't exist";
+		String message = "error-Member "+memberDetails.getMemid()+" doesn't exist";
 		if(existingMemberDetails != null){
 			memberDetails.setCreatedDate(existingMemberDetails.getCreatedDate());
 			memberDetails.setModifiedDate(DateUtility.getSQLCurrentTime());
@@ -84,7 +79,7 @@ public class CRUDHandlerImpl implements CRUDHandler {
 	}
 
 	public String handleDeleteRequest(MemberDetails memberDetails, MemberDetails existingMemberDetails) {
-		String message = "Member "+memberDetails.getMemid()+" doesn't exist";
+		String message = "error-Member "+memberDetails.getMemid()+" doesn't exist";
 		if(existingMemberDetails != null){
 			memberRegistrationService.delete(memberDetails);
 			return "Member record deleted successfully";

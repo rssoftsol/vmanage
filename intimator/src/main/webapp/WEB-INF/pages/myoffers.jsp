@@ -27,7 +27,7 @@ $('#sms').addClass('active');
 			        <div class='col-xs-12'>
 				        <div class='col-xs-4'><label>Send SMS to:</label></div>
 				        <div class='col-xs-6'>
-					        <select id='smsto' name="smsto" class="form-control">
+					        <select id='smsto' name="smsTo" class="form-control">
 					        	<option value="0" selected="selected">Only to Members whose membership is expired</option>
 					        	<option value="1">All members</option>
 					        </select>
@@ -40,6 +40,10 @@ $('#sms').addClass('active');
 							<textarea id="smsText" maxlength="160" name="smsText"></textarea>
 						</div>
 					</div>
+					
+					<div class='col-xs-offset-10'>
+				        	<input type="submit" value="Save" id='save' class="btn btn-primary">
+				    </div>
 			    </div>
 		    </div>
 		</div>

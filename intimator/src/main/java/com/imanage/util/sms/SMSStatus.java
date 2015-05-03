@@ -11,21 +11,21 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
-public class GetSmsCreditStatus {
+public class SMSStatus {
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		GetSmsCreditStatus test = new GetSmsCreditStatus();
-		test.getSmsCreditStatus();
+		SMSStatus test = new SMSStatus();
+		test.getSmsStatus("", "", "");
 	}
-	public String getSmsCreditStatus() {
+	public String getSmsStatus(String broadcastid, String phoneNumber, String date) {
 		
 		StringBuffer response = new StringBuffer();
 		try {
 			
-			URL url = new URL(getURLPath());
+			URL url = new URL(getURLPath()+"&phonenumber="+phoneNumber+"&broadcastid="+broadcastid+"&date="+date);
 			final HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
 			conn.setRequestMethod("GET");
@@ -55,8 +55,8 @@ public class GetSmsCreditStatus {
 		return twar;
 	}
 
-	@Value("${smsConfig.creditStatusLink}")
-	private String creditStatusLink;
+	@Value("${smsConfig.smsStatusLink}")
+	private String smsStatusLink;
 	
 	@Value("${smsConfig.username}")
 	private String username;
@@ -66,7 +66,7 @@ public class GetSmsCreditStatus {
 	
 	private String getURL() {
 		//return http://smsc.biz/api/getcredits?username=USERNAME&password=PASSWORD
-		return creditStatusLink;
+		return smsStatusLink;
 	}
 	
 	public String getUsername() {

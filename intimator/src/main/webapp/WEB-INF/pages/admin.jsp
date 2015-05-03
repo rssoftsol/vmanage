@@ -32,7 +32,12 @@ dataSet = dataMainfinalArr;
 <title>Subscribed Clubs</title>
 </head>
 <body class="header" >
-<div id='demo'></div>
-<div>click<a href="${pageContext.request.contextPath}/admin/updatesmsbalance.htm"> here </a>to update sms balance of any user</div>
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <%@ include file="leftmenu.html" %>
+        <!-- /#sidebar-wrapper -->
+	<div id='demo' class='container-fluid'></div>
+</div>
 </body>
 </html>

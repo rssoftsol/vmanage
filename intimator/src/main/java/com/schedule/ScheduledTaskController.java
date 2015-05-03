@@ -12,9 +12,12 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.imanage.intimate.impl.ExpiryIntimator;
+import com.imanage.intimate.impl.NotifyingService;
 import com.imanage.models.ClubDetails;
+import com.imanage.models.MemberDetails;
 import com.imanage.services.register.ClubRegistrationService;
+import com.imanage.util.DateUtility;
+import com.imanage.util.sms.SmsCallGet;
 
 @ComponentScan
 @EnableScheduling
@@ -26,7 +29,10 @@ public class ScheduledTaskController {
 	ClubRegistrationService clubRegistrationService;
 	
 	@Autowired
-	ExpiryIntimator intimator;
+	NotifyingService notifyingService;
+	
+	@Autowired
+	SmsCallGet smsCallGet;
 	
 	@PostConstruct
 	public void dosomething(){
@@ -42,8 +48,20 @@ public class ScheduledTaskController {
         	try {
         		if("N".equalsIgnoreCase(clubDetails.getIsAccountative())) continue;
         		//put logger here
+        		int count = 0;
+        		for(MemberDetails memberDetails : clubDetails.getMemberDetails()){
+        			if(memberDetails.getExpirydate().getTime() == DateUtility.getTodaysDate()){
+        				count++;
+        			}
+        		}
+        		if(count>clubDetails.getSmsCreditBal().getBalance()){
+        			smsCallGet.sendMessage("Scheduled Notifiction failed due to low sms balance. Please refill SMS credits and rerun it from Admin tool. Contact IT(75063386587) in case of any doubt", clubDetails.getPhonenumber().toString());
+        			continue;
+        		}
         		System.out.println("Active club found:"+clubDetails);
-        		intimator.intimate(clubDetails);	
+        		notifyingService.setRoute("T");
+        		notifyingService.setSenderId(clubDetails.getSmsCreditBal().getSenderId());
+        		notifyingService.intimate(clubDetails);	
         		
 			} catch (Exception e) {
 				// TODO Auto-generated catch block

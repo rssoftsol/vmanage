@@ -40,9 +40,25 @@
 	  	  	$('form[name=form2]').submit();
 	  	});
 	    
-	    $('#addSender').on( 'click', function () {
-	  	  	window.location = '${pageContext.request.contextPath}/members/createSmsSender.htm';
+	    $('#changepassword').on( 'click', function () {
+	  	  	window.location = '${pageContext.request.contextPath}/passwordchange.htm';
 	  	});
+	    
+	    $('#senderId').on( 'change', function () {
+	    	if(document.getElementById('senderId').value == 'PROMOTIONAL'){
+	    		$( "#smsText" ).prop( "readonly", false );
+	    	}else{
+	    		$( "#smsText" ).prop( "readonly", true );
+	    	}
+	    	$('form[name=form]').attr('action','${pageContext.request.contextPath}/myprofile/dropdownChange.htm');
+	  	  	$('form[name=form]').submit();
+	  	  	//window.location = '${pageContext.request.contextPath}/myprofile/dropdownChange.htm';
+	  	});
+	    if(document.getElementById('senderId').value == 'PROMOTIONAL'){
+    		$( "#smsText" ).prop( "readonly", false );
+    	}else{
+    		$( "#smsText" ).prop( "readonly", true );
+    	}
 	});
 </script>
 <body class="header">
@@ -86,14 +102,14 @@
 				<div class="col-xs-12">
 					<div class="col-xs-4"><label>SMS Sender :</label></div>
 					<div class="col-xs-4">
-						<form:select path="smsCreditBal.senderId" class="form-control">
+						<form:select path="smsCreditBal.senderId" class="form-control" 
+							id="senderId" >
         					<form:options items="${command.smsSenders}" />
 						</form:select>
 					</div>
-					<div>Click<a href="#" id="addSender"> here </a>to add more sender</div>
 				</div>
 				
-				<div class="col-xs-12">
+				<div class="col-xs-12" style="visibility: hidden;">
 					<div class="col-xs-4"><label>Membership type:</label></div>
 					<div class="col-xs-4">Regular<form:radiobutton checked="checked" id="regular" path="membershiptype" value="R"/>
 					&nbsp;&nbsp;
@@ -103,12 +119,14 @@
 				
 				<div class="col-xs-12">
 					<div class="col-xs-4"><label>SMS Text:</label></div>
-					<div class="col-xs-4"><form:textarea id="smsText" maxlength="160" path="smsText" class="form-control" /></div>
+					<div class="col-xs-4"><form:textarea id="smsText" maxlength="160" path="smsText" 
+					class="form-control" /></div>
 					<div class="col-xs-4"><form:errors path="smsText" cssClass="smsText" element="div" /></div>
 				</div>
 				
 				<div class="col-xs-12">
 					<div><input type="submit" id="save" value="Save" class="btn btn-primary pull-right"></div>
+					<div><input type="button" id="changepassword" value="Change Password" class="btn btn-primary pull-right"></div>
 				</div>
 			</div>
 			</form:form>
@@ -143,7 +161,7 @@
 					<div class="col-xs-4"><small><label>${command.smsCreditBal.senderId}</label></small></div>
 				</div>
 				
-				<div class="col-xs-12">
+				<div class="col-xs-12" style="visibility: hidden;">
 					<div class="col-xs-4"><label>Membership type:</label></div>
 					<div class="col-xs-4"><small><label>${command.membershiptype}</label></small></div>
 				</div>

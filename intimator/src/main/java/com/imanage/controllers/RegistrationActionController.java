@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -61,12 +62,13 @@ public class RegistrationActionController {
 		clubDetails.setRoleId(1);
 		clubDetails.setIsAccountative("Y");
 		clubDetails.setNewPassword(passwordEncoder.encodePassword(clubDetails.getPassword(), clubDetails.getUsername().toLowerCase()));
-		clubDetails.setSmsText("Dear Member, your "+clubDetails.getClubname()+" membership is getting expired today. Kindly renew");
+		String smsText = "Dear Member, your "+clubDetails.getClubname()+" membership is  expired. Kindly renew";
+		clubDetails.setSmsText(smsText);
 		ESMSCreditBal smsCreditBal = new ESMSCreditBal("PROMOTINAL", 500, "P");
 		smsCreditBal.setClubDetails(clubDetails);
 		clubDetails.setSmsCreditBal(smsCreditBal);
 		Set<ESMSSender> senderList = new HashSet<ESMSSender>();
-		ESMSSender smsSender = new ESMSSender("PROMOTIONAL", "P");
+		ESMSSender smsSender = new ESMSSender("PROMOTIONAL", "P", smsText);
 		smsSender.setClubDetails(clubDetails);
 		senderList.add(smsSender);
 		clubDetails.setSmsSenders(senderList);
@@ -115,6 +117,26 @@ public class RegistrationActionController {
 		ClubDetails clubDetails = clubRegService.findByUserName(authentication.getName());
 		mav.addObject("command", clubDetails);
 		mav.addObject("isActive", clubDetails.getIsAccountative());
+		mav.addObject("user", authentication.getName());
+		mav.addObject("rw", "W");
+		return mav;
+	}
+	
+	@RequestMapping(value="/myprofile/dropdownChange", method = RequestMethod.POST)
+	public ModelAndView myProfileDropdownChange(@ModelAttribute("command") ClubDetails clubDetails) {
+		ModelAndView mav = new ModelAndView("myprofile");
+		Authentication authentication = SecurityContextHolder.getContext()
+				.getAuthentication();
+		
+		ClubDetails clubDetailsOrg = clubRegService.findByUserName(authentication.getName());
+
+		clubDetailsOrg.setSmsText(clubDetailsOrg.getSMSSender(clubDetails.getSmsCreditBal().getSenderId()).getSmsText());
+		clubDetailsOrg.setSmsCreditBal(new ESMSCreditBal(clubDetails.getSmsCreditBal().getSenderId(), 
+				clubDetailsOrg.getSmsCreditBal().getBalance(), 
+				clubDetailsOrg.getSMSSender(clubDetails.getSmsCreditBal().getSenderId()).getRoute()));
+		
+		mav.addObject("command", clubDetailsOrg);
+		mav.addObject("isActive", clubDetailsOrg.getIsAccountative());
 		mav.addObject("user", authentication.getName());
 		mav.addObject("rw", "W");
 		return mav;
@@ -174,6 +196,10 @@ public class RegistrationActionController {
 		clubDetails.setCreatedDate(clubDetailstmp.getCreatedDate());
 		clubDetails.setModifiedDate(DateUtility.getSQLCurrentTime());
 		clubDetails.setIsAccountative(clubDetailstmp.getIsAccountative());
+		clubDetails.setSmsCreditBal(clubDetailstmp.getSmsCreditBal());
+		clubDetails.setSmsSenders(clubDetailstmp.getSmsSenders());
+		ESMSSender esmsSender = clubDetails.getSMSSender("PROMOTIONAL");
+		esmsSender.setSmsText(clubDetails.getSmsText());
 		//put logger here
 		clubRegService.update(clubDetails);
 		model.addAttribute("command", clubDetails);
@@ -183,6 +209,30 @@ public class RegistrationActionController {
 		return "redirect:/myprofile/view";
 	}
 	
+	@RequestMapping(value="/passwordchange.htm", method=RequestMethod.GET)
+    public ModelAndView passwordReset() {
+		ModelAndView mav = new ModelAndView("passwordchange");
+		return mav;
+	}
+    
+    @RequestMapping(value="/passwordchangeAction.htm", method=RequestMethod.POST)
+    public String passwordResetAction(@RequestParam("oldPassword") String oldPassword, 
+    		@RequestParam("newPassword") String newPassword, RedirectAttributes redirectAttributes) {
+    	Authentication authentication = SecurityContextHolder.getContext()
+				.getAuthentication();
+    	ClubDetails clubDetails = clubRegService.findByUserName(authentication.getName());
+    	if(!clubDetails.getPassword().equals(
+    			passwordEncoder.encodePassword(oldPassword, clubDetails.getUsername().toLowerCase()))){
+    		redirectAttributes.addFlashAttribute("popupErrorMessage", "Invalid Old password");
+    	}else{
+    		clubDetails.setPassword(passwordEncoder.encodePassword(newPassword, 
+    				clubDetails.getUsername().toLowerCase()));
+    	}
+    	clubRegService.update(clubDetails);
+    	redirectAttributes.addFlashAttribute("popupInfoMessage", "Password changed");
+		return "redirect:/myprofile/view";
+	}
+    
 	@ModelAttribute
 	public void addCommonAttribute(Model model){
 		model.addAttribute("date", new java.util.Date().toString());

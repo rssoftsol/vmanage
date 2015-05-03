@@ -35,7 +35,7 @@
 					<li id="sms" data-toggle="tooltip" data-placement="bottom" 
 	      			title="send sms to club member here">
 						<a href='${pageContext.request.contextPath}/members/myOffer.htm'>
-							<span>SMS</span>
+							<span>Broadcast offer</span>
 						</a>
 					</li>
 					

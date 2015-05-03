@@ -1,6 +1,9 @@
 package com.imanage.models.security;
 
+import java.io.File;
 import java.util.Date;
+
+import com.imanage.util.DateUtility;
 
 public class Role {
 
@@ -39,6 +42,22 @@ public class Role {
 
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
+	}
+	
+	public void testmethod(String s, Boolean b){
+		s = s + s;
+		b = true;
+	}
+	private static String getPath(){
+		String path = "";
+		File f = new File("D://intimator//"+DateUtility.getTodaysDate("dd_MM_yyyy"));
+		if(!f.exists()){
+			System.out.println(f.mkdirs());
+		}
+		return path;
+	}
+	public static void main(String[] args) {
+		getPath();
 	}
 
 }

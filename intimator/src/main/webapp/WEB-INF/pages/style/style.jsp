@@ -22,4 +22,4 @@
 <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
 <script src="<c:url value="/resources/js/jquery.maxlength.js" />"></script>
 <script src="<c:url value="/resources/js/main.js" />"></script>
-
+<link href="<c:url value="/resources/css/simple-sidebar.css" />" rel="stylesheet">
