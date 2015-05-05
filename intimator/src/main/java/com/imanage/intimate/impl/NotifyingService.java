@@ -13,6 +13,7 @@ import com.imanage.models.ClubDetails;
 import com.imanage.models.MemberDetails;
 import com.imanage.services.register.ClubRegistrationService;
 import com.imanage.util.DateUtility;
+import com.imanage.util.SMSErrorCodes;
 import com.itextpdf.text.pdf.PdfPTable;
 
 @Service("notifyingService")
@@ -56,11 +57,12 @@ public class NotifyingService extends AbstractIntimator<ClubDetails> {
 		        		//put logger here
 		        		System.out.println("Member with given expiry date exist:"+details);
 		        		String response = intimateBySMS();
-		        		if(response.length() > 3){
+		        		SMSErrorCodes smsErrorCode = SMSErrorCodes.getSMSErrorCodeMeaning(response);
+		        		if(smsErrorCode == null){
 		        			pdfPTable.addCell("Successful");
 		        			bal--;
 		        		}else{
-		        			pdfPTable.addCell("Failed("+response+")");
+		        			pdfPTable.addCell("Failed("+smsErrorCode+")");
 		        		}
 			    		expires = true;
 		        	}
@@ -72,9 +74,9 @@ public class NotifyingService extends AbstractIntimator<ClubDetails> {
 				return expires;
 			}
 		};
-		FileSystemResource file = new FileSystemResource(getPath()+"\\"+notificationType.name()+"_"+DateUtility.getTodaysDate("ddMMyyyy")+".pdf");
+		FileSystemResource file = new FileSystemResource(getPath()+"\\"+clubDetails.getClubname()+notificationType.name()+"_"+DateUtility.getTodaysDate("ddMMyyyy")+".pdf");
 		try {
-			file = pdfGen.getPDFDoc(file);
+			pdfGen.getPDFDoc(file);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

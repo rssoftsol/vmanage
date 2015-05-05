@@ -195,7 +195,7 @@ public class AdminController {
 		notifyingService.intimate(clubDetails, NotificationType.SCHEDULAR_REMINDER, 
 				clubDetails.getSmsText());
 		message = "Reminder sent!!!";
-		redirectAttributes.addFlashAttribute("popupErrorMessage", message);
+		redirectAttributes.addFlashAttribute("popupInfoMessage", message);
 		return "redirect:/admin/smstrigger.htm";
 	}
 	

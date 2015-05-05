@@ -59,7 +59,7 @@ public class ScheduledTaskController {
         			continue;
         		}
         		System.out.println("Active club found:"+clubDetails);
-        		notifyingService.setRoute("T");
+        		notifyingService.setRoute(clubDetails.getSmsCreditBal().getRoute());
         		notifyingService.setSenderId(clubDetails.getSmsCreditBal().getSenderId());
         		notifyingService.intimate(clubDetails);	
         		

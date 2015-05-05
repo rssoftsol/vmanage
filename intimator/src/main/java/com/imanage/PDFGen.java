@@ -37,7 +37,13 @@ public abstract class PDFGen<T> {
         table.addCell("Name");
         table.addCell("Expiry");
         table.addCell("Member Notification");
-        if(!createPdfPTable(table)) return null;
+        if(!createPdfPTable(table)){
+        	PdfPCell cell2 = new PdfPCell (new Paragraph ("No Member with Expiry exist"));
+        	cell2.setColspan (3);
+        	cell2.setHorizontalAlignment (Element.ALIGN_CENTER);
+        	cell2.setPadding (10.0f);
+        	table.addCell(cell2);
+        }
         
         table.setSpacingBefore(30.0f);       // Space Before table starts, like margin-top in CSS
         table.setSpacingAfter(30.0f);        // Space After table starts, like margin-Bottom in CSS                                          
